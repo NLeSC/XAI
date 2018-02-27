@@ -67,7 +67,7 @@ class Pooling:
 class Convolution:
 
 	def __init__(self,name):
-		wshape = map(int,list(name.split("-")[-1].split("x")))
+		wshape = list(map(int,list(name.split("-")[-1].split("x"))));           
 		self.W = numpy.loadtxt(name+'-W.txt').reshape(wshape)
 		self.B = numpy.loadtxt(name+'-B.txt')
 
