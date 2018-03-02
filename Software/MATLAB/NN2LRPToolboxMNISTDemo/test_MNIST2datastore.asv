@@ -1,0 +1,29 @@
+ % test_MNIST2datastore.m - tesing script 
+
+ %% parameters
+ path2MNIST = '../../../Data/MNIST/original';
+ train_images_fname = 'train-images.idx3-ubyte';
+ test_images_fname = 't10k-images.idx1-ubyte';
+ train_labels_fname = 'train-labels.idx3-ubyte';
+ test_labels_fname = 't10k-labels.idx1-ubyte';
+ 
+ verbose = true;
+ visualize = true;
+ %% load original files to matricies and vectors
+ if verbose
+     disp('Loading original MNIST files ot matricies and vectors...');
+ end
+ [train_images,train_labels] = loadMNIST2MAT(fullfile(path2MNIST, train_images_fname),...
+                                             fullfile(path2MNIST, train_labels_fname));
+                                         
+ [test_images,test_labels] = loadMNIST2MAT(fullfile(path2MNIST, test_images_fname),...
+                                             fullfile(path2MNIST, test_labels_fname));
+ 
+%% visualize some train images
+if verbose
+     disp('Loading original MNIST files ot matricies and vectors...');
+end
+ 
+%% visualize some test images
+                                         
+                                         
