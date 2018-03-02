@@ -7,9 +7,10 @@ train_images_fname = 'train-images.idx3-ubyte';
 test_images_fname = 't10k-images.idx3-ubyte';
 train_labels_fname = 'train-labels.idx1-ubyte';
 test_labels_fname = 't10k-labels.idx1-ubyte';
-
+path2trainImages = fullfile(project_path,'/Data/MNIST/images/train');
+path2testImages = fullfile(project_path,'/Data/MNIST/images/test');
 verbose = true;
-visualize = true;
+visualize = false;
 
 %% load original files to matricies and vectors
 if verbose
@@ -52,3 +53,14 @@ if visualize
     end
     
 end
+
+%% save matricies to images with folders indication labels
+if verbose
+    disp('Saving testing images to folder...');
+end
+MAT2imageFiles(test_images, test_labels, path2testImages);
+
+if verbose
+    disp('Saving training images to folder...');
+end
+MAT2imageFiles(train_images, train_labels, path2trainImages);

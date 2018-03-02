@@ -12,6 +12,7 @@
 % main
 %--------------------------------------------------------------------------
 % loadMNIST2MAT - loading MNIST original data into MATLAB matricies
+% MAT2imageFiles - saving images from the image MNIST MATLAB matrix 
 %--------------------------------------------------------------------------
 % secondary
 %--------------------------------------------------------------------------
