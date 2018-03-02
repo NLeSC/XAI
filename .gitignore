@@ -1,3 +1,6 @@
 *.ipynb
 *.pyc
 *.asv
+/Data/MNIST/images
+/Data/MNIST/imageDatastores
+
