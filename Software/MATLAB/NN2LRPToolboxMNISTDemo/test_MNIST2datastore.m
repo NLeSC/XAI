@@ -33,7 +33,7 @@ if visualize
     colormap(gray)                                  % set to grayscale
     for i = 1:36                                    % preview first 36 samples
         subplot(6,6,i)                              % plot them in 6 x 6 grid
-        digit = reshape(train_images(:, i), [28,28]);     % row = 28 x 28 image
+        digit = reshape(train_images(i,:), [28,28]);     % row = 28 x 28 image
         imagesc(digit)                              % show the image
         title(num2str(train_labels(i)))                   % show the label
     end
@@ -46,7 +46,7 @@ if visualize
     colormap(gray)                                  % set to grayscale
     for i = 1:36                                    % preview first 36 samples
         subplot(6,6,i)                              % plot them in 6 x 6 grid
-        digit = reshape(test_images(:, i), [28,28]);     % row = 28 x 28 image
+        digit = reshape(test_images(i,:), [28,28]);     % row = 28 x 28 image
         imagesc(digit)                              % show the image
         title(num2str(test_labels(i)))                   % show the label
     end

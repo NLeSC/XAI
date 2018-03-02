@@ -27,9 +27,9 @@
 
 function [images,labels] = loadMNIST2MAT(fname_images,fname_labels)
 
-images = loadMNISTImages(fname_images);  
+images = loadMNISTImages(fname_images); 
+images = images';
 labels = loadMNISTLabels(fname_labels);
-labels = labels';
 
 end
 
