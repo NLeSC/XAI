@@ -9,6 +9,7 @@ train_labels_fname = 'train-labels.idx1-ubyte';
 test_labels_fname = 't10k-labels.idx1-ubyte';
 path2trainImages = fullfile(project_path,'/Data/MNIST/images/train');
 path2testImages = fullfile(project_path,'/Data/MNIST/images/test');
+path2datastores = fullfile(project_path,'/Data/MNIST/imageDatastores');
 verbose = true;
 visualize = false;
 
@@ -64,3 +65,12 @@ if verbose
     disp('Saving training images to folder...');
 end
 MAT2imageFiles(train_images, train_labels, path2trainImages);
+
+%% create image datastores
+trainMNISTimds = imageDatastore(path2trainImages,...
+'IncludeSubfolders',true,'FileExtensions','.png','LabelSource','foldernames');
+save(fullfile(path2datastores,'trainMNISTimds.mat'),'trainMNISTimds');
+
+testMNISTimds = imageDatastore(path2testImages,...
+'IncludeSubfolders',true,'FileExtensions','.png','LabelSource','foldernames');
+save(fullfile(path2datastores,'testMNISTimds.mat'),'testMNISTimds');
