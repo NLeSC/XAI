@@ -17,6 +17,7 @@
 % secondary
 %--------------------------------------------------------------------------
 % loadMNISTLabels/Images- Stanford functions
+% lenet5MP_mnist_arch - defines the LeNet-5 MaxPooling architecture for MNIST
 %**************************************************************************
 % scripts
 %**************************************************************************
