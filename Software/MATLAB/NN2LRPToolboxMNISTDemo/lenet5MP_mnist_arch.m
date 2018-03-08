@@ -22,24 +22,48 @@
 %**************************************************************************
 function [layers] = lenet5MP_mnist_arch()
 
+% layers = [
+%     imageInputLayer([28 28 1])
+% 
+%     convolution2dLayer(5,10,'Stride',1)
+%    % batchNormalizationLayer
+%     reluLayer
+%     maxPooling2dLayer(2,'Stride',2)
+% 
+%     convolution2dLayer(5,25,'Stride',1)
+%     reluLayer
+%     maxPooling2dLayer(2,'Stride',2)
+% 
+%     convolution2dLayer(4,100,'Stride',1)
+%     reluLayer
+%     maxPooling2dLayer(2,'Stride',2)
+%      
+%     convolution2dLayer(1,10,'Stride',1)
+%     reluLayer
+%     
+%     fullyConnectedLayer(10)
+%     softmaxLayer
+%     classificationLayer];
+
 layers = [
     imageInputLayer([28 28 1])
-
-    convolution2dLayer(5,10,'Stride',1)
+    
+    convolution2dLayer(3,16,'Padding',1)
    % batchNormalizationLayer
     reluLayer
+    
     maxPooling2dLayer(2,'Stride',2)
-
-    convolution2dLayer(5,25,'Stride',1)
+    
+    convolution2dLayer(3,32,'Padding',1)
+   % batchNormalizationLayer
     reluLayer
+    
     maxPooling2dLayer(2,'Stride',2)
-
-    convolution2dLayer(4,100,'Stride',1)
+    
+    convolution2dLayer(3,64,'Padding',1)
+  %  batchNormalizationLayer
     reluLayer
-    maxPooling2dLayer(2,'Stride',2)
-     
-    convolution2dLayer(1,10,'Stride',1)
-
+    
     fullyConnectedLayer(10)
     softmaxLayer
     classificationLayer];
