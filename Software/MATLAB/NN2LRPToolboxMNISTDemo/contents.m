@@ -22,3 +22,4 @@
 % scripts
 %**************************************************************************
 % test_MNIST2datastore.m - tesing script 
+% train_lenet5MP_mnist.m - training of the LeNet-5 max pooling architecture on MNIST data
