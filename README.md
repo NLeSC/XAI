@@ -5,6 +5,8 @@ Resources and Prototyping about eXplainable Artificial Inteligence (XAI)
 
 A [github repository](https://github.com/dais-ita/interpretability-papers) collecting Interpretability papers as issues.
 
+Own collection of papers in the [State-of-the-art folder](https://github.com/NLeSC/XAI/tree/master/State-of-the-art)
+
 ### LIME - Local Interpretable Model-Agnostic Explanations
 [Paper](https://github.com/NLeSC/XAI/tree/master/State-of-the-art/LIME) in State-of-the-art folder
 
@@ -25,7 +27,7 @@ New one keras-oriented is coming up!
 [LRP tutorial](https://github.com/NLeSC/XAI/tree/master/Software/Python/LRP%20Tutorial) (redone by me)
 
 ### CLEAR - CLass-Enhanced Attentive Response (CLEAR) maps
-[Paper]()https://github.com/NLeSC/XAI/tree/master/State-of-the-art/CLEAR in State-of0the-art-folder
+[Paper](https://github.com/NLeSC/XAI/tree/master/State-of-the-art/CLEAR) in State-of0the-art-folder
 
 ### Other
 [Building blocks for interpretability](https://distill.pub/2018/building-blocks/) Distill article
