@@ -22,7 +22,7 @@ New one keras-oriented is coming up!
 [LRP tutorial](https://github.com/NLeSC/XAI/tree/master/Software/Python/LRP%20Tutorial) (redone by me)
 
 ### Other
-[Building blocks for interpretability](https://distill.pub/2018/building-blocks/) blog
+[Building blocks for interpretability](https://distill.pub/2018/building-blocks/) Distill article
 
 ## Prototyping 
 
