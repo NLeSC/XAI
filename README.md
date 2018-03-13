@@ -2,6 +2,9 @@
 Resources and Prototyping about eXplainable Artificial Inteligence (XAI)
 
 ## Resources
+
+A [github repository](https://github.com/dais-ita/interpretability-papers) collecting Interpretability papers as issues.
+
 ### LIME - Local Interpretable Model-Agnostic Explanations
 [Paper](https://github.com/NLeSC/XAI/tree/master/State-of-the-art/LIME) in State-of-the-art folder
 
