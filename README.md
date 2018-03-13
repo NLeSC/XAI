@@ -24,6 +24,9 @@ New one keras-oriented is coming up!
 [LRP tutorial](http://www.heatmapping.org/tutorial/) (orginial);
 [LRP tutorial](https://github.com/NLeSC/XAI/tree/master/Software/Python/LRP%20Tutorial) (redone by me)
 
+### CLEAR - CLass-Enhanced Attentive Response (CLEAR) maps
+[Paper]()https://github.com/NLeSC/XAI/tree/master/State-of-the-art/CLEAR in State-of0the-art-folder
+
 ### Other
 [Building blocks for interpretability](https://distill.pub/2018/building-blocks/) Distill article
 
