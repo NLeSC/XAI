@@ -1,0 +1,1 @@
+This folder contains the code for the experiment: find out the informativeness of LRP heatmaps on a squares vs triangles classification via CNN task
