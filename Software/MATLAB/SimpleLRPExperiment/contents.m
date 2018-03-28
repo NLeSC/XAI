@@ -10,6 +10,7 @@
 %**************************************************************************
 % amat_loader - function to load data from the amat format
 % normalize_input4lenet - normalize the input matrix to be used by LeNet
+% reshape_labels - reshaping the labels to fit LRP toolbox format
 %**************************************************************************
 % test_scripts
 %**************************************************************************

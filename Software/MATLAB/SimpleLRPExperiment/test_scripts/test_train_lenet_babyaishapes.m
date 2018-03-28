@@ -29,30 +29,45 @@ verbose = true;
 %% load MAT files with data
 load(train_images_full_fname);
 num_train_images = size(train_images,1);
+load(train_labels_full_fname);
 if verbose
-     disp(['Loaded ', num2str(num_train_images) ,' train images']);
+     disp(['Loaded ', num2str(num_train_images) ,' train images and labels']);
 end
 load(test_images_full_fname);
 num_test_images = size(test_images,1);
+load(test_labels_full_fname);
 if verbose
-     disp(['Loaded ', num2str(num_test_images) ,' test images']);
+     disp(['Loaded ', num2str(num_test_images) ,' test images and labels']);
 end
 load(valid_images_full_fname);
 num_valid_images = size(valid_images,1);
+load(valid_labels_full_fname);
 if verbose
-     disp(['Loaded ', num2str(num_valid_images) ,' valid images']);
+     disp(['Loaded ', num2str(num_valid_images) ,' valid images and labels']);
 end
 
-%% normalize the data
+%% normalize & reshape the data and labels
 [train_images] = normalize_input4lenet(train_images, im_dim, num_channels, reshape_order);
 if verbose
      disp(['Normaised ', num2str(num_train_images) ,' train images']);
+end
+[train_labels] = reshape_labels(train_labels);
+if verbose
+     disp(['Reshaped ', num2str(num_train_images) ,' train labels']);
 end
 [test_images] = normalize_input4lenet(test_images, im_dim, num_channels, reshape_order);
 if verbose
      disp(['Normaised ', num2str(num_test_images) ,' test images']);
 end
+[test_labels] = reshape_labels(test_labels);
+if verbose
+     disp(['Reshaped ', num2str(num_test_images) ,' test labels']);
+end
 [valid_images] = normalize_input4lenet(valid_images, im_dim, num_channels, reshape_order);
 if verbose
-     disp(['Normaised ', num2str(num_valid_images) ,' valid images']);
+     disp(['Normalised ', num2str(num_valid_images) ,' valid images']);
+end
+[valid_labels] = reshape_labels(valid_labels);
+if verbose
+     disp(['Reshaped ', num2str(num_valid_images) ,' valid labels']);
 end
