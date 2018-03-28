@@ -9,8 +9,9 @@
 % functions
 %**************************************************************************
 % amat_loader - function to load data from the amat format
-
+% normalize_input4lenet - normalize the input matrix to be used by LeNet
 %**************************************************************************
 % test_scripts
 %**************************************************************************
 % test_amat_loader - testing script for the amat format loader
+% test_train_lenet_babyaishapes.m - testing the training of LeNet5 CNNon the BabaAIShapes dataset
