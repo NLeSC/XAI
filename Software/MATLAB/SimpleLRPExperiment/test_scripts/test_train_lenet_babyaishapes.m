@@ -71,3 +71,6 @@ end
 if verbose
      disp(['Reshaped ', num2str(num_valid_images) ,' valid labels']);
 end
+
+%% create LeNet-5 CNN
+[lenet] = lenet_arch();
