@@ -34,6 +34,6 @@ net = modules.Sequential({
                             modules.Convolution([4 4 25 100],[1 1]),
                             modules.Rect(),
                             modules.SumPool([2 2],[2 2]),
-                            modules.Convolution([1 1 100 10],[1 1]),
+                            modules.Convolution([1 1 100 3],[1 1]),
                             modules.Flatten()
                             });
