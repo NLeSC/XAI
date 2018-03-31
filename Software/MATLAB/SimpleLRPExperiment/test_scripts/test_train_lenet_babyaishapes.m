@@ -5,6 +5,9 @@
 %% parameters
 project_path = 'C:/Projects/eStep/XAI';
 path2matBabyAIShapes = fullfile(project_path,'/Data/BabyAIShape/shapeset_mat');
+path2model = fullfile(project_path, '/Results/Models');
+model_fname = 'lenet5_shapeset1_1c_2s_3po.mat';
+full_model_fname = fullfile(path2model, model_fname);
 train_images_mat_fname = 'shapeset1_1c_2s_3po.10000.train_images.mat';
 test_images_mat_fname = 'shapeset1_1c_2s_3po.5000.test_images.mat';
 valid_images_mat_fname = 'shapeset1_1c_2s_3po.5000.valid_images.mat';
@@ -24,7 +27,7 @@ num_channels = 1;
 reshape_order = [1 3 2 4];
 
 verbose = true;
-
+sav = true;
 
 %% load MAT files with data
 load(train_images_full_fname);
@@ -74,3 +77,18 @@ end
 
 %% create LeNet-5 CNN
 [lenet] = lenet_arch();
+
+%% train the network
+%train the net
+if verbose
+     disp('Training LeNet5 on the training images using the validation images');
+end
+lenet.train(train_images,train_labels,valid_images,valid_labels,25,50000,0.0001);
+
+%% save the model
+if sav
+    model_io.write(lenet, full_model_fname);
+    if verbose
+        disp('Saving the model...');
+    end
+end
