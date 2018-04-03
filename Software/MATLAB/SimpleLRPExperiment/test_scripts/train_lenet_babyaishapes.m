@@ -19,12 +19,6 @@ load(train_labels_full_fname);
 if verbose
      disp(['Loaded ', num2str(num_train_images) ,' train images and labels']);
 end
-load(test_images_full_fname);
-num_test_images = size(test_images,1);
-load(test_labels_full_fname);
-if verbose
-     disp(['Loaded ', num2str(num_test_images) ,' test images and labels']);
-end
 load(valid_images_full_fname);
 num_valid_images = size(valid_images,1);
 load(valid_labels_full_fname);
@@ -40,14 +34,6 @@ end
 [train_labels] = reshape_labels(train_labels);
 if verbose
      disp(['Reshaped ', num2str(num_train_images) ,' train labels']);
-end
-[test_images] = normalize_input4lenet(test_images, im_dim, num_channels, reshape_order);
-if verbose
-     disp(['Normaised ', num2str(num_test_images) ,' test images']);
-end
-[test_labels] = reshape_labels(test_labels);
-if verbose
-     disp(['Reshaped ', num2str(num_test_images) ,' test labels']);
 end
 [valid_images] = normalize_input4lenet(valid_images, im_dim, num_channels, reshape_order);
 if verbose
