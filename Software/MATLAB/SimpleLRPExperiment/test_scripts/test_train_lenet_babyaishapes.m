@@ -3,24 +3,7 @@
 % this script uses LRP Toolbox v.1.2.0
 
 %% parameters
-project_path = 'C:/Projects/eStep/XAI';
-path2matBabyAIShapes = fullfile(project_path,'/Data/BabyAIShape/shapeset_mat');
-path2model = fullfile(project_path, '/Results/Models');
-model_fname = 'lenet5_shapeset1_1c_2s_3po.mat';
-full_model_fname = fullfile(path2model, model_fname);
-train_images_mat_fname = 'shapeset1_1c_2s_3po.10000.train_images.mat';
-test_images_mat_fname = 'shapeset1_1c_2s_3po.5000.test_images.mat';
-valid_images_mat_fname = 'shapeset1_1c_2s_3po.5000.valid_images.mat';
-train_labels_mat_fname = 'shapeset1_1c_2s_3po.10000.train_labels.mat';
-test_labels_mat_fname = 'shapeset1_1c_2s_3po.5000.test_labels.mat';
-valid_labels_mat_fname = 'shapeset1_1c_2s_3po.5000.valid_labels.mat';
-train_images_full_fname = fullfile(path2matBabyAIShapes, train_images_mat_fname);
-test_images_full_fname = fullfile(path2matBabyAIShapes, test_images_mat_fname);
-valid_images_full_fname = fullfile(path2matBabyAIShapes, valid_images_mat_fname);
-train_labels_full_fname = fullfile(path2matBabyAIShapes, train_labels_mat_fname);
-test_labels_full_fname = fullfile(path2matBabyAIShapes, test_labels_mat_fname);
-valid_labels_full_fname = fullfile(path2matBabyAIShapes, valid_labels_mat_fname);
-
+config;
 
 im_dim = [32 32]; 
 num_channels = 1;
