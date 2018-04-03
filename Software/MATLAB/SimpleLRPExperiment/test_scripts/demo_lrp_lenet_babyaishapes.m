@@ -82,7 +82,8 @@ for method = 1:3
         
         
         %render input and heatmap as rgb images
-        shape = render.shape_to_rgb(round(original_test_image*255),3);        
+        shape = render.shape_to_rgb(round(original_test_image*255),3); 
+        shape = permute(shape,[2 1 3]);
         hm = render.hm_to_rgb(R,test_image,3,[],2);        
         img = render.save_image({shape,hm},'../heatmap.png');
         subplot(3,4,sbplt);
