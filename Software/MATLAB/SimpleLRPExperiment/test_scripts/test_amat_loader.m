@@ -5,7 +5,7 @@ config;
 
 verbose = true;
 visualize = true;
-sav = true;
+sav = false;
 
 %% loading of the files
 [train_images, train_labels, train_colors] = amat_loader(train_full_fname);
