@@ -16,8 +16,8 @@
 % test_scripts
 %**************************************************************************
 % test_amat_loader - testing script for the amat format loader
-% train_lenet_babyaishapes.m - testing the training of LeNet5 CNNon the BabaAIShapes dataset
-
+% train_lenet_babyaishapes.m - testing the training of LeNet5 CNN on the BabaAIShapes dataset
+% test_lenet_babyaishapes.m - testing the performance of the LeNet5 CNN on the BabaAIShapes dataset
 %**************************************************************************
 % misc
 %**************************************************************************

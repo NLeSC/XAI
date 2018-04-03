@@ -5,10 +5,6 @@
 %% parameters
 config;
 
-im_dim = [32 32]; 
-num_channels = 1;
-reshape_order = [1 3 2 4];
-
 verbose = true;
 sav = true;
 
@@ -29,7 +25,7 @@ end
 %% normalize & reshape the data and labels
 [train_images] = normalize_input4lenet(train_images, im_dim, num_channels, reshape_order);
 if verbose
-     disp(['Normaised ', num2str(num_train_images) ,' train images']);
+     disp(['Normalised ', num2str(num_train_images) ,' train images']);
 end
 [train_labels] = reshape_labels(train_labels);
 if verbose

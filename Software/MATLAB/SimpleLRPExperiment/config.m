@@ -39,3 +39,7 @@ valid_images_full_fname = fullfile(path2matBabyAIShapes, valid_images_mat_fname)
 train_labels_full_fname = fullfile(path2matBabyAIShapes, train_labels_mat_fname);
 test_labels_full_fname = fullfile(path2matBabyAIShapes, test_labels_mat_fname);
 valid_labels_full_fname = fullfile(path2matBabyAIShapes, valid_labels_mat_fname);
+
+im_dim = [32 32]; 
+num_channels = 1;
+reshape_order = [1 3 2 4];
