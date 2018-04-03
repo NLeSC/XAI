@@ -1,4 +1,4 @@
-% test_lenet_babyaishapes.m - testing the performance of the LeNet5 CNN on the BabaAIShapes dataset
+% test_lenet_babyaishapes.m - testing the performance of the LeNet5 CNN on the BabyAIShapes dataset
 
 % this script uses LRP Toolbox v.1.2.0
 
