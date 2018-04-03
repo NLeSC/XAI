@@ -1,4 +1,4 @@
-% test_train_lenet_babyaishapes.m - testing the training of LeNet5 CNNon the BabaAIShapes dataset
+% test_train_lenet_babyaishapes.m - testing the training of LeNet5 CNNon the BabyAIShapes dataset
 
 % this script uses LRP Toolbox v.1.2.0
 
