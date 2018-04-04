@@ -21,7 +21,7 @@
 %**************************************************************************
 % REFERENCES:
 %**************************************************************************
-function [net] = lenet_arch()
+function [net] = lenet5_sumpool_arch()
 
 %model network according to LeNet-5 architecture
 net = modules.Sequential({
