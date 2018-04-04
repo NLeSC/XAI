@@ -7,7 +7,10 @@ config;
 
 verbose = true;
 
-num_examples = 12;
+num_examples = 15;
+
+arch = input('Chose architecture (1 = lenet5_sumpool, 2 = lenet3_maxpool): ');
+
 
 %% load MAT files with data
 load(test_images_full_fname);
@@ -29,7 +32,12 @@ if verbose
 end
 
 %% load the model
-lenet5 = model_io.read(lenet5_sumpool_full_model_fname);
+switch arch
+    case 1
+        lenet = model_io.read(lenet5_sumpool_full_model_fname);
+    case 2
+        lenet = model_io.read(lenet3_maxpool_full_model_fname);
+end
 if verbose
     disp('Loading the pre-trained model...');
 end
@@ -45,7 +53,7 @@ for method = 1:3
         sbplt = sbplt + 1;
         test_image = test_images(i,:,:,:);
         original_test_image = reshape(original_test_images(i,:),[32 32]);
-        pred_label = lenet5.forward(test_image);
+        pred_label = lenet.forward(test_image);
         [~,true] = max(test_labels(i,:));
         [~,pred] = max(pred_label);
         
@@ -70,23 +78,28 @@ for method = 1:3
         %compute first layer relevance according to prediction
         switch method
             case 1
-                R = lenet5.lrp(pred_label);   %as Eq(56) from DOI: 10.1371/journal.pone.0130140
-                title_str = 'LRP: ratio local and global pre-activtatons';
+                R = lenet.lrp(pred_label);   %as Eq(56) from DOI: 10.1371/journal.pone.0130140
+                tit_str = 'LRP: ratio local and global pre-activtatons';
             case 2
-                R = lenet5.lrp(pred_label,'epsilon',1.);   %as Eq(58) from DOI: 10.1371/journal.pone.0130140
-                title_str = 'LRP: Using stabilizer  epsilon, 1';
+                R = lenet.lrp(pred_label,'epsilon',1.);   %as Eq(58) from DOI: 10.1371/journal.pone.0130140
+                tit_str = 'LRP: Using stabilizer  epsilon, 1';
             case 3
-                R = lenet5.lrp(pred_label,'alphabeta',2);    %as Eq(60) from DOI: 10.1371/journal.pone.0130140
-                title_str = 'LRP: Using alpha-beta rule, 2';
+                R = lenet.lrp(pred_label,'alphabeta',2);    %as Eq(60) from DOI: 10.1371/journal.pone.0130140
+                tit_str = 'LRP: Using alpha-beta rule, 2';
         end
         
-        
+        switch arch
+            case 1
+                title_str = [tit_str ' lenet5\_sumpool'];
+            case 2
+                title_str = [tit_str ' lenet3\_maxpool'];
+        end
         %render input and heatmap as rgb images
         shape = render.shape_to_rgb(round(original_test_image*255),3); 
         shape = permute(shape,[2 1 3]);
         hm = render.hm_to_rgb(R,test_image,3,[],2);        
         img = render.save_image({shape,hm},'../heatmap.png');
-        subplot(3,4,sbplt);
+        subplot(3,5,sbplt);
         imshow(img); axis off ; drawnow;
         title(['True: ' true_class ' |Pred.: ' pred_class]);
     end
