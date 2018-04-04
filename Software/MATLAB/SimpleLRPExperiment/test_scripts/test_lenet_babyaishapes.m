@@ -32,7 +32,8 @@ switch arch
         lenet = model_io.read(lenet5_sumpool_full_model_fname);
     case 2
         lenet = model_io.read(lenet3_maxpool_full_model_fname);
-endif verbose
+end
+if verbose
     disp('Loading the pre-trained model...');
 end
 
