@@ -5,12 +5,12 @@
 %% parameters
 config;
 
-verbose = true;
+verbose = false;
 
 num_examples = 15;
 
 %arch = input('Chose architecture (1 = lenet5_sumpool, 2 = lenet3_maxpool): ');
-arch = 1;
+arch = 2;
 
 %% load MAT files with data
 load(test_images_full_fname);
@@ -65,7 +65,9 @@ for selected_class = 1:3
         case 2
             select_label = 'triangle';
     end
-    fprintf('Selected Class:      %d: %s\n', s, select_label);
+    if verbose
+        fprintf('Selected Class:      %d: %s\n', s, select_label);
+    end
     select = (1:size(test_labels,2) == selected_class)*1.;
     for method = 1:3
     %for method = 2
@@ -97,7 +99,9 @@ for selected_class = 1:3
                     case 2
                         pred_class = 'triangle';
                 end
-                fprintf('Predicted Class: %d: %s \n\n', pred-1, pred_class);
+                if verbose
+                    fprintf('Predicted Class: %d: %s \n\n', pred-1, pred_class);
+                end
                 
                 %compute first layer relevance according to prediction
                 switch method
