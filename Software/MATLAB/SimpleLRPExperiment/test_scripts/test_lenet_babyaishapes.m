@@ -26,7 +26,7 @@ if verbose
 end
 
 %% load the model
-lenet5 = model_io.read(full_model_fname);
+lenet5 = model_io.read(lenet5_sumpool_full_model_fname);
 if verbose
     disp('Loading the pre-trained model...');
 end

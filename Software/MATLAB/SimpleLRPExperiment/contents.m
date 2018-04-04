@@ -11,7 +11,7 @@
 % amat_loader - function to load data from the amat format
 % normalize_input4lenet - normalize the input matrix to be used by LeNet
 % reshape_labels - reshaping the labels to fit LRP toolbox format
-% lenet_arch - LeNet CNN architecture using LRP Toolbox
+% lenet5_sumpool_arch - LeNet5 sum pool CNN architecture using LRP Toolbox
 %**************************************************************************
 % test_scripts
 %**************************************************************************

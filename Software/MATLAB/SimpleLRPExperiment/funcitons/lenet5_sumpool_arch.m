@@ -1,11 +1,11 @@
-% lenet_arch - LeNet CNN architecture using LRP Toolbox
+% lenet5_sumpool_arch - LeNet5 sum pool CNN architecture using LRP Toolbox
 % **************************************************************************
 % function [net] = lenet_arch()
 %
 % author: Elena Ranguelova, NLeSc
 % date created: 29-03-2018
-% last modification date: 
-% modification details: 
+% last modification date:04-04-2018
+% modification details: Renaming
 %**************************************************************************
 % INPUTS:
 %**************************************************************************

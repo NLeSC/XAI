@@ -41,18 +41,18 @@ if verbose
 end
 
 %% create LeNet-5 CNN
-[lenet] = lenet_arch();
+[lenet5_sumpool] = lenet5_sumpool_arch();
 
 %% train the network
 %train the net
 if verbose
      disp('Training LeNet5 on the training images using the validation images');
 end
-lenet.train(train_images,train_labels,valid_images,valid_labels,25,50000,0.0001);
+lenet5_sumpool.train(train_images,train_labels,valid_images,valid_labels,25,50000,0.0001);
 
 %% save the model
 if sav
-    model_io.write(lenet, full_model_fname);
+    model_io.write(lenet5_sumpool, full_model_fname);
     if verbose
         disp('Saving the model...');
     end
