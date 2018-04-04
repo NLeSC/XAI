@@ -1,13 +1,5 @@
-function image = digit_to_rgb(X,scaling,shape,cmap)
-    % @author: Sebastian Lapuschkin
-    % @maintainer: Sebastian Lapuschkin
-    % @contact: sebastian.lapuschkin@hhi.fraunhofer.de
-    % @date: 14.08.2015
-    % @version: 1.0
-    % @copyright: Copyright (c)  2015, Sebastian Lapuschkin, Alexander Binder, Gregoire Montavon, Klaus-Robert Mueller
-    % @license : BSD-2-Clause
-    %
-    %image = digit_to_rgb(X,scaling,shape,cmap)
+function image = shape_to_rgb(X,scaling,shape,cmap)
+    %image = shape_to_rgb(X,scaling,shape,cmap)
     %
     %Takes as input an intensity array and produces a rgb image due to some color map
     %

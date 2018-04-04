@@ -54,7 +54,7 @@ function image = save_image(rgb_images, path, gap)
        end
     end
 
-    fprintf('saving image to %s\n\n',path)
+    %fprintf('saving image to %s\n\n',path)
     imwrite(image, path)
 
 
