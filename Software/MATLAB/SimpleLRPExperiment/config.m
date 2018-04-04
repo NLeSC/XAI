@@ -27,6 +27,9 @@ valid_labels_full_fname = fullfile(path2matBabyAIShapes, valid_labels_mat_fname)
 path2models = fullfile(project_path, '/Results/Models');
 lenet5_sumpool_model_fname = 'lenet5_sumpool_shapeset1_1c_2s_3po.mat';
 lenet5_sumpool_full_model_fname = fullfile(path2models, lenet5_sumpool_model_fname);
+lenet3_maxpool_model_fname = 'lenet3_maxpool_shapeset1_1c_2s_3po.mat';
+lenet3_maxpool_full_model_fname = fullfile(path2models, lenet3_maxpool_model_fname);
+
 
 im_dim = [32 32]; 
 num_channels = 1;

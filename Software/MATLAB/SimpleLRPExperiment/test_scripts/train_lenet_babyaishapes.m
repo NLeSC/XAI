@@ -8,6 +8,7 @@ config;
 verbose = true;
 sav = true;
 
+arch = input('Chose architecture (1 = lenet5_sumpool, 2 = lenet3_maxpool): ');
 %% load MAT files with data
 load(train_images_full_fname);
 num_train_images = size(train_images,1);
@@ -40,19 +41,34 @@ if verbose
      disp(['Reshaped ', num2str(num_valid_images) ,' valid labels']);
 end
 
-%% create LeNet-5 CNN
-[lenet5_sumpool] = lenet5_sumpool_arch();
+%% create LeNet CNN
+switch arch
+    case 1
+        [lenet] = lenet5_sumpool_arch();
+    case 2
+        [lenet] = lenet3_maxpool_arch();
+    otherwise
+        error("Unknown architecture!");
+end
 
 %% train the network
 %train the net
 if verbose
-     disp('Training LeNet5 on the training images using the validation images');
+     disp('Training LeNet on the training images using the validation images');
 end
-lenet5_sumpool.train(train_images,train_labels,valid_images,valid_labels,25,50000,0.0001);
+lenet.train(train_images,train_labels,valid_images,valid_labels,25,50000,0.0001);
 
 %% save the model
 if sav
-    model_io.write(lenet5_sumpool, full_model_fname);
+    switch arch
+        case 1
+            full_model_fname = lenet5_sumpool_full_model_fname;
+        case 2
+            full_model_fname = lenet3_maxpool_full_model_fname;
+        otherwise
+            error("Unknown architecture!");
+    end
+    model_io.write(lenet, full_model_fname);
     if verbose
         disp('Saving the model...');
     end

@@ -12,6 +12,7 @@
 % normalize_input4lenet - normalize the input matrix to be used by LeNet
 % reshape_labels - reshaping the labels to fit LRP toolbox format
 % lenet5_sumpool_arch - LeNet5 sum pool CNN architecture using LRP Toolbox
+% lenet3_maxpool_arch - LeNet3 max pool CNN architecture using LRP Toolbox
 %**************************************************************************
 % test_scripts
 %**************************************************************************
