@@ -7,6 +7,7 @@ config;
 
 verbose = true;
 
+arch = input('Chose architecture (1 = lenet5_sumpool, 2 = lenet3_maxpool): ');
 %% load MAT files with data
 load(test_images_full_fname);
 num_test_images = size(test_images,1);
@@ -26,13 +27,17 @@ if verbose
 end
 
 %% load the model
-lenet5 = model_io.read(lenet5_sumpool_full_model_fname);
-if verbose
+switch arch
+    case 1
+        lenet = model_io.read(lenet5_sumpool_full_model_fname);
+    case 2
+        lenet = model_io.read(lenet3_maxpool_full_model_fname);
+endif verbose
     disp('Loading the pre-trained model...');
 end
 
 %% pass the test data through the trained model
-Pred = lenet5.forward(test_images);
+Pred = lenet.forward(test_images);
 [~,argmaxPred]  = max(Pred,[],2);
 [~,argmaxTruth] = max(test_labels,[],2);
 acc = mean(argmaxPred == argmaxTruth);
