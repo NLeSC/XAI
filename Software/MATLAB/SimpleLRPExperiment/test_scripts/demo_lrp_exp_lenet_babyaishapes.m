@@ -9,7 +9,8 @@ verbose = true;
 
 num_examples = 15;
 
-arch = input('Chose architecture (1 = lenet5_sumpool, 2 = lenet3_maxpool): ');
+%arch = input('Chose architecture (1 = lenet5_sumpool, 2 = lenet3_maxpool): ');
+arch = 1;
 
 %% load MAT files with data
 load(test_images_full_fname);
@@ -18,6 +19,17 @@ load(test_labels_full_fname);
 if verbose
     disp(['Loaded ', num2str(num_test_images) ,' test images and labels']);
 end
+
+%% select random samples for demonstration
+ind_rectangles = find(test_labels == 0);
+ind_rectangles = ind_rectangles(randperm(length(ind_rectangles)));
+ind_rectangles5 = ind_rectangles(1:5);
+ind_circles = find(test_labels == 1);
+ind_circles = ind_circles(randperm(length(ind_circles)));
+ind_circles5 = ind_circles(1:5);
+ind_triangles = find(test_labels == 2);
+ind_triangles = ind_triangles(randperm(length(ind_triangles)));
+ind_triangles5 = ind_triangles(1:5);
 
 %% normalize & reshape the data and labels
 original_test_images = test_images;
@@ -41,10 +53,8 @@ if verbose
     disp('Loading the pre-trained model...');
 end
 
-%% select random samples for demonstration
-all_indicies = randperm(num_test_images);
-indicies = all_indicies(1:num_examples);
 
+%% dispay heat maps per each of the selected classes and methods
 for selected_class = 1:3
     s = selected_class - 1;
     switch s
@@ -57,55 +67,66 @@ for selected_class = 1:3
     end
     fprintf('Selected Class:      %d: %s\n', s, select_label);
     select = (1:size(test_labels,2) == selected_class)*1.;
-    %for method = 1:3
-    for method = 2
+    for method = 1:3
+    %for method = 2
         figure('units','normalized','outerposition',[0 0 1 1]);
         sbplt = 0;
-        for i = indicies
-            sbplt = sbplt + 1;
-            test_image = test_images(i,:,:,:);
-            original_test_image = reshape(original_test_images(i,:),[32 32]);
-            pred_label = lenet.forward(test_image);
+        for class = 1:3
             
-            [~,pred] = max(pred_label);
-            
-            switch pred-1
-                case 0
-                    pred_class = 'rectangle';
-                case 1
-                    pred_class = 'circle';
-                case 2
-                    pred_class = 'triangle';
+            for counter = 1:5
+                switch class
+                    case 1
+                        index = ind_rectangles5(counter);
+                    case 2
+                        index = ind_circles5(counter);
+                    case 3
+                        index = ind_triangles5(counter);
+                end
+                sbplt = sbplt + 1;
+                test_image = test_images(index,:,:,:);
+                original_test_image = reshape(original_test_images(index,:),[32 32]);
+                pred_label = lenet.forward(test_image);
+                
+                [~,pred] = max(pred_label);
+                
+                switch pred-1
+                    case 0
+                        pred_class = 'rectangle';
+                    case 1
+                        pred_class = 'circle';
+                    case 2
+                        pred_class = 'triangle';
+                end
+                fprintf('Predicted Class: %d: %s \n\n', pred-1, pred_class);
+                
+                %compute first layer relevance according to prediction
+                switch method
+                    case 1
+                        R = lenet.lrp(select);   %as Eq(56) from DOI: 10.1371/journal.pone.0130140
+                        tit_str = 'LRP: ratio local and global pre-activtatons';
+                    case 2
+                        R = lenet.lrp(select,'epsilon',1.);   %as Eq(58) from DOI: 10.1371/journal.pone.0130140
+                        tit_str = 'LRP: Using stabilizer  epsilon: 1';
+                    case 3
+                        R = lenet.lrp(select,'alphabeta',2);    %as Eq(60) from DOI: 10.1371/journal.pone.0130140
+                        tit_str = 'LRP: Using alpha-beta rule: 2';
+                end
+                switch arch
+                    case 1
+                        title_str = [tit_str ', model: lenet5\_sumpool'];
+                    case 2
+                        title_str = [tit_str ', model: lenet3\_maxpool'];
+                end
+                
+                %render input and heatmap as rgb images
+                shape = render.shape_to_rgb(round(original_test_image*255),3);
+                shape = permute(shape,[2 1 3]);
+                hm = render.hm_to_rgb(R,test_image,3,[],2);
+                img = render.save_image({shape,hm},'../heatmap.png');
+                subplot(3,5,sbplt);
+                imshow(img); axis off ; drawnow;
+                title(['Pred.: ' pred_class ' | Selected: ' select_label ]);
             end
-            fprintf('Predicted Class: %d: %s \n\n', pred-1, pred_class);
-            
-            %compute first layer relevance according to prediction
-            switch method
-                case 1
-                    R = lenet.lrp(select);   %as Eq(56) from DOI: 10.1371/journal.pone.0130140
-                    tit_str = 'LRP: ratio local and global pre-activtatons';
-                case 2
-                    R = lenet.lrp(select,'epsilon',1.);   %as Eq(58) from DOI: 10.1371/journal.pone.0130140
-                    tit_str = 'LRP: Using stabilizer  epsilon: 1';
-                case 3
-                    R = lenet.lrp(select,'alphabeta',2);    %as Eq(60) from DOI: 10.1371/journal.pone.0130140
-                    tit_str = 'LRP: Using alpha-beta rule: 2';
-            end
-            switch arch
-                case 1
-                    title_str = [tit_str ', model: lenet5\_sumpool'];
-                case 2
-                    title_str = [tit_str ', model: lenet3\_maxpool'];
-            end
-            
-            %render input and heatmap as rgb images
-            shape = render.shape_to_rgb(round(original_test_image*255),3);
-            shape = permute(shape,[2 1 3]);
-            hm = render.hm_to_rgb(R,test_image,3,[],2);
-            img = render.save_image({shape,hm},'../heatmap.png');
-            subplot(3,5,sbplt);
-            imshow(img); axis off ; drawnow;
-            title(['Selected: ' select_label ' |Pred.: ' pred_class]);
         end
         
         ha = axes('Position',[0 0 1 1],'Xlim',[0 1],'Ylim',[0  1],'Box','off','Visible','off','Units','normalized', 'clipping' , 'off');

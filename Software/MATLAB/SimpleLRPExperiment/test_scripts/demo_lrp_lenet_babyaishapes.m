@@ -9,7 +9,8 @@ verbose = true;
 
 num_examples = 15;
 
-arch = input('Chose architecture (1 = lenet5_sumpool, 2 = lenet3_maxpool): ');
+%arch = input('Chose architecture (1 = lenet5_sumpool, 2 = lenet3_maxpool): ');
+arch = 1;
 
 
 %% load MAT files with data
