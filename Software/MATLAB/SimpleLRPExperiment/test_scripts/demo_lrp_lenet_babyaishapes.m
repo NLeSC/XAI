@@ -82,17 +82,17 @@ for method = 1:3
                 tit_str = 'LRP: ratio local and global pre-activtatons';
             case 2
                 R = lenet.lrp(pred_label,'epsilon',1.);   %as Eq(58) from DOI: 10.1371/journal.pone.0130140
-                tit_str = 'LRP: Using stabilizer  epsilon, 1';
+                tit_str = 'LRP: Using stabilizer  epsilon: 1';
             case 3
                 R = lenet.lrp(pred_label,'alphabeta',2);    %as Eq(60) from DOI: 10.1371/journal.pone.0130140
-                tit_str = 'LRP: Using alpha-beta rule, 2';
+                tit_str = 'LRP: Using alpha-beta rule: 2';
         end
         
         switch arch
             case 1
-                title_str = [tit_str ' lenet5\_sumpool'];
+                title_str = [tit_str ', model: lenet5\_sumpool'];
             case 2
-                title_str = [tit_str ' lenet3\_maxpool'];
+                title_str = [tit_str ', model: lenet3\_maxpool'];
         end
         %render input and heatmap as rgb images
         shape = render.shape_to_rgb(round(original_test_image*255),3); 
