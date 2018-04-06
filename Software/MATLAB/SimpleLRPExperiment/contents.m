@@ -9,6 +9,7 @@
 % functions
 %**************************************************************************
 % amat_loader - function to load data from the amat format
+% sort_contrast - sort a set of images on contrast between BG and FG (object)
 % normalize_input4lenet - normalize the input matrix to be used by LeNet
 % reshape_labels - reshaping the labels to fit LRP toolbox format
 % lenet5_sumpool_arch - LeNet5 sum pool CNN architecture using LRP Toolbox
@@ -17,6 +18,7 @@
 % test_scripts
 %**************************************************************************
 % test_amat_loader - testing script for the amat format loader
+% sort_contrast - sort a set of images on contrast between BG and FG (object)
 % train_lenet_babyaishapes.m - testing the training of LeNet5 CNN on the BabyAIShapes dataset
 % test_lenet_babyaishapes.m - testing the performance of the LeNet5 CNN on the BabyAIShapes dataset
 % demo_lrp_lenet_babyaishapes.m - demonstrating the LRP heatmaps on LeNet5 CNN on the BabyAIShapes dataset
