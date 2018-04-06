@@ -3,7 +3,7 @@
 % this script uses LRP Toolbox v.1.2.0
 
 %% parameters
-config;
+config_params;
 
 verbose = true;
 sav = true;

@@ -1,4 +1,4 @@
-% config.m - setting configurable parameters
+% config_params.m - setting configurable parameters
 
 project_path = 'C:/Projects/eStep/XAI';
 path2originalBabyAIShapes = fullfile(project_path,'/Data/BabyAIShape/shapeset');

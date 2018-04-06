@@ -24,4 +24,4 @@
 %**************************************************************************
 % misc
 %**************************************************************************
-% config.m - setting configurable parameters
+% config_params.m - setting configurable parameters
