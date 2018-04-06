@@ -33,5 +33,5 @@ New one keras-oriented is coming up!
 [Building blocks for interpretability](https://distill.pub/2018/building-blocks/) Distill article
 
 ## Prototyping 
-March 2018: [simple experiment](https://github.com/NLeSC/XAI/tree/master/Software/MATLAB/SimpleLRPExperiment) to find out the informativeness of LRP heatmaps on a squares vs triangles classification via CNN task
-spring 2018: Testing model 'adaptor' idea, pilot- [MATLAB NNToolbox <-> LRP Toolbox](https://github.com/NLeSC/XAI/tree/master/Software/MATLAB/NN2LRPToolboxMNISTDemo)
+March, April 2018: [simple experiment](https://github.com/NLeSC/XAI/tree/master/Software/MATLAB/SimpleLRPExperiment) to find out the informativeness of LRP heatmaps on a squares vs triangles classification via CNN task
+later in 2018: Testing model 'adaptor' idea, pilot- [MATLAB NNToolbox <-> LRP Toolbox](https://github.com/NLeSC/XAI/tree/master/Software/MATLAB/NN2LRPToolboxMNISTDemo) ?
