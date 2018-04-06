@@ -1,11 +1,11 @@
 % amat_loader - function to load data from the amat format
 % **************************************************************************
-% function [images, labels, colors] = amat_loader(amat_filename)
+% function [images, labels, colors, centroids] = amat_loader(amat_filename)
 %
 % author: Elena Ranguelova, NLeSc
 % date created: 23.03.2018
-% last modification date: 
-% modification details: 
+% last modification date: 06-04-2018
+% modification details: returns centroids of the shape
 %**************************************************************************
 % INPUTS:
 % amat_filename an .amat (ascii format) file containing BabyAIShapes dataset
@@ -14,6 +14,8 @@
 % images        matrix of size num_images x image_dimentions_product containing the raw pixel values
 % labels        column vector of size num_images x 1 containing the shape labels 
 % colors        column vector of size num_images x 1 containing the shape colors 
+% centroids     column vector of size num_imahes x 2 containing the
+%               (x,y)coords of the shape centroid
 %**************************************************************************
 % NOTES: This function is closely related to the <BabyAIShapes datasets>:
 % http://www.iro.umontreal.ca/~lisa/twiki/bin/view.cgi/Public/BabyAIShapesDatasets
@@ -36,7 +38,7 @@
 %**************************************************************************
 % REFERENCES:
 %**************************************************************************
-function [images, labels, colors] = amat_loader(amat_filename)
+function [images, labels, colors, centroids] = amat_loader(amat_filename)
 
 delimiterIn = ' ';
 headerlinesIn = 1;
@@ -44,4 +46,4 @@ import_data = importdata(amat_filename,delimiterIn,headerlinesIn);
 images = import_data.data(:,1:1024);
 labels = import_data.data(:,1025);
 colors = import_data.data(:,1026);
-
+centroids = [import_data.data(:,1027) import_data.data(:,1028)];

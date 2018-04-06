@@ -8,17 +8,17 @@ visualize = true;
 sav = false;
 
 %% loading of the files
-[train_images, train_labels, train_colors] = amat_loader(train_full_fname);
+[train_images, train_labels, train_colors,~] = amat_loader(train_full_fname);
 num_train_images = size(train_images,1);
 if verbose
     disp(['Loaded ', num2str(num_train_images) ,' train images']);
 end
-[test_images, test_labels, test_colors] = amat_loader(test_full_fname);
+[test_images, test_labels, test_colors,test_coords] = amat_loader(test_full_fname);
 num_test_images = size(test_images,1);
 if verbose
     disp(['Loaded ', num2str(num_test_images) ,' test images']);
 end
-[valid_images, valid_labels, valid_colors] = amat_loader(valid_full_fname);
+[valid_images, valid_labels, valid_colors,~] = amat_loader(valid_full_fname);
 num_val_images = size(valid_images,1);
 if verbose
     disp(['Loaded ', num2str(num_val_images) ,' validation images']);
