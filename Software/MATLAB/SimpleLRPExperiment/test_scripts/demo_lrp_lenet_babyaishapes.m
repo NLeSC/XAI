@@ -60,7 +60,7 @@ for method = 1:3
         
         switch true-1
             case 0
-                true_class = 'rectangle';
+                true_class = 'square';
             case 1
                 true_class = 'circle';
             case 2
@@ -69,7 +69,7 @@ for method = 1:3
         fprintf('True Class:      %d: %s\n', true-1, true_class);
         switch pred-1
             case 0
-                pred_class = 'rectangle';
+                pred_class = 'square';
             case 1
                 pred_class = 'circle';
             case 2

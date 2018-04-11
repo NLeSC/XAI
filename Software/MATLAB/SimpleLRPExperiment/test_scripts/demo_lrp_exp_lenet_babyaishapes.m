@@ -1,4 +1,4 @@
-% demo_lrp_exp_lenet_babyaishapes.m - demon experiemnt forLRP heatmaps on LeNet5 CNN on the BabaAIShapes dataset
+% demo_lrp_exp_lenet_babyaishapes.m - demo experiment for LRP heatmaps on LeNet5 CNN on the BabaAIShapes dataset
 
 % this script uses LRP Toolbox v.1.2.0
 
@@ -21,9 +21,9 @@ if verbose
 end
 
 %% select random samples for demonstration
-ind_rectangles = find(test_labels == 0);
-ind_rectangles = ind_rectangles(randperm(length(ind_rectangles)));
-ind_rectangles5 = ind_rectangles(1:5);
+ind_squares = find(test_labels == 0);
+ind_squares = ind_squares(randperm(length(ind_squares)));
+ind_squares5 = ind_squares(1:5);
 ind_circles = find(test_labels == 1);
 ind_circles = ind_circles(randperm(length(ind_circles)));
 ind_circles5 = ind_circles(1:5);
@@ -59,7 +59,7 @@ for selected_class = 1:3
     s = selected_class - 1;
     switch s
         case 0
-            select_label = 'rectangle';
+            select_label = 'square';
         case 1
             select_label = 'circle';
         case 2
@@ -78,7 +78,7 @@ for selected_class = 1:3
             for counter = 1:5
                 switch class
                     case 1
-                        index = ind_rectangles5(counter);
+                        index = ind_squares5(counter);
                     case 2
                         index = ind_circles5(counter);
                     case 3
@@ -93,7 +93,7 @@ for selected_class = 1:3
                 
                 switch pred-1
                     case 0
-                        pred_class = 'rectangle';
+                        pred_class = 'square';
                     case 1
                         pred_class = 'circle';
                     case 2
