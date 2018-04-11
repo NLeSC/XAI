@@ -1,15 +1,15 @@
 % sort_contrast - sort a set of images on contrast between BG and FG (object)
 % **************************************************************************
-% function [sort_index, output_images] = sort_contrast(input_images, bg_point, fg_point)
+% function [output_mages, sort_index] = sort_contrast(input_images, bg_point, fg_point)
 %
 % author: Elena Ranguelova, NLeSc
 % date created: 06-04-2018
 % last modification date: 11-04-2018
-% modification details: correct sorting algorithm, added sorted index
-% output
+% modification details: correct sorting algorithm, added sorted index output
 %**************************************************************************
 % INPUTS:
 % input_images_matrix  matrix containing BabyAIShapes returned by amat_loader
+%                of one or more shapes
 % bg_point       indicies (row,col) of a point belonging to the BG
 % fg_point       indicies (row,col) of a point belonging to the FG (shape)
 %**************************************************************************
@@ -26,7 +26,7 @@
 %**************************************************************************
 % REFERENCES:
 %**************************************************************************
-function [sort_index, output_images] = sort_contrast(input_images, bg_point, fg_point)
+function [output_images, sort_index] = sort_contrast(input_images, bg_point, fg_point)
 
 % number of images
 num_images = size(input_images,1);

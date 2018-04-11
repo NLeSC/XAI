@@ -23,7 +23,7 @@ bg_point = [1 1];
 fg_point = [15 12];
 
 %% sort the images on BG and then on FG gray values
-[sorted_index, sorted_test_images] = sort_contrast(test_images, bg_point, fg_point);
+[sorted_test_images, sorted_index] = sort_contrast(test_images, bg_point, fg_point);
 if verbose
     disp(['Sorted ', num2str(num_test_images) ,' test images by contrast']);
 end
