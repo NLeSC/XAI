@@ -18,7 +18,7 @@
 % test_scripts
 %**************************************************************************
 % test_amat_loader - testing script for the amat format loader
-% sort_contrast - sort a set of images on contrast between BG and FG (object)
+% test_sort_contrast - sort a set of images on contrast 
 % train_lenet_babyaishapes.m - testing the training of LeNet5 CNN on the BabyAIShapes dataset
 % test_lenet_babyaishapes.m - testing the performance of the LeNet5 CNN on the BabyAIShapes dataset
 % demo_lrp_lenet_babyaishapes.m - demonstrating the LRP heatmaps on LeNet5 CNN on the BabyAIShapes dataset

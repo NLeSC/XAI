@@ -1,20 +1,22 @@
 % sort_contrast - sort a set of images on contrast between BG and FG (object)
 % **************************************************************************
-% function [output_images] = sort_contrast(input_images, bg_point, fg_point)
+% function [sort_index, output_images] = sort_contrast(input_images, bg_point, fg_point)
 %
 % author: Elena Ranguelova, NLeSc
 % date created: 06-04-2018
-% last modification date: 
-% modification details: 
+% last modification date: 11-04-2018
+% modification details: correct sorting algorithm, added sorted index
+% output
 %**************************************************************************
 % INPUTS:
 % input_images_matrix  matrix containing BabyAIShapes returned by amat_loader
+% bg_point       indicies (row,col) of a point belonging to the BG
+% fg_point       indicies (row,col) of a point belonging to the FG (shape)
 %**************************************************************************
 % OUTPUTS:
 % output_images  the matrix sorted line-wise first according to BG
 %                gray level, then by FG (object) gray level
-% bg_point       indicies (row,col) of a point belonging to the BG
-% fg_point       indicies (row,col) of a point belonging to the FG (shape)
+% sort_index     the original index of the images order after the sorting
 %**************************************************************************
 % NOTES: 
 %**************************************************************************
@@ -24,7 +26,7 @@
 %**************************************************************************
 % REFERENCES:
 %**************************************************************************
-function [output_images] = sort_contrast(input_images, bg_point, fg_point)
+function [sort_index, output_images] = sort_contrast(input_images, bg_point, fg_point)
 
 % number of images
 num_images = size(input_images,1);
@@ -48,15 +50,15 @@ for ind = 1:num_images
 end
 clear shape_images
 
-% sort based on BG gray level
-[~,sorted_bg_ind] = sort(bg_values);
-fg_values_sorted_bg = fg_values(sorted_bg_ind);
-% sort based on FG gray level on the pre-sorted by BG values
-[~, sorted_fg_ind] = sort(fg_values_sorted_bg);
+% create combined vector from the BG and FG values for sorting
+combined_values = bg_values * 1000 + fg_values;
+
+% sort 
+[~,sort_index] = sort(combined_values);
 
 % construct output matrix by using sorted indicies
 for ind =  1:num_images
-    output_images(ind,:) = input_images(sorted_fg_ind(ind),:);
+    output_images(ind,:) = input_images(sort_index(ind),:);
 end
 
 
