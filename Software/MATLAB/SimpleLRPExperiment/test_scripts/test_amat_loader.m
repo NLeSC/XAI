@@ -33,14 +33,13 @@ if visualize
     for i = 1:6
         subplot(2,3,i);
         shape = reshape(train_images(train_indicies(i),:),32,32);
-  %      shape = reshape(train_images(i,:),32,32);
-        imshow(shape);
-        if i==1
-            title('Train set random subset');
-        end        
+        imshow(shape); 
         hold on;
     end
     hold off;
+    title_str = 'Train set random subset';
+    ha = axes('Position',[0 0 1 1],'Xlim',[0 1],'Ylim',[0  1],'Box','off','Visible','off','Units','normalized', 'clipping' , 'off');
+    t = text(0.5, 0.98,title_str); t.FontSize = 14; t.FontWeight = 'bold';
     
     % select 6 random images from the test set
     test_indicies = randi(num_test_images, 1, 6);
@@ -48,14 +47,13 @@ if visualize
     for i = 1:6      
         subplot(2,3,i);
         shape = reshape(test_images(test_indicies(i),:),32,32);
-      %  shape = reshape(test_images(i,:),32,32);
         imshow(shape);
-        if i==1
-            title('Test set random subset');
-        end
         hold on;
     end
     hold off;
+    title_str = 'Test set random subset';
+    ha = axes('Position',[0 0 1 1],'Xlim',[0 1],'Ylim',[0  1],'Box','off','Visible','off','Units','normalized', 'clipping' , 'off');
+    t = text(0.5, 0.98,title_str); t.FontSize = 14; t.FontWeight = 'bold';
     
     % select 6 random images from the valid set
     valid_indicies = randi(num_val_images, 1, 6);
@@ -63,14 +61,13 @@ if visualize
     for i = 1:6
         subplot(2,3,i);
         shape = reshape(valid_images(valid_indicies(i),:),32,32);
-       % shape = reshape(valid_images(i,:),32,32);
         imshow(shape);
-        if i==1
-            title('Validation set random subset');
-        end        
         hold on;
     end
     hold off;
+    title_str = 'Validaiton set random subset';
+    ha = axes('Position',[0 0 1 1],'Xlim',[0 1],'Ylim',[0  1],'Box','off','Visible','off','Units','normalized', 'clipping' , 'off');
+    t = text(0.5, 0.98,title_str); t.FontSize = 14; t.FontWeight = 'bold';    
 end
 
 %% saving the matricies into MAT files
