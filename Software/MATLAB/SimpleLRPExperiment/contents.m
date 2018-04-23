@@ -3,7 +3,7 @@
 % topic: Studying the usefulness of the LRP Toolbox heatmaps when
 % explaining circles vs sqaures vs triangles simple shape classification 
 % author: Elena Ranguelova, NLeSc
-% date: March/April 2018
+% date: March/April/May 2018
 %
 %**************************************************************************
 % functions
@@ -15,6 +15,7 @@
 % reshape_labels - reshaping the labels to fit LRP toolbox format
 % lenet5_sumpool_arch - LeNet5 sum pool CNN architecture using LRP Toolbox
 % lenet3_maxpool_arch - LeNet3 max pool CNN architecture using LRP Toolbox
+% lenet5_maxpool_arch - LeNet5 max pool CNN architecture using LRP Toolbox
 %**************************************************************************
 % test_scripts
 %**************************************************************************
