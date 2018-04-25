@@ -7,7 +7,7 @@ config_params;
 
 verbose = true;
 
-arch = input('Chose architecture (1 = lenet5_sumpool, 2 = lenet3_maxpool): ');
+arch = input('Chose architecture (1 = lenet5_sumpool, 2 = lenet3_maxpool, 3 = lenet5_maxpool): ');
 %% load MAT files with data
 load(test_images_full_fname);
 num_test_images = size(test_images,1);
@@ -32,6 +32,8 @@ switch arch
         lenet = model_io.read(lenet5_sumpool_full_model_fname);
     case 2
         lenet = model_io.read(lenet3_maxpool_full_model_fname);
+    case 3
+        lenet = model_io.read(lenet5_maxpool_full_model_fname);        
 end
 if verbose
     disp('Loading the pre-trained model...');
