@@ -32,6 +32,12 @@ lenet3_maxpool_full_model_fname = fullfile(path2models, lenet3_maxpool_model_fna
 lenet5_maxpool_model_fname = 'lenet5_maxpool_shapeset1_1c_2s_3po.mat';
 lenet5_maxpool_full_model_fname = fullfile(path2models, lenet5_maxpool_model_fname);
 
+% image dimentions and reshape order
 im_dim = [32 32]; 
 num_channels = 1;
 reshape_order = [1 3 2 4];
+
+%% define BG and FG points
+% see the comments of issue #9: https://github.com/NLeSC/XAI/issues/9
+bg_point = [1 1];
+fg_point = [15 12];

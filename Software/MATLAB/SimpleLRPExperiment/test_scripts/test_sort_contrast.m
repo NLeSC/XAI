@@ -18,12 +18,6 @@ if verbose
     disp(['Loaded ', num2str(num_test_images) ,' test images']);
 end
 
-%% define BG and FG points
-% see the comments of issue #9: https://github.com/NLeSC/XAI/issues/9
-
-bg_point = [1 1];
-fg_point = [15 12];
-
 %% sort the images on BG and then on FG gray values per shape
 for shape_label = 0:2
     [sorted_1shape_images, shape_index, sort_1shape_index] = ...
