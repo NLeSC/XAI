@@ -9,8 +9,8 @@ verbose = false;
 
 num_examples = 15;
 
-%arch = input('Chose architecture (1 = lenet5_sumpool, 2 = lenet3_maxpool): ');
-arch = 2;
+%arch = input('Chose architecture (1 = lenet5_sumpool, 2 = lenet3_maxpool, 3 = lenet5_maxpool): ');
+arch = 3;
 
 %% load MAT files with data
 load(test_images_full_fname);
@@ -20,15 +20,17 @@ if verbose
     disp(['Loaded ', num2str(num_test_images) ,' test images and labels']);
 end
 
-%% select random samples for demonstration
+
+%% select first  5 samples per shape for demonstration
+% %% select random samples for demonstration
 ind_squares = find(test_labels == 0);
-ind_squares = ind_squares(randperm(length(ind_squares)));
+%ind_squares = ind_squares(randperm(length(ind_squares)));
 ind_squares5 = ind_squares(1:5);
 ind_circles = find(test_labels == 1);
-ind_circles = ind_circles(randperm(length(ind_circles)));
+%ind_circles = ind_circles(randperm(length(ind_circles)));
 ind_circles5 = ind_circles(1:5);
 ind_triangles = find(test_labels == 2);
-ind_triangles = ind_triangles(randperm(length(ind_triangles)));
+%ind_triangles = ind_triangles(randperm(length(ind_triangles)));
 ind_triangles5 = ind_triangles(1:5);
 
 %% normalize & reshape the data and labels
@@ -48,6 +50,8 @@ switch arch
         lenet = model_io.read(lenet5_sumpool_full_model_fname);
     case 2
         lenet = model_io.read(lenet3_maxpool_full_model_fname);
+    case 3
+        lenet = model_io.read(lenet5_maxpool_full_model_fname);
 end
 if verbose
     disp('Loading the pre-trained model...');
@@ -55,7 +59,8 @@ end
 
 
 %% dispay heat maps per each of the selected classes and methods
-for selected_class = 1:3
+%for selected_class = 1:3
+for selected_class = 1
     s = selected_class - 1;
     switch s
         case 0
@@ -120,6 +125,8 @@ for selected_class = 1:3
                         title_str = [tit_str ', model: lenet5\_sumpool'];
                     case 2
                         title_str = [tit_str ', model: lenet3\_maxpool'];
+                   case 3
+                        title_str = [tit_str ', model: lenet5\_maxpool'];                        
                 end
                 
                 %render input and heatmap as rgb images
