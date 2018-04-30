@@ -12,6 +12,7 @@ num_examples = 15;
 %arch = input('Chose architecture (1 = lenet5_sumpool, 2 = lenet3_maxpool, 3 = lenet5_maxpool): ');
 arch = 3;
 
+module = true;
 %% load MAT files with data
 load(test_images_full_fname);
 num_test_images = size(test_images,1);
@@ -74,8 +75,8 @@ for selected_class = 1
         fprintf('Selected Class:      %d: %s\n', s, select_label);
     end
     select = (1:size(test_labels,2) == selected_class)*1.;
-    for method = 1:3
-    %for method = 2
+    %for method = 1:3
+     for method = 2
         figure('units','normalized','outerposition',[0 0 1 1]);
         sbplt = 0;
         for class = 1:3
@@ -91,11 +92,17 @@ for selected_class = 1
                 end
                 sbplt = sbplt + 1;
                 test_image = test_images(index,:,:,:);
-                original_test_image = reshape(original_test_images(index,:),[32 32]);
-                pred_label = lenet.forward(test_image);
                 
-                [~,pred] = max(pred_label);
-                
+                if module
+                    [comp_hm, R, pred] = compute_lrp_heatmap(test_image, im_dim, ...
+                        lenet, method, select);
+                else
+                    
+                    original_test_image = reshape(original_test_images(index,:),[32 32]);
+                    pred_label = lenet.forward(test_image);
+                    
+                    [~,pred] = max(pred_label);
+                end
                 switch pred-1
                     case 0
                         pred_class = 'square';
@@ -111,13 +118,19 @@ for selected_class = 1
                 %compute first layer relevance according to prediction
                 switch method
                     case 1
-                        R = lenet.lrp(select);   %as Eq(56) from DOI: 10.1371/journal.pone.0130140
+                        if not(module)
+                            R = lenet.lrp(select);   %as Eq(56) from DOI: 10.1371/journal.pone.0130140
+                        end
                         tit_str = 'LRP: ratio local and global pre-activtatons';
                     case 2
-                        R = lenet.lrp(select,'epsilon',1.);   %as Eq(58) from DOI: 10.1371/journal.pone.0130140
+                        if not(module)
+                            R = lenet.lrp(select,'epsilon',1.);   %as Eq(58) from DOI: 10.1371/journal.pone.0130140
+                        end
                         tit_str = 'LRP: Using stabilizer  epsilon: 1';
                     case 3
-                        R = lenet.lrp(select,'alphabeta',2);    %as Eq(60) from DOI: 10.1371/journal.pone.0130140
+                        if not(module)
+                            R = lenet.lrp(select,'alphabeta',2);    %as Eq(60) from DOI: 10.1371/journal.pone.0130140
+                        end
                         tit_str = 'LRP: Using alpha-beta rule: 2';
                 end
                 switch arch
@@ -125,17 +138,19 @@ for selected_class = 1
                         title_str = [tit_str ', model: lenet5\_sumpool'];
                     case 2
                         title_str = [tit_str ', model: lenet3\_maxpool'];
-                   case 3
-                        title_str = [tit_str ', model: lenet5\_maxpool'];                        
+                    case 3
+                        title_str = [tit_str ', model: lenet5\_maxpool'];
                 end
                 
                 %render input and heatmap as rgb images
-                shape = render.shape_to_rgb(round(original_test_image*255),3);
-                shape = permute(shape,[2 1 3]);
-                hm = render.hm_to_rgb(R,test_image,3,[],2);
-                img = render.save_image({shape,hm},'../heatmap.png');
+                if not(module)
+                    shape = render.shape_to_rgb(round(original_test_image*255),3);
+                    shape = permute(shape,[2 1 3]);
+                    hm = render.hm_to_rgb(R,test_image,3,[],2);
+                    comp_hm = render.save_image({shape,hm},'../heatmap.png');
+                end
                 subplot(3,5,sbplt);
-                imshow(img); axis off ; drawnow;
+                imshow(comp_hm); axis off ; drawnow;
                 title(['Pred.: ' pred_class ' | Selected: ' select_label ]);
             end
         end
