@@ -25,7 +25,8 @@ function image = shape_to_rgb(X,scaling,shape,cmap)
     %image : three-dimensional matrix of shape [scaling*H x scaling*W x 3] , where H*W == M*N
 
     if nargin < 4 || ( exist('cmap','var') && isempty(cmap))
-       cmap = 1-gray(255) ;
+     %  cmap = 1-gray(255) ;
+       cmap = gray(255) ;
     end
     if nargin < 3 || ( exist('shape','var') && isempty(shape))
         shape = [];

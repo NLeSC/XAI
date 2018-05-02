@@ -6,13 +6,16 @@
 config_params;
 
 verbose = false;
-
+visualize = true;
 num_examples = 15;
+start_index = 1000;
+step = 10;
 
 %arch = input('Chose architecture (1 = lenet5_sumpool, 2 = lenet3_maxpool, 3 = lenet5_maxpool): ');
 arch = 3;
 
-%% load MAT files with data
+%% data preparation
+% load MAT files with data
 load(test_images_full_fname);
 num_test_images = size(test_images,1);
 load(test_labels_full_fname);
@@ -20,22 +23,33 @@ if verbose
     disp(['Loaded ', num2str(num_test_images) ,' test images and labels']);
 end
 
+% sort the images on BG and then on FG gray values per shape
+for shape_label = 0:2
+    [sorted_1shape_images, shape_index, sort_1shape_index] = ...
+        sort_1shape_contrast(test_images, test_labels, shape_label, bg_point,fg_point);
+    switch shape_label
+        case 0
+            or_sorted_squares = sorted_1shape_images;
+        case 1
+            or_sorted_circles = sorted_1shape_images;
+        case 2
+            or_sorted_triangles = sorted_1shape_images;
+    end
+    
+end
 
-%% select first  5 samples per shape for demonstration
-% %% select random samples for demonstration
-ind_squares = find(test_labels == 0);
-%ind_squares = ind_squares(randperm(length(ind_squares)));
-ind_squares5 = ind_squares(1:5);
-ind_circles = find(test_labels == 1);
-%ind_circles = ind_circles(randperm(length(ind_circles)));
-ind_circles5 = ind_circles(1:5);
-ind_triangles = find(test_labels == 2);
-%ind_triangles = ind_triangles(randperm(length(ind_triangles)));
-ind_triangles5 = ind_triangles(1:5);
-
-%% normalize & reshape the data and labels
-original_test_images = test_images;
-[test_images] = normalize_input4lenet(test_images, im_dim, num_channels, reshape_order);
+if verbose
+    disp(['Sorted ', num2str(num_test_images) ,' test images by contrast']);
+end
+% if visualize
+%     visualize_sorted_shape(or_sorted_squares, 0, num_examples, start_index, step);
+%     visualize_sorted_shape(or_sorted_circles, 1, num_examples, start_index, step);
+%     visualize_sorted_shape(or_sorted_triangles, 2, num_examples, start_index, step);
+% end
+% normalize & reshape the data and labels
+[sorted_squares] = normalize_input4lenet(or_sorted_squares, im_dim, num_channels, reshape_order);
+[sorted_circles] = normalize_input4lenet(or_sorted_circles, im_dim, num_channels, reshape_order);
+[sorted_triangles] = normalize_input4lenet(or_sorted_triangles, im_dim, num_channels, reshape_order);
 if verbose
     disp(['Normaised ', num2str(num_test_images) ,' test images']);
 end
@@ -58,9 +72,9 @@ if verbose
 end
 
 
-%% dispay heat maps per each of the selected classes and methods
-%for selected_class = 1:3
-for selected_class = 1
+%% compute and dispay heat maps per each of the selected classes and methods
+for selected_class = 1:3
+%for selected_class = 1
     s = selected_class - 1;
     switch s
         case 0
@@ -74,26 +88,49 @@ for selected_class = 1
         fprintf('Selected Class:      %d: %s\n', s, select_label);
     end
     select = (1:size(test_labels,2) == selected_class)*1.;
-    %for method = 1:3
-     for method = 2
-        figure('units','normalized','outerposition',[0 0 1 1]);
-        sbplt = 0;
+    for method = 1:3
+    %for method = 2
         for class = 1:3
-            
-            for counter = 1:5
+            if visualize
+                figure('units','normalized','outerposition',[0 0 1 1]);
+                subplts = numSubplots(num_examples);
+                sbplt_rows = subplts(1); sbplt_cols = subplts(2);
+                hold on
+            end
+            c = class - 1;
+            switch c
+                case 0
+                    class_label = 'square';
+                case 1
+                    class_label = 'circle';
+                case 2
+                    class_label = 'triangle';
+            end
+            counter = 0;
+            for i = 1:step:num_examples*step
+                counter = counter + 1;
                 switch class
                     case 1
-                        index = ind_squares5(counter);
+                        index = i + start_index;
+                        test_image = sorted_squares(index,:,:,:);
+                        or_image = or_sorted_squares(index,:,:,:);
                     case 2
-                        index = ind_circles5(counter);
+                        index = i + start_index;
+                        test_image = sorted_circles(index,:,:,:);
+                        or_image = or_sorted_circles(index,:,:,:);
                     case 3
-                        index = ind_triangles5(counter);
+                        index = i + start_index;
+                        test_image = sorted_triangles(index,:,:,:);
+                        or_image = or_sorted_triangles(index,:,:,:);
                 end
-                sbplt = sbplt + 1;
-                test_image = test_images(index,:,:,:);
                 
-                [comp_hm, R, pred] = compute_lrp_heatmap(test_image, im_dim, ...
-                        lenet, method, select);
+                [comp_hm, R, pred] = compute_lrp_heatmap(or_image, test_image, im_dim, ...
+                    lenet, method, select);
+                if visualize
+                    subplot(sbplt_rows, sbplt_cols,counter);
+                    imshow(comp_hm); axis off ; drawnow;
+                end
+                
                 switch pred-1
                     case 0
                         pred_class = 'square';
@@ -105,8 +142,6 @@ for selected_class = 1
                 if verbose
                     fprintf('Predicted Class: %d: %s \n\n', pred-1, pred_class);
                 end
-                
-                %compute first layer relevance according to prediction
                 switch method
                     case 1
                         tit_str = 'LRP: ratio local and global pre-activtatons';
@@ -117,22 +152,27 @@ for selected_class = 1
                 end
                 switch arch
                     case 1
-                        title_str = [tit_str ', model: lenet5\_sumpool'];
+                        titl_str = [tit_str ', model: lenet5\_sumpool'];
                     case 2
-                        title_str = [tit_str ', model: lenet3\_maxpool'];
+                        titl_str = [tit_str ', model: lenet3\_maxpool'];
                     case 3
-                        title_str = [tit_str ', model: lenet5\_maxpool'];
+                        titl_str = [tit_str ', model: lenet5\_maxpool'];
                 end
                 
-                %render input and heatmap as rgb images
-                subplot(3,5,sbplt);
-                imshow(comp_hm); axis off ; drawnow;
-                title(['Pred.: ' pred_class ' | Selected: ' select_label ]);
+                if visualize
+                    title(['Pred.: ' pred_class ' | Selected: ' select_label ]);
+                end
+            end
+            if visualize
+                title_str = ['LRP on test set: 15 sorted ' class_label ...
+                    ' images starting at image ' num2str(start_index) ...
+                    ' with step of ' num2str(step) titl_str];
+                axes('Position',[0 0 1 1],'Xlim',[0 1],'Ylim',[0  1],'Box','off','Visible','off','Units','normalized', 'clipping' , 'off');
+                t = text(0.3, 0.98,title_str); t.FontSize = 14; t.FontWeight = 'bold';
             end
         end
         
-        ha = axes('Position',[0 0 1 1],'Xlim',[0 1],'Ylim',[0  1],'Box','off','Visible','off','Units','normalized', 'clipping' , 'off');
-        t = text(0.5, 0.98,title_str); t.FontSize = 14; t.FontWeight = 'bold';
-     end
+    end
+    
 end
 

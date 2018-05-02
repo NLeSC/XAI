@@ -1,6 +1,6 @@
 % compute_lrp_heatmap - computes LRP toolbox relevance heatmap
 % **************************************************************************
-% function [comp_hm, rel, pred_class] = compute_lrp_heatmap(data, im_dim, model, ...
+% function [comp_hm, rel, pred_class] = compute_lrp_heatmap(or_data, data, im_dim, model, ...
 %                           lrp_method, select)
 %
 % author: Elena Ranguelova, NLeSc
@@ -32,7 +32,7 @@
 % REFERENCES:
 % paper: DOI: 10.1371/journal.pone.0130140
 %**************************************************************************
-function [comp_hm, rel, pred_class] = compute_lrp_heatmap(data, im_dim, ...
+function [comp_hm, rel, pred_class] = compute_lrp_heatmap(or_data, data, im_dim, ...
     model, lrp_method, select)
 
 % pass the image trough the pre-trained model
@@ -50,9 +50,10 @@ switch lrp_method
 end
 
 % reshape the input data to an image
-inp_shape = reshape(data,im_dim);
+inp_shape = reshape(or_data,im_dim);
 % convert the relevance toan RGB image
 shape = render.shape_to_rgb(round(inp_shape*255),3);
+%shape = render.digit_to_rgb(inp_shape,3);
 shape = permute(shape,[2 1 3]);
 hm = render.hm_to_rgb(rel,data,3,[],2);
 comp_hm = render.save_image({shape,hm},'../heatmap.png');

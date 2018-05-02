@@ -45,6 +45,7 @@ sbplt_rows = subplts(1); sbplt_cols = subplts(2);
 
 count = 0;
 for i = 1:step:num2display*step
+    %disp(['Start_index + i:', num2str(start_index + i)]);
     count = count + 1;
     subplot(sbplt_rows, sbplt_cols,count);
     shape = reshape(shape_images(start_index + i,:),32,32);

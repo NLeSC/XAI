@@ -7,8 +7,8 @@ verbose = true;
 visualize = true;
 sav = false;
 
-start_index = 1000;
-step = 10;
+start_index = 1;
+step = 1;
 
 num_samples = 15;
 
