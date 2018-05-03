@@ -1,12 +1,12 @@
 % compute_lrp_heatmap - computes LRP toolbox relevance heatmap
 % **************************************************************************
-% function [comp_hm, rel, pred_class] = compute_lrp_heatmap(or_data, data, im_dim, model, ...
+% function [comp_hm, rel, pred_class, gray_diff] = compute_lrp_heatmap(or_data, data, im_dim, model, ...
 %                           lrp_method, select)
 %
 % author: Elena Ranguelova, NLeSc
 % date created: 30-04-2018
-% last modification date:
-% modification details:
+% last modification date: 03-05-2018
+% modification details: returns the gray-value difference
 %**************************************************************************
 % INPUTS:
 % data          input data of size 1 x image_dimentions_product(after normalization)
@@ -22,6 +22,7 @@
 % comp_hm      rendered image of an input image and a heatmap (HM) as composite HM
 % rel          the relevance at the first level
 % pred_class   the predicted class
+% gray_diff    the absolute gray-value difference between BG and FG
 %**************************************************************************
 % NOTES:
 %**************************************************************************
@@ -32,7 +33,7 @@
 % REFERENCES:
 % paper: DOI: 10.1371/journal.pone.0130140
 %**************************************************************************
-function [comp_hm, rel, pred_class] = compute_lrp_heatmap(or_data, data, im_dim, ...
+function [comp_hm, rel, pred_class, gray_diff] = compute_lrp_heatmap(or_data, data, im_dim, ...
     model, lrp_method, select)
 
 % pass the image trough the pre-trained model
@@ -51,6 +52,8 @@ end
 
 % reshape the input data to an image
 inp_shape = reshape(or_data,im_dim);
+% quantify contrast
+gray_diff = abs(max(or_data(:)) - min(or_data(:)));
 % convert the relevance toan RGB image
 shape = render.shape_to_rgb(round(inp_shape*255),3);
 %shape = render.digit_to_rgb(inp_shape,3);
