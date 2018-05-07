@@ -75,7 +75,7 @@ end
 
 %% compute and dispay heat maps per each of the selected classes and methods
 %for selected_class = 1:3
-for selected_class = 1
+for selected_class = 3
     s = selected_class - 1;
     switch s
         case 0
@@ -92,7 +92,7 @@ for selected_class = 1
     %for method = 1:3
     for method = 3
         %for class = 1:3
-        for class = 1
+        for class = 3
             c = class - 1;
             switch c
                 case 0
@@ -167,13 +167,14 @@ for selected_class = 1
                         xlabel(['Abs. gray val. diff: ', num2str(gray_diff)]);
                     end
                 end
-            end
-            if visualize
-                title_str = ['LRP on test set: 15 sorted ' class_label ...
-                    ' images starting at image ' num2str(start_index) ...
-                    ' with step of ' num2str(step) '.' titl_str];
-                axes('Position',[0 0 1 1],'Xlim',[0 1],'Ylim',[0  1],'Box','off','Visible','off','Units','normalized', 'clipping' , 'off');
-                t = text(0.3, 0.98,title_str); t.FontSize = 14; t.FontWeight = 'bold';
+                if visualize
+                    title_str = ['LRP on test set: 15 sorted ' class_label ...
+                        ' images starting at image ' num2str(start_index) ...
+                        ' with step of ' num2str(step) '.' titl_str];
+                    axes('Position',[0 0 1 1],'Xlim',[0 1],'Ylim',[0  1],'Box','off','Visible','off','Units','normalized', 'clipping' , 'off');
+                    t = text(0.3, 0.98,title_str); t.FontSize = 14; t.FontWeight = 'bold';
+                end
+                
             end
         end
         
