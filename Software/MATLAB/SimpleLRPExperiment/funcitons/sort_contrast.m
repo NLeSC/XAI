@@ -1,32 +1,35 @@
 % sort_contrast - sort a set of images on contrast between BG and FG (object)
 % **************************************************************************
-% function [output_mages, sort_index] = sort_contrast(input_images, bg_point, fg_point)
+% function [output_mages, sort_index] = sort_contrast(input_images, bg_point, fg_point, unique_flag)
 %
 % author: Elena Ranguelova, NLeSc
 % date created: 06-04-2018
 % last modification date: 11-04-2018
 % modification details: correct sorting algorithm, added sorted index output
+% last modification date: 09-05-2018
+% modification details: added unique flag
 %**************************************************************************
 % INPUTS:
 % input_images_matrix  matrix containing BabyAIShapes returned by amat_loader
 %                of one or more shapes
 % bg_point       indicies (row,col) of a point belonging to the BG
 % fg_point       indicies (row,col) of a point belonging to the FG (shape)
+% unique_flag    flag indicating weather tho retun only unque values
 %**************************************************************************
 % OUTPUTS:
 % output_images  the matrix sorted line-wise first according to BG
 %                gray level, then by FG (object) gray level
 % sort_index     the original index of the images order after the sorting
 %**************************************************************************
-% NOTES: 
+% NOTES:
 %**************************************************************************
-% EXAMPLES USAGE: 
-% 
+% EXAMPLES USAGE:
+%
 % see test_sort_contrast.m
 %**************************************************************************
 % REFERENCES:
 %**************************************************************************
-function [output_images, sort_index] = sort_contrast(input_images, bg_point, fg_point)
+function [output_images, sort_index] = sort_contrast(input_images, bg_point, fg_point, unique_flag)
 
 % number of images
 num_images = size(input_images,1);
@@ -53,7 +56,7 @@ clear shape_images
 % create combined vector from the BG and FG values for sorting
 combined_values = bg_values * 1000 + fg_values;
 
-% sort 
+% sort
 [~,sort_index] = sort(combined_values);
 
 % construct output matrix by using sorted indicies
@@ -61,5 +64,9 @@ for ind =  1:num_images
     output_images(ind,:) = input_images(sort_index(ind),:);
 end
 
-
+% return only the unique images
+if unique_flag
+    [unique_output_images, ~, ~] = unique(output_images, 'rows');
+    output_images = unique_output_images;
+end
 

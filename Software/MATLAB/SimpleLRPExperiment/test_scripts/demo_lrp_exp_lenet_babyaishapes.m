@@ -5,6 +5,8 @@
 %% parameters
 config_params;
 
+unique_flag = true;
+
 verbose = false;
 visualize = true;
 num_examples = 15;
@@ -27,7 +29,7 @@ end
 % sort the images on BG and then on FG gray values per shape
 for shape_label = 0:2
     [sorted_1shape_images, shape_index, sort_1shape_index] = ...
-        sort_1shape_contrast(test_images, test_labels, shape_label, bg_point,fg_point);
+        sort_1shape_contrast(test_images, test_labels, shape_label, bg_point,fg_point, unique_flag);
     switch shape_label
         case 0
             or_sorted_squares = sorted_1shape_images;

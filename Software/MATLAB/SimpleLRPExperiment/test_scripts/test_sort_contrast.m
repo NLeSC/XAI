@@ -12,6 +12,8 @@ step = 1;
 
 num_samples = 15;
 
+unique_flag = false;
+
 %% load the MAT test shapes and their labels
 load(test_images_full_fname); % loaded test_images
 load(test_labels_full_fname); % loaded test_labels
@@ -23,7 +25,7 @@ end
 %% sort the images on BG and then on FG gray values per shape
 for shape_label = 0:2
     [sorted_1shape_images, shape_index, sort_1shape_index] = ...
-        sort_1shape_contrast(test_images, test_labels, shape_label, bg_point,fg_point);
+        sort_1shape_contrast(test_images, test_labels, shape_label, bg_point,fg_point, unique_flag);
     switch shape_label
         case 0
             sorted_squares = sorted_1shape_images;

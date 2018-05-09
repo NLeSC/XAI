@@ -1,12 +1,12 @@
 % sort_1shape_contrast - sort images of a shape by contrast between BG and FG
 % **************************************************************************
 % function [sorted_1shape_images, shape_index, sort_1shape_index] = ...
-%        sort_1shape_contrast(input_images, input_labels, shape_label, bg_point,fg_point)
+%        sort_1shape_contrast(input_images, input_labels, shape_label, bg_point,fg_point, unique_flag)
 %
 % author: Elena Ranguelova, NLeSc
 % date created: 11-04-2018
-% last modification date: 
-% modification details: 
+% last modification date: 09-05-2018
+% modification details: added unique flag
 %**************************************************************************
 % INPUTS:
 % input_images   matrix containing BabyAIShapes images all shapes
@@ -14,6 +14,7 @@
 % shape_label    the label of the shape: 0-square, 1- circle, 2- triangle
 % bg_point       indicies (row,col) of a point belonging to the BG
 % fg_point       indicies (row,col) of a point belonging to the FG (shape)
+% unique_flag    flag indicating weather tho retun only unque values
 %**************************************************************************
 % OUTPUTS:
 % sorted_1shape_images  the matrix of images for the chosen shape 
@@ -31,13 +32,13 @@
 % REFERENCES:
 %**************************************************************************
 function [sorted_1shape_images, shape_index, sort_1shape_index] = ...
-        sort_1shape_contrast(input_images, input_labels, shape_label, bg_point,fg_point)
+        sort_1shape_contrast(input_images, input_labels, shape_label, bg_point,fg_point, unique_flag)
     
 % select the images of the givel shape
 shape_index = find(input_labels == shape_label);
 input_1shape_images = input_images(shape_index,:);
 
 % sort the images of that shape
-[sorted_1shape_images, sort_1shape_index] = sort_contrast(input_1shape_images, bg_point, fg_point);
+[sorted_1shape_images, sort_1shape_index] = sort_contrast(input_1shape_images, bg_point, fg_point, unique_flag);
 
 
