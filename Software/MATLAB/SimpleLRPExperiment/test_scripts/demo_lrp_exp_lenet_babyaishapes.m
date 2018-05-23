@@ -1,4 +1,4 @@
-% demo_lrp_exp_lenet_babyaishapes.m - demo experiment for LRP heatmaps on LeNet5 CNN on the BabaAIShapes dataset
+% demo_lrp_exp_lenet_babyaishapes.m - demo experiment for LRP heatmaps on LeNet5 CNN on the BabyAIShapes dataset
 
 % this script uses LRP Toolbox v.1.2.0
 
