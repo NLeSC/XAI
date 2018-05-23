@@ -1,7 +1,7 @@
 % contents.m- contents of directory ...\XAI\SimpleLRPExperiment
 %
 % topic: Studying the usefulness of the LRP Toolbox heatmaps when
-% explaining circles vs sqaures vs triangles simple shape classification 
+% explaining (circles vs) sqaures vs triangles simple shape classification 
 % author: Elena Ranguelova, NLeSc
 % date: March/April/May 2018
 %
@@ -24,7 +24,9 @@
 % test_amat_loader - testing script for the amat format loader
 % test_sort_contrast - sort a set of images on contrast 
 % train_lenet_babyaishapes.m - testing the training of LeNet5 CNN on the BabyAIShapes dataset
+% test_lenet_babyaishapes.m - testing the performance of the LeNet5 CNN on the BabyAIShapes dataset
 % train_lenet_tri_sq_rot.m - testing the training of LeNet5 CNNon the Triangles and Squares rotaiton dataset
+% test_lenet_tri_sq_rot.m - testing the performance of the LeNet5 CNN on the Triangles & squares dataset
 % test_lenet_babyaishapes.m - testing the performance of the LeNet5 CNN on the BabyAIShapes dataset
 % demo_lrp_lenet_babyaishapes.m - demonstrating the LRP heatmaps on LeNet5 CNN on the BabyAIShapes dataset
 % demo_lrp_exp_lenet_babyaishapes.m - demon experiemnt forLRP heatmaps on LeNet5 CNN on the BabaAIShapes dataset
