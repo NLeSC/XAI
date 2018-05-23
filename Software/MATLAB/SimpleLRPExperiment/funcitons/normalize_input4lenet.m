@@ -28,10 +28,12 @@
 function [norm_data] = normalize_input4lenet(data, im_dim, num_channels, reshape_order)
 
 num_images = size(data,1);
+min_data = min(data(:));
+max_data = max(data(:));
 
 % transfer pixel values from original range to [-1 1] to satisfy the expected input
 %and training paradigm of the model
-norm_data =  -1 + 2.*(data - min(data))./(max(data) - min(data));
+norm_data =  -1 + 2.*(data - min_data)./(max_data - min_data);
 %norm_data = data.*255/ 127.5 - 1;
 
 % reshape the data to match the requirements of the LeNet input
