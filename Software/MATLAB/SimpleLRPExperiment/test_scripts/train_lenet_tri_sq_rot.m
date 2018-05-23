@@ -8,7 +8,7 @@ config_params_tri_sq_rot;
 verbose = true;
 sav = true;
 
-arch = input('Chose architecture (1 = lenet5_sumpool, 2 = lenet3_maxpool, 3 = lenet5_maxpool): ');
+arch = input('Chose architecture (1 = lenet5_maxpool): ');
 %% load MAT files with data
 load(train_images_full_fname);
 num_train_images = size(train_images,1);
@@ -44,10 +44,6 @@ end
 %% create LeNet CNN
 switch arch
     case 1
-        [lenet] = lenet5_sumpool_arch();
-    case 2
-        [lenet] = lenet3_maxpool_arch();
-    case 3
         [lenet] = lenet5_maxpool_arch2();        
     otherwise
         error("Unknown architecture!");
