@@ -1,16 +1,16 @@
-% visualize_1shape_tri_sq_rot - visualize one shape from the Tri&Sq dataset
+% visualize_1shape - visualize 1 shape from the simple shapes datasets
 % **************************************************************************
-% function [] = visualize_1shape_tri_sq_rot(shape_images, shape_label, num2display, ...
+% function [] = visualize_1shape(shape_images, shape_label, num2display, ...
 %                   start_index, step)
 %
 % author: Elena Ranguelova, NLeSc
 % date created: 02-02-2018
-% last modification date:
-% modification details:
+% last modification date: 24-05-2018
+% modification details: made it generic for more shape datasets
 %**************************************************************************
 % INPUTS:
-% shape_images   matrix containing sorted BabyAIShapes images from one shape
-% shape_label    the label of the shape: 0-triangle, 1- square
+% shape_images   matrix containing  images from one shape
+% shape_label    the label of the shape: 0-square, 1- circle, 2- triangle
 % num2display    number of imges to display in 1 figure
 % start_index    the index of the first image to display
 % step           the index step betweeen 2 images to display
@@ -21,11 +21,11 @@
 %**************************************************************************
 % EXAMPLES USAGE:
 %
-% see demo_lrp_exp_lenet_tri_sq_rot.m
+% see test_sort_contrast.m or demo_lrp_exp_lenet_*.m
 %**************************************************************************
 % REFERENCES:
 %**************************************************************************
-function [] = visualize_1shape_tri_sq_rot(shape_images, shape_label, num2display, ...
+function [] = visualize_1shape(shape_images, shape_label, num2display, ...
     start_index, step)
 
 
@@ -56,9 +56,11 @@ hold off;
 
 switch shape_label
     case 0
-        shape_type = 'triangle';
-    case 1
         shape_type = 'square';
+    case 1
+        shape_type = 'circle';
+    case 2
+        shape_type = 'triangle';
 end
 
 title_str = ['Test set: 15 ' shape_type ' images starting at image ' num2str(start_index) ' with step of ' num2str(step)];

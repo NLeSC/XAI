@@ -43,7 +43,7 @@ end
 
 %% visualizaiton
 if visualize
-    visualize_sorted_shape(sorted_squares, 0, num_samples, start_index, step);
-    visualize_sorted_shape(sorted_circles, 1, num_samples, start_index, step);
-    visualize_sorted_shape(sorted_triangles, 2, num_samples, start_index, step);
+    visualize_1shape(sorted_squares, 0, num_samples, start_index, step);
+    visualize_1shape(sorted_circles, 1, num_samples, start_index, step);
+    visualize_1shape(sorted_triangles, 2, num_samples, start_index, step);
 end

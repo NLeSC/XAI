@@ -11,8 +11,7 @@
 % amat_loader - function to load data from the amat format
 % sort_contrast - sort a set of images on contrast between BG and FG (object)
 % sort_1shape_contrast - sort images of a shape by contrast between BG and FG
-% visualize_sorted_shape - visualize soted shape from the BabyAI dataset
-% visualize_1shape_tri_sq_rot - visualize one shape from the Tri&Sq dataset
+% visualize_1shape - visualize 1 shape from the simple shapes datasets
 % normalize_input4lenet - normalize the input matrix to be used by LeNet
 % reshape_labels - reshaping the labels to fit LRP toolbox format
 % lenet5_sumpool_arch - LeNet5 sum pool CNN architecture using LRP Toolbox

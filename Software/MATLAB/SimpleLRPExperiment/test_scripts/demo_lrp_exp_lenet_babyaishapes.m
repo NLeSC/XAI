@@ -45,9 +45,9 @@ if verbose
     disp(['Sorted ', num2str(num_test_images) ,' test images by contrast']);
 end
 % if visualize
-%     visualize_sorted_shape(or_sorted_squares, 0, num_examples, start_index, step);
-%     visualize_sorted_shape(or_sorted_circles, 1, num_examples, start_index, step);
-%     visualize_sorted_shape(or_sorted_triangles, 2, num_examples, start_index, step);
+%     visualize_1shape(or_sorted_squares, 0, num_examples, start_index, step);
+%     visualize_1shape(or_sorted_circles, 1, num_examples, start_index, step);
+%     visualize_1shape(or_sorted_triangles, 2, num_examples, start_index, step);
 % end
 % normalize & reshape the data and labels
 [sorted_squares] = normalize_input4lenet(or_sorted_squares, im_dim, num_channels, reshape_order);

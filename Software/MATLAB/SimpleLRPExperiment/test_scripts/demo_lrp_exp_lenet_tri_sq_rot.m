@@ -27,14 +27,14 @@ if verbose
 end
 
 % split the images per shape
-for shape_label = 0:1
+for shape_label = 0:2
     shape_index = find(test_labels == shape_label);
     input_1shape_images = test_images(shape_index,:);
     switch shape_label
         case 0
+            or_squares = input_1shape_images;            
+        case 2
             or_triangles = input_1shape_images;
-        case 1
-            or_squares = input_1shape_images;
     end
     
 end
@@ -42,10 +42,10 @@ end
 if verbose
     disp(['Splited ', num2str(num_test_images) ,' test images by shape type']);
 end
-% if visualize
-%     visualize_1shape_tri_sq_rot(or_triangles, 0, num_examples, start_index, step);
-%     visualize_1shape_tri_sq_rot(or_squares, 1, num_examples, start_index, step);
-% end
+if visualize
+    visualize_1shape(or_squares, 0, num_examples, start_index, step);
+    visualize_1shape(or_triangles, 2, num_examples, start_index, step);
+end
 %% normalize & reshape the data and labels
 [squares] = normalize_input4lenet(or_squares, im_dim, num_channels, reshape_order);
 [triangles] = normalize_input4lenet(or_triangles, im_dim, num_channels, reshape_order);
@@ -68,14 +68,15 @@ end
 
 
 %% compute and dispay heat maps per each of the selected classes and methods
-for selected_class = 1:2
+for selected_class = 1:3
 %for selected_class = 2
     s = selected_class - 1;
     switch s
         case 0
+            select_label = 'square';            
+        case 2
             select_label = 'triangle';
-        case 1
-            select_label = 'square';
+            
     end
 %     if verbose
 %         fprintf('Selected Class:      %d: %s\n', s, select_label);
@@ -83,14 +84,14 @@ for selected_class = 1:2
     select = (1:size(test_labels,2) == selected_class)*1.;
     %for method = 1:3
     for method = 3
-        for class = 1:2
+        for class = 1:3
         %for class = 2
             c = class - 1;
             switch c
                 case 0
-                    class_label = 'triangle';
-                case 1
                     class_label = 'square';
+                case 2
+                    class_label = 'triangle';                    
             end
             for start_index = start_indicies
                 if visualize
@@ -122,9 +123,9 @@ for selected_class = 1:2
                     
                     switch pred-1
                         case 0
-                            pred_class = 'triangle';
-                        case 1
                             pred_class = 'square';
+                        case 2
+                            pred_class = 'triangle';                            
                     end
 %                     if verbose
 %                         fprintf('Predicted Class: %d: %s \n\n', pred-1, pred_class);
