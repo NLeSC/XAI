@@ -3,4 +3,4 @@
 *.asv
 /Data/MNIST/images
 /Data/MNIST/imageDatastores
-
+/Data/TrianglesAndSquaresRotation/Gray
