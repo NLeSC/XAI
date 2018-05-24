@@ -4,8 +4,8 @@
 %
 % author: Elena Ranguelova, NLeSc
 % date created: 28.032018
-% last modification date: 
-% modification details: 
+% last modification date: 24.05.2018
+% modification details: quick hack to handle 2 of 3 possible labels
 %**************************************************************************
 % INPUTS:
 % labels        a vector of single label per training esample
@@ -23,7 +23,18 @@
 %**************************************************************************
 function [reshaped_labels] = reshape_labels(labels)
 
+max_label = max(labels(:));
+num_uniq_el = numel(unique(labels));
 
-index = labels+1;
-reshaped_labels = zeros(size(labels,1),numel(unique(labels)));
+if max_label + 1 > num_uniq_el % only 3>2!
+    num_classes = max_label;
+    index(labels==0)= 1;
+    index(labels==2)= 2;
+    index =  index';
+else
+    num_classes = num_uniq_el;
+    index = labels+1;
+end
+%index = labels+1;
+reshaped_labels = zeros(size(labels,1),num_classes); %numel(unique(labels)));
 reshaped_labels(sub2ind(size(reshaped_labels),1:size(reshaped_labels,1),index')) = 1;

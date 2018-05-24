@@ -8,7 +8,8 @@ config_params_tri_sq_rot;
 verbose = true;
 sav = true;
 
-arch = input('Chose architecture (1 = lenet5_maxpool): ');
+%arch = input('Chose architecture (1 = lenet5_maxpool): ');
+arch = 1;
 %% load MAT files with data
 load(train_images_full_fname);
 num_train_images = size(train_images,1);
@@ -60,10 +61,6 @@ lenet.train(train_images,train_labels,valid_images,valid_labels,25,50000,0.0001)
 if sav
     switch arch
         case 1
-            full_model_fname = lenet5_sumpool_full_model_fname;
-        case 2
-            full_model_fname = lenet3_maxpool_full_model_fname;
-        case 3
             full_model_fname = lenet5_maxpool_full_model_fname;            
         otherwise
             error("Unknown architecture!");
