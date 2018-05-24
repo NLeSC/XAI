@@ -1,8 +1,14 @@
 % config_params_tri_sq_rot.m - setting configurable parameters for Tringles and Squares rotation experiments
 
+%binary = true;
+binary = false;
 project_path = 'C:/Projects/eStep/XAI';
 
-path2matTrianglesAndSquaresShapes = fullfile(project_path,'/Data/TrianglesAndSquaresRotation/Binary');
+if binary
+    path2matTrianglesAndSquaresShapes = fullfile(project_path,'/Data/TrianglesAndSquaresRotation/Binary');
+else
+    path2matTrianglesAndSquaresShapes = fullfile(project_path,'/Data/TrianglesAndSquaresRotation/Gray');
+end
 train_images_mat_fname = 'TrianglesAndSquares_images_train_50k.mat';
 test_images_mat_fname = 'TrianglesAndSquares_images_test_30k.mat';
 valid_images_mat_fname = 'TrianglesAndSquares_images_valid_20k.mat';
@@ -19,7 +25,11 @@ valid_labels_full_fname = fullfile(path2matTrianglesAndSquaresShapes, valid_labe
 
 path2models = fullfile(project_path, '/Results/Models');
 
-lenet5_maxpool_model_fname = 'lenet5_maxpool_binary_triangles_and_squares_rotation.mat';
+if binary
+    lenet5_maxpool_model_fname = 'lenet5_maxpool_binary_triangles_and_squares_rotation.mat';
+else
+    lenet5_maxpool_model_fname = 'lenet5_maxpool_gray_triangles_and_squares_rotation.mat';
+end
 lenet5_maxpool_full_model_fname = fullfile(path2models, lenet5_maxpool_model_fname);
 
 % image dimentions and reshape order
