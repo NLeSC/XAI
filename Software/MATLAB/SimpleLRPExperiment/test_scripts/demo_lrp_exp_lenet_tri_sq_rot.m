@@ -27,7 +27,7 @@ if verbose
 end
 
 % split the images per shape
-for shape_label = 0:2
+for shape_label = shape_labels
     shape_index = find(test_labels == shape_label);
     input_1shape_images = test_images(shape_index,:);
     switch shape_label
@@ -68,11 +68,10 @@ end
 
 
 %% compute and dispay heat maps per each of the selected classes and methods
-for selected_class = 1:3
-%for selected_class = 2
-    s = selected_class - 1;
+for s = 1:length(shape_labels)
+    selected_class = shape_labels(s);
     switch s
-        case 0
+        case 1
             select_label = 'square';            
         case 2
             select_label = 'triangle';
@@ -81,13 +80,12 @@ for selected_class = 1:3
 %     if verbose
 %         fprintf('Selected Class:      %d: %s\n', s, select_label);
 %     end
-    select = (1:size(test_labels,2) == selected_class)*1.;
+    select = (1:size(test_labels,2) == s)*1.;
     %for method = 1:3
     for method = 3
-        for class = 1:3
-        %for class = 2
-            c = class - 1;
-            switch c
+        for c = 1:length(shape_labels)
+            class = shape_labels(c);
+            switch class
                 case 0
                     class_label = 'square';
                 case 2
@@ -103,15 +101,15 @@ for selected_class = 1:3
                 counter = 0;
                 for i = 1:step:num_examples*step
                     counter = counter + 1;
-                    switch class
+                    switch c
                         case 1
+                            index = i + start_index;
+                            test_image = squares(index,:,:,:);
+                            or_image = or_squares(index,:,:,:);                        
+                        case 2
                             index = i + start_index;
                             test_image = triangles(index,:,:,:);
                             or_image = or_triangles(index,:,:,:);
-                        case 2
-                            index = i + start_index;
-                            test_image = squares(index,:,:,:);
-                            or_image = or_squares(index,:,:,:);
                     end
                     
                     [comp_hm, R, pred, gray_diff] = compute_lrp_heatmap(or_image, test_image, im_dim, ...
@@ -121,8 +119,8 @@ for selected_class = 1:3
                         imshow(comp_hm); axis off ; drawnow;
                     end
                     
-                    switch pred-1
-                        case 0
+                    switch pred
+                        case 1
                             pred_class = 'square';
                         case 2
                             pred_class = 'triangle';                            
