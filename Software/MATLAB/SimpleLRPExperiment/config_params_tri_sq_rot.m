@@ -4,6 +4,7 @@
 binary = false;
 num_train_iter = 20000;
 
+shape_labels = [0,2];
 project_path = 'C:/Projects/eStep/XAI';
 
 if binary
