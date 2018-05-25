@@ -55,7 +55,7 @@ end
 if verbose
      disp('Training LeNet on the training images using the validation images');
 end
-lenet.train(train_images,train_labels,valid_images,valid_labels,25,5000,0.0001);
+lenet.train(train_images,train_labels,valid_images,valid_labels,25,num_train_iter,0.0001);
 
 %% save the model
 if sav

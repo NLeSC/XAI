@@ -2,6 +2,8 @@
 
 %binary = true;
 binary = false;
+num_train_iter = 20000;
+
 project_path = 'C:/Projects/eStep/XAI';
 
 if binary
