@@ -31,6 +31,7 @@
 % demo_lrp_lenet_babyaishapes.m - demonstrating the LRP heatmaps on LeNet5 CNN on the BabyAIShapes dataset
 % demo_lrp_exp_lenet_babyaishapes.m - demon experiemnt forLRP heatmaps on LeNet5 CNN on the BabaAIShapes dataset
 % demo_lrp_exp_lenet_tri_sq_rot.m - demo experiment for LRP heatmaps on LeNet5 CNN on the Triangles and Squares dataset
+% test_compute_relevance_tri_sq_rot.m - computing the relevance of all test images from the T&S dataset
 %**************************************************************************
 % misc
 %**************************************************************************

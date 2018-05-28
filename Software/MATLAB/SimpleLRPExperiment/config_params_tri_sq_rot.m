@@ -1,7 +1,11 @@
 % config_params_tri_sq_rot.m - setting configurable parameters for Tringles and Squares rotation experiments
 
-%binary = true;
-binary = false;
+
+save_relevance = true;
+%save_relevance = false;
+
+binary = true;
+%binary = false;
 num_train_iter = 20000;
 
 shape_labels = [0,2];
@@ -34,6 +38,15 @@ else
     lenet5_maxpool_model_fname = 'lenet5_maxpool_gray_triangles_and_squares_rotation.mat';
 end
 lenet5_maxpool_full_model_fname = fullfile(path2models, lenet5_maxpool_model_fname);
+
+path2exper = fullfile(project_path, '/Results/Experiments/TrianglesAndSquares');
+relevance_fname_base = 'TrianglesAndSquares_test_30k_relevance';
+if binary
+    path2experiments = fullfile(path2exper, 'Binary');
+else
+    path2experiments = fullfile(path2exper, 'Gray');
+end
+
 
 % image dimentions and reshape order
 im_dim = [32 32]; 
