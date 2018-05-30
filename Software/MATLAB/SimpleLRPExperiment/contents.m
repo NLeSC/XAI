@@ -18,6 +18,7 @@
 % lenet3_maxpool_arch - LeNet3 max pool CNN architecture using LRP Toolbox
 % lenet5_maxpool_arch - LeNet5 max pool CNN architecture using LRP Toolbox
 % lenet5_maxpool_arch2 - LeNet5 max pool CNN architecture for 2 classes using LRP Toolbox
+% sum_pixel_evidence_2class - agreggated pixel evidence for, against or neutral for 2 classes
 %**************************************************************************
 % test_scripts
 %**************************************************************************
@@ -32,6 +33,7 @@
 % demo_lrp_exp_lenet_babyaishapes.m - demon experiemnt forLRP heatmaps on LeNet5 CNN on the BabaAIShapes dataset
 % demo_lrp_exp_lenet_tri_sq_rot.m - demo experiment for LRP heatmaps on LeNet5 CNN on the Triangles and Squares dataset
 % test_compute_relevance_tri_sq_rot.m - computing the relevance of all test images from the T&S dataset
+% test_sum_pixel_evidence_2class.m -computing accumulated evidence for
 %**************************************************************************
 % misc
 %**************************************************************************

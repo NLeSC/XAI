@@ -4,6 +4,8 @@
 save_relevance = true;
 %save_relevance = false;
 
+save_evidence = true;
+
 binary = true;
 %binary = false;
 num_train_iter = 20000;
@@ -39,14 +41,22 @@ else
 end
 lenet5_maxpool_full_model_fname = fullfile(path2models, lenet5_maxpool_model_fname);
 
-path2exper = fullfile(project_path, '/Results/Experiments/TrianglesAndSquares');
+path2vid = fullfile(project_path, '/Results/Experiments/TrianglesAndSquares');
 relevance_fname_base = 'TrianglesAndSquares_test_30k_relevance';
 if binary
-    path2experiments = fullfile(path2exper, 'Binary');
+    path2experiments = fullfile(path2vid, 'Binary');
 else
-    path2experiments = fullfile(path2exper, 'Gray');
+    path2experiments = fullfile(path2vid, 'Gray');
 end
 
+path2vid = fullfile(project_path, '/Results/Experiments/TrianglesAndSquares');
+evidence_fname_base = 'TrianglesAndSquares_test_30k_evidence.mat';
+if binary
+    path2evidence = fullfile(path2vid, 'Binary');
+else
+    path2evidence = fullfile(path2vid, 'Gray');
+end
+evidence_fullfname = fullfile(path2evidence,evidence_fname_base);
 
 % image dimentions and reshape order
 im_dim = [32 32]; 
@@ -56,3 +66,6 @@ reshape_order = [1 3 2 4];
 % see the comments of issue #9: https://github.com/NLeSC/XAI/issues/9
 bg_point = [1 1];
 fg_point = [15 12];
+
+%% define evidence threshold
+eps = 0.001;
