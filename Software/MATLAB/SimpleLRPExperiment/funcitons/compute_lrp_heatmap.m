@@ -1,12 +1,14 @@
 % compute_lrp_heatmap - computes LRP toolbox relevance heatmap
 % **************************************************************************
 % function [comp_hm, rel, pred_class, gray_diff] = compute_lrp_heatmap(or_data, data, im_dim, model, ...
-%                           lrp_method, select)
+%                           lrp_method, select, shape_labels)
 %
 % author: Elena Ranguelova, NLeSc
 % date created: 30-04-2018
 % last modification date: 03-05-2018
 % modification details: returns the gray-value difference
+% last modification date: 04-06-2018
+% modification details: get the shape labels codes as parameter
 %**************************************************************************
 % INPUTS:
 % data          input data of size 1 x image_dimentions_product(after normalization)
@@ -17,6 +19,7 @@
 %               2 = Using stabilizer  epsilon: 1 (Eq(58) from paper)
 %               3 = LRP: Using alpha-beta rule: 2 (Eq(60) from paper)
 % select        vector indicating the selected class of to computer relevance against
+% shape_labels  the shape label codes
 %**************************************************************************
 % OUTPUTS:
 % comp_hm      rendered image of an input image and a heatmap (HM) as composite HM
@@ -34,11 +37,14 @@
 % paper: DOI: 10.1371/journal.pone.0130140
 %**************************************************************************
 function [comp_hm, rel, pred_class, gray_diff] = compute_lrp_heatmap(or_data, data, im_dim, ...
-    model, lrp_method, select)
+    model, lrp_method, select, shape_labels)
 
 % pass the image trough the pre-trained model
 pred_classes = model.forward(data);
-[~,pred_class] = max(pred_classes);
+[~,index_pred_class] = max(pred_classes);
+pred_class = shape_labels(index_pred_class);
+
+
 
 % compute the relevance after LRP
 switch lrp_method
@@ -60,7 +66,7 @@ shape = render.shape_to_rgb(round(inp_shape*255),3);
 shape = permute(shape,[2 1 3]);
 hm = render.hm_to_rgb(rel,data,3,[],2);
 comp_hm = render.save_image({shape,hm},'../heatmap.png');
-delete('../heatmap.png');
+%delete('../heatmap.png');
 
 
 
