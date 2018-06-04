@@ -62,14 +62,16 @@ for s = 1:length(shape_labels)
     
     for index = 1:num_test_images
         if verbose
-            disp(['Computing relevance of image ' num2str(index) ...
-                ' out of ' num2str(num_test_images) ' for selected class ' select_label ]);
+            if (mod(index,100)== 0)
+                disp(['Computing relevance of image ' num2str(index) ...
+                    ' out of ' num2str(num_test_images) ' for selected class ' select_label ]);
+            end
         end
         test_image = norm_test_images(index,:,:,:);
         or_image = test_images(index,:,:,:);
         
         [comp_hm, R, pred, gray_diff] = compute_lrp_heatmap(or_image, test_image, im_dim, ...
-            lenet, method, select);
+            lenet, method, select, shape_labels);
         %            switch pred
         %                case 1
         %                    pred_class = 'square';

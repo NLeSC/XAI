@@ -113,7 +113,7 @@ for s = 1:length(shape_labels)
                     end
                     
                     [comp_hm, R, pred, gray_diff] = compute_lrp_heatmap(or_image, test_image, im_dim, ...
-                        lenet, method, select);
+                        lenet, method, select, shape_labels);
                     if visualize
                         subplot(sbplt_rows, sbplt_cols,counter);
                         imshow(comp_hm); axis off ; drawnow;

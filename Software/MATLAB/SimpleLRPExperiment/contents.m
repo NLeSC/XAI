@@ -18,7 +18,7 @@
 % lenet3_maxpool_arch - LeNet3 max pool CNN architecture using LRP Toolbox
 % lenet5_maxpool_arch - LeNet5 max pool CNN architecture using LRP Toolbox
 % lenet5_maxpool_arch2 - LeNet5 max pool CNN architecture for 2 classes using LRP Toolbox
-% sum_pixel_evidence_2class - agreggated pixel evidence for, against or neutral for 2 classes
+% sum_pixels_evidence_2class - agreggated pixel evidence for, against or neutral for 2 classes
 %**************************************************************************
 % test_scripts
 %**************************************************************************
