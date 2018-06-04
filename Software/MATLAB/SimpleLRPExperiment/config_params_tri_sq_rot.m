@@ -1,16 +1,12 @@
 % config_params_tri_sq_rot.m - setting configurable parameters for Tringles and Squares rotation experiments
 
+binary = input('Process Binary dataset? Binary=true, Gray=false. [true|false]: ');
+save_relevance = input('Save relevance matrix and predicted classes? [true|false]: ');
+save_evidence = input('Save evidence statistics? [true|false]: ');
 
-save_relevance = true;
-%save_relevance = false;
-
-save_evidence = true;
-
-binary = true;
-%binary = false;
 num_train_iter = 20000;
 
-shape_labels = [0,2];
+shape_labels = [0,2]; % [square triangle]
 project_path = 'C:/Projects/eStep/XAI';
 
 if binary
@@ -33,33 +29,40 @@ valid_labels_full_fname = fullfile(path2matTrianglesAndSquaresShapes, valid_labe
 
 
 path2models = fullfile(project_path, '/Results/Models');
-
+model_basename = 'lenet5_maxpool';
 if binary
-    lenet5_maxpool_model_fname = 'lenet5_maxpool_binary_triangles_and_squares_rotation.mat';
+    lenet5_maxpool_model_fname = [model_basename '_binary_triangles_and_squares_rotation.mat'];
 else
-    lenet5_maxpool_model_fname = 'lenet5_maxpool_gray_triangles_and_squares_rotation.mat';
+    lenet5_maxpool_model_fname = [model_basename '_gray_triangles_and_squares_rotation.mat'];
 end
 lenet5_maxpool_full_model_fname = fullfile(path2models, lenet5_maxpool_model_fname);
 
-path2vid = fullfile(project_path, '/Results/Experiments/TrianglesAndSquares');
-relevance_fname_base = 'TrianglesAndSquares_test_30k_relevance';
-if binary
-    path2experiments = fullfile(path2vid, 'Binary');
-else
-    path2experiments = fullfile(path2vid, 'Gray');
-end
 
 path2vid = fullfile(project_path, '/Results/Experiments/TrianglesAndSquares');
-evidence_fname_base = 'TrianglesAndSquares_test_30k_evidence.mat';
-if binary
-    path2evidence = fullfile(path2vid, 'Binary');
-else
-    path2evidence = fullfile(path2vid, 'Gray');
+if save_relevance
+    relevance_fname_base = 'TrianglesAndSquares_test_30k_relevance';
+    if binary
+        path2experiments = fullfile(path2vid, 'Binary');
+    else
+        path2experiments = fullfile(path2vid, 'Gray');
+    end
+    predictions_fname_base = 'TrianglesAndSquares_test_30k_predicitons.mat';
+    predictions_fullfname = fullfile(path2experiments,predictions_fname_base);
+    
 end
-evidence_fullfname = fullfile(path2evidence,evidence_fname_base);
+
+if save_evidence
+    evidence_fname_base = 'TrianglesAndSquares_test_30k_evidence.mat';
+    if binary
+        path2evidence = fullfile(path2vid, 'Binary');
+    else
+        path2evidence = fullfile(path2vid, 'Gray');
+    end
+    evidence_fullfname = fullfile(path2evidence,evidence_fname_base);   
+end
 
 % image dimentions and reshape order
-im_dim = [32 32]; 
+im_dim = [32 32];
 num_channels = 1;
 reshape_order = [1 3 2 4];
 %% define BG and FG points
@@ -68,4 +71,4 @@ bg_point = [1 1];
 fg_point = [15 12];
 
 %% define evidence threshold
-eps = 0.001;
+eps = 0.0001;

@@ -22,8 +22,9 @@ if verbose
     disp(['Loaded ', num2str(num_test_images) ,' test images and labels']);
 end
 
-%% initialize relevance matrix
+%% initialize relevance matrix and prediction labels
 rel_matrix = zeros(num_test_images, im_dim(1)*im_dim(2));
+pred_test_labels = zeros(num_test_images,1);
 %% normalize & reshape the data and labels
 [norm_test_images] = normalize_input4lenet(test_images, im_dim, num_channels, reshape_order);
 if verbose
@@ -76,9 +77,11 @@ for s = 1:length(shape_labels)
         %                    pred_class = 'triangle';
         %            end
         rel_matrix(index,:) = R(:)';
+        pred_test_labels(index) = pred;
     end
     if save_relevance
         save(relevance_fullfname, "rel_matrix");
+        save(predictions_fullfname, "pred_test_labels")
     end
 end
 
