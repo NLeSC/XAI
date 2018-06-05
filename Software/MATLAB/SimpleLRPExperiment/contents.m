@@ -23,6 +23,7 @@
 % compute_lrp_heatmap - computes LRP toolbox relevance heatmap
 % normalize_relevance_map - normalize relevance map, so max value is 1
 % sum_pixels_evidence_2class - agreggated pixel evidence for, against or neutral for 2 classes
+% compute_evidence - selected statistical evidence from an LRP within a mask
 %**************************************************************************
 %% test_scripts
 %**************************************************************************
