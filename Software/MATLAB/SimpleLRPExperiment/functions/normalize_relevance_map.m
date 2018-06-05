@@ -1,4 +1,4 @@
-% normalize_relevance_map - normalize relevance map, so max value is 1
+% normalize_relevance_map - normalize relevance map to be in the range [0 1]
 % **************************************************************************
 % function [norm_map] = normalize_relevance_map(map)
 %
@@ -11,18 +11,22 @@
 % map - relevance map(s) as computed by compute_lrp_heatmap.m
 %**************************************************************************
 % OUTPUTS:
-% norm_map - normalized relevance map(s) with max value of 1
+% norm_map - normalized relevance map(s) to be in the range [0 1]
 %**************************************************************************
-% NOTES: 
+% NOTES: Maybe use LRP toolbox render.hm_to_rgb instead!
 %**************************************************************************
 % EXAMPLES USAGE: 
 % 
-% see test_script_name.m
+% see test_normalize_relevance_map.m
 %**************************************************************************
 % REFERENCES:
 %**************************************************************************
 function [norm_map] = normalize_relevance_map(map)
 
-norm_map = map./norm(map(:), Inf);
+%norm_map = map./norm(map(:), Inf);
+min_map = min(map(:));
+max_map = max(map(:));
+
+norm_map = (map-min_map)./(max_map - min_map);
 
 

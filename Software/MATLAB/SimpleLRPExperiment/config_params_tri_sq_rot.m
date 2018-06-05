@@ -1,8 +1,11 @@
 % config_params_tri_sq_rot.m - setting configurable parameters for Tringles and Squares rotation experiments
 
-binary = input('Process Binary dataset? Binary=true, Gray=false. [true|false]: ');
-save_relevance = input('Save relevance matrix and predicted classes? [true|false]: ');
-save_evidence = input('Save evidence statistics? [true|false]: ');
+%binary = input('Process Binary dataset? Binary=true, Gray=false. [1=true|0=false]: ');
+binary =  false;
+%save_relevance = input('Save relevance matrix and predicted classes? [1=true|0=false]: ');
+save_relevance =true;
+%save_evidence = input('Save evidence statistics? [1=true|0=false]: ');
+save_evidence = false;
 
 num_train_iter = 20000;
 
@@ -65,6 +68,7 @@ end
 im_dim = [32 32];
 num_channels = 1;
 reshape_order = [1 3 2 4];
+res_order = [2 1 3];
 %% define BG and FG points
 % see the comments of issue #9: https://github.com/NLeSC/XAI/issues/9
 bg_point = [1 1];

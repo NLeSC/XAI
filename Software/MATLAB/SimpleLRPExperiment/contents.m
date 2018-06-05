@@ -37,8 +37,9 @@
 % test_lenet_tri_sq_rot.m - testing the performance of the LeNet5 CNN on the Triangles & squares dataset
 % demo_lrp_exp_lenet_tri_sq_rot.m - demo experiment for LRP heatmaps on LeNet5 CNN on the Triangles and Squares dataset
 %
+% plot_relevance_maps - script to visualize relevance maps
 % test_compute_relevance_tri_sq_rot.m - computing the relevance of all test images from the T&S dataset
-% test_sum_pixel_evidence_2class.m -computing accumulated evidence for selected class
+% test_sum_pixels_evidence_2class.m -computing accumulated evidence for selected class
 %**************************************************************************
 %% misc
 %**************************************************************************
