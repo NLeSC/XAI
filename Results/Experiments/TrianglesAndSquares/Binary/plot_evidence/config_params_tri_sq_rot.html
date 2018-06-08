@@ -1,0 +1,150 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>config_params_tri_sq_rot</title><meta name="generator" content="MATLAB 9.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2018-06-08"><meta name="DC.source" content="config_params_tri_sq_rot.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#2">define BG and FG points</a></li><li><a href="#3">define evidence threshold</a></li></ul></div><h2 id="2">define BG and FG points</h2><p>see the comments of issue #9: https://github.com/NLeSC/XAI/issues/9</p><h2 id="3">define evidence threshold</h2><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+% config_params_tri_sq_rot.m - setting configurable parameters for Tringles and Squares rotation experiments
+
+%binary = input('Process Binary dataset? Binary=true, Gray=false. [1=true|0=false]: ');
+binary =  true;
+%save_relevance = input('Save relevance matrix and predicted classes? [1=true|0=false]: ');
+save_relevance =true;
+%save_evidence = input('Save evidence statistics? [1=true|0=false]: ');
+save_evidence = true;
+
+num_train_iter = 20000;
+
+shape_labels = [0,2]; % [square triangle]
+project_path = 'C:/Projects/eStep/XAI';
+
+if binary
+    path2matTrianglesAndSquaresShapes = fullfile(project_path,'/Data/TrianglesAndSquaresRotation/Binary');
+else
+    path2matTrianglesAndSquaresShapes = fullfile(project_path,'/Data/TrianglesAndSquaresRotation/Gray');
+end
+train_images_mat_fname = 'TrianglesAndSquares_images_train_50k.mat';
+test_images_mat_fname = 'TrianglesAndSquares_images_test_30k.mat';
+valid_images_mat_fname = 'TrianglesAndSquares_images_valid_20k.mat';
+train_labels_mat_fname = 'TrianglesAndSquares_labels_train_50k.mat';
+test_labels_mat_fname = 'TrianglesAndSquares_labels_test_30k.mat';
+valid_labels_mat_fname = 'TrianglesAndSquares_labels_valid_20k.mat';
+train_images_full_fname = fullfile(path2matTrianglesAndSquaresShapes, train_images_mat_fname);
+test_images_full_fname = fullfile(path2matTrianglesAndSquaresShapes, test_images_mat_fname);
+valid_images_full_fname = fullfile(path2matTrianglesAndSquaresShapes, valid_images_mat_fname);
+train_labels_full_fname = fullfile(path2matTrianglesAndSquaresShapes, train_labels_mat_fname);
+test_labels_full_fname = fullfile(path2matTrianglesAndSquaresShapes, test_labels_mat_fname);
+valid_labels_full_fname = fullfile(path2matTrianglesAndSquaresShapes, valid_labels_mat_fname);
+
+
+path2models = fullfile(project_path, '/Results/Models');
+model_basename = 'lenet5_maxpool';
+if binary
+    lenet5_maxpool_model_fname = [model_basename '_binary_triangles_and_squares_rotation.mat'];
+else
+    lenet5_maxpool_model_fname = [model_basename '_gray_triangles_and_squares_rotation.mat'];
+end
+lenet5_maxpool_full_model_fname = fullfile(path2models, lenet5_maxpool_model_fname);
+
+
+path2vid = fullfile(project_path, '/Results/Experiments/TrianglesAndSquares');
+if save_relevance
+    relevance_fname_base = 'TrianglesAndSquares_test_30k_relevance';
+    if binary
+        path2experiments = fullfile(path2vid, 'Binary');
+    else
+        path2experiments = fullfile(path2vid, 'Gray');
+    end
+    predictions_fname_base = 'TrianglesAndSquares_test_30k_predicitons.mat';
+    predictions_fullfname = fullfile(path2experiments,predictions_fname_base);
+    
+end
+
+if save_evidence
+    evidence_fname_base = 'TrianglesAndSquares_test_30k_evidence.mat';
+    if binary
+        path2evidence = fullfile(path2vid, 'Binary');
+    else
+        path2evidence = fullfile(path2vid, 'Gray');
+    end
+    evidence_fullfname = fullfile(path2evidence,evidence_fname_base);   
+end
+
+% image dimentions and reshape order
+im_dim = [32 32];
+num_channels = 1;
+reshape_order = [1 3 2 4];
+res_order = [2 1 3];
+%% define BG and FG points
+% see the comments of issue #9: https://github.com/NLeSC/XAI/issues/9
+bg_point = [1 1];
+fg_point = [15 12];
+
+%% define evidence threshold
+eps = 0.0001;
+##### SOURCE END #####
+--></body></html>

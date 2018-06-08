@@ -39,9 +39,13 @@ switch statistic
         evidence_statistic = sum(data(:) <= -thresh);
     case 'AverageValue'
         evidence_statistic = mean(data(:));
-    case 'SizePositive'
+    case 'MaxValue'
+        evidence_statistic = max(data(:));
+    case 'SumValue'    
+        evidence_statistic = sum(data(:));
+    case 'SumPositive'
         evidence_statistic = sum((data(:) >= thresh).*(data(:)));
-    case 'SizeNegative'
+    case 'SumNegative'
         evidence_statistic = sum((data(:) <= -thresh).*(data(:)));        
     case 'DiffPosNeg'    
         evidence_statistic = sum(abs(data(:) >= thresh).*data(:));
