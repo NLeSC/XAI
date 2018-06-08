@@ -257,10 +257,16 @@ else
             xlabel('Evidence for class square'); ylabel('Evidence for class triangle');
             if titles
                 if binary
-                    title(['Binary dataset: ' statistic]);
+                    title_str = ['Binary dataset: ' statistic];                    
                 else
-                    title(['Gray dataset: ' statistic]);
+                    title_str = ['Gray dataset: ' statistic];
                 end
+                if masks
+                    title_str = [title_str ' using band masks'];
+                else
+                    title_str = [title_str ' using all pixels'];
+                end
+                title(title_str);
             end
             hold off
             
