@@ -39,6 +39,12 @@ switch statistic
         evidence_statistic = sum(data(:) <= -thresh);
     case 'AverageValue'
         evidence_statistic = mean(data(:));
+    case 'SizePositive'
+        evidence_statistic = sum((data(:) >= thresh).*(data(:)));
+    case 'SizeNegative'
+        evidence_statistic = sum((data(:) <= -thresh).*(data(:)));        
+    case 'DiffPosNeg'    
+        evidence_statistic = sum(abs(data(:) >= thresh).*data(:));
     otherwise
         error('Unknown statistic!');
 end

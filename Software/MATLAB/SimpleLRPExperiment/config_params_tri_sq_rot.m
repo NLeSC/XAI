@@ -1,11 +1,11 @@
 % config_params_tri_sq_rot.m - setting configurable parameters for Tringles and Squares rotation experiments
 
 %binary = input('Process Binary dataset? Binary=true, Gray=false. [1=true|0=false]: ');
-binary =  false;
+binary =  true;
 %save_relevance = input('Save relevance matrix and predicted classes? [1=true|0=false]: ');
 save_relevance =true;
 %save_evidence = input('Save evidence statistics? [1=true|0=false]: ');
-save_evidence = false;
+save_evidence = true;
 
 num_train_iter = 20000;
 
