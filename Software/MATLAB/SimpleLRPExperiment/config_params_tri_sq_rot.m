@@ -1,7 +1,7 @@
 % config_params_tri_sq_rot.m - setting configurable parameters for Tringles and Squares rotation experiments
 
 %binary = input('Process Binary dataset? Binary=true, Gray=false. [1=true|0=false]: ');
-binary =  false;
+binary =  true;
 %save_relevance = input('Save relevance matrix and predicted classes? [1=true|0=false]: ');
 save_relevance =true;
 %save_evidence = input('Save evidence statistics? [1=true|0=false]: ');
@@ -10,7 +10,8 @@ save_evidence = true;
 num_train_iter = 20000;
 
 shape_labels = [0,2]; % [square triangle]
-project_path = 'C:/Projects/eStep/XAI';
+% project_path = 'C:/Projects/eStep/XAI';
+project_path = 'C:\Users\berkhout\Desktop\XAI';
 
 if binary
     path2matTrianglesAndSquaresShapes = fullfile(project_path,'/Data/TrianglesAndSquaresRotation/Binary');
@@ -40,6 +41,15 @@ else
 end
 lenet5_maxpool_full_model_fname = fullfile(path2models, lenet5_maxpool_model_fname);
 
+
+% model configuration for short_relu by Joost
+model_basename = 'short_relu';
+if binary
+    short_relu_model_fname = [model_basename '_binary_triangles_and_squares_rotation.mat'];
+else
+    short_relu_model_fname = [model_basename '_gray_triangles_and_squares_rotation.mat'];
+end
+short_relu_full_model_fname = fullfile(path2models, short_relu_model_fname);
 
 path2vid = fullfile(project_path, '/Results/Experiments/TrianglesAndSquares');
 if save_relevance
