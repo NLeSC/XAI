@@ -13,7 +13,9 @@ verbose = true;
 save = true;
 
 %arch = input('Chose architecture (1 = lenet5_maxpool): ');
-arch = 2;
+%arch = 1;  % lenet5_maxpool
+arch = 2;  % short relu
+
 %% load MAT files with data
 load(train_images_full_fname);
 num_train_images = size(train_images,1);
