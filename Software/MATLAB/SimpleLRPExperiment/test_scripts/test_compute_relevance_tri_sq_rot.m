@@ -8,8 +8,9 @@ config_params_tri_sq_rot;
 verbose = true;
 step = 1;
 
-%arch = input('Chose architecture (1 = lenet5_maxpool): ');
-arch = 1;
+%arch = input('Chose architecture (1 = lenet5_maxpool, 2 = short_relu): ');
+%arch = 1;
+arch = 2;
 
 method = 3; % alpha-beta rule
 
@@ -27,6 +28,7 @@ rel_matrix = zeros(num_test_images, im_dim(1)*im_dim(2));
 pred_test_labels = zeros(num_test_images,1);
 %% normalize & reshape the data and labels
 [norm_test_images] = normalize_input4lenet(test_images, im_dim, num_channels, reshape_order);
+norm_test_images = reshape(norm_test_images, [size(norm_test_images,1), im_dim(1) * im_dim(2)]);
 if verbose
     disp(['Normaised ', num2str(num_test_images) ,' test images']);
 end
@@ -38,7 +40,9 @@ end
 %% load the model
 switch arch
     case 1
-        lenet = model_io.read(lenet5_maxpool_full_model_fname);
+        net = model_io.read(lenet5_maxpool_full_model_fname);
+    case 2
+        net = model_io.read(short_relu_full_model_fname);        
 end
 if verbose
     disp('Loading the pre-trained model...');
@@ -71,7 +75,7 @@ for s = 1:length(shape_labels)
         or_image = test_images(index,:,:,:);
         
         [comp_hm, R, pred, gray_diff] = compute_lrp_heatmap(or_image, test_image, im_dim, ...
-            lenet, method, select, shape_labels);
+            net, method, select, shape_labels);
         %            switch pred
         %                case 1
         %                    pred_class = 'square';

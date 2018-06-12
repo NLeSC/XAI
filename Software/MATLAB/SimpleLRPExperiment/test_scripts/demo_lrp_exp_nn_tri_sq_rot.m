@@ -17,9 +17,9 @@ start_index = 1;
 start_indicies = 1:15:31; %1500-75;
 step = 1;
 
-%arch = input('Chose architecture (1 = lenet5_maxpool): ');
+%arch = input('Chose architecture (1 = lenet5_maxpool, 2= short_relu): ');
 %arch = 1;  % lenet5_maxpool
-arch = 2;  % short relu
+arch = 2;  % short relu - not very good name, I would call it linear? 
 
 %% data loading
 % load MAT files with data
@@ -65,16 +65,16 @@ end
 
 if arch == 2
    % reshape data
-   squares = reshape(squares, [size(squares,1), 32^2]);
-   triangles = reshape(triangles, [size(triangles,1), 32^2]);
+   squares = reshape(squares, [size(squares,1), im_dim(1) * im_dim(2)]);
+   triangles = reshape(triangles, [size(triangles,1), im_dim(1) * im_dim(2)]);
 end
 
 %% load the model
 switch arch
     case 1
-        lenet = model_io.read(lenet5_maxpool_full_model_fname);
+        net = model_io.read(lenet5_maxpool_full_model_fname);
     case 2
-        lenet = model_io.read(short_relu_full_model_fname);
+        net = model_io.read(short_relu_full_model_fname);
 end
 if verbose
     disp('Loaded the pre-trained model.');
@@ -130,7 +130,7 @@ for s = 1:length(shape_labels)
                     end
                     
                     [comp_hm, R, pred, gray_diff] = compute_lrp_heatmap(or_image, test_image, im_dim, ...
-                        lenet, method, select, shape_labels);
+                        net, method, select, shape_labels);
                                         
                     if visualize
                         subplot(sbplt_rows, sbplt_cols,counter);
@@ -157,6 +157,8 @@ for s = 1:length(shape_labels)
                     switch arch
                         case 1
                             titl_str = [tit_str ', model: lenet5\_maxpool'];
+                       case 2
+                            titl_str = [tit_str ', model: short\_relu (name??)'];                            
                     end
                     
                     if visualize

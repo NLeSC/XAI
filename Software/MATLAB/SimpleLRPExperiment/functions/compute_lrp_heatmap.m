@@ -58,8 +58,8 @@ end
 
 % For testing whether the relevance scores sum up to the sum of predictions
 % By the theory of LRP, the following should be equal, right?
-disp('The sum of pred_classes and sum of relevance scores (after LRP):')
-disp([sum(pred_classes) sum(sum(rel))])
+%disp('The sum of pred_classes and sum of relevance scores (after LRP):')
+%disp([sum(pred_classes) sum(sum(rel))])
 
 % reshape the input data to an image
 inp_shape = reshape(or_data,im_dim);

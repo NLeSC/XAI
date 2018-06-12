@@ -18,10 +18,10 @@ if visualize
 end
 
 %partial = input('Use subset [1=true|0=false]?: ');
-partial = false; % flag indicating if part of the dataset is used
+partial = true; % flag indicating if part of the dataset is used
 
 % masks  = input('Use band masks around shape contour [1=true|0=false]?: ');
-masks =  true;
+masks =  false;
 
 % threshold for the relevance heatmap values
 thresh = 0;
