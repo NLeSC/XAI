@@ -11,7 +11,7 @@ verbose = true;
 visualize = true;
 num_examples = 15;
 start_index = 1;
-start_indicies = 1:15:4*15; %1500-75;
+start_indicies = 1; %1500-75;
 step = 1;
 
 %arch = input('Chose architecture (1 = lenet5_maxpool): ');
@@ -31,6 +31,7 @@ for shape_label = shape_labels
     shape_index = find(test_labels == shape_label);
     input_1shape_images = test_images(shape_index,:);
     switch shape_label
+        % or stands most likely for original
         case 0
             or_squares = input_1shape_images;            
         case 2
@@ -69,6 +70,8 @@ end
 
 %% compute and dispay heat maps per each of the selected classes and methods
 for s = 1:length(shape_labels)
+    % s is the index of the selected shape for heatmap
+    
     selected_class = shape_labels(s);
     switch s
         case 1
@@ -84,6 +87,8 @@ for s = 1:length(shape_labels)
     %for method = 1:3
     for method = 3
         for c = 1:length(shape_labels)
+            % c is the index of the true shape
+            
             class = shape_labels(c);
             switch class
                 case 0
@@ -114,13 +119,14 @@ for s = 1:length(shape_labels)
                     
                     [comp_hm, R, pred, gray_diff] = compute_lrp_heatmap(or_image, test_image, im_dim, ...
                         lenet, method, select, shape_labels);
+                                        
                     if visualize
                         subplot(sbplt_rows, sbplt_cols,counter);
                         imshow(comp_hm); axis off ; drawnow;
                     end
                     
                     switch pred
-                        case 1
+                        case 0  % I think this should be 0 instead of 1?
                             pred_class = 'square';
                         case 2
                             pred_class = 'triangle';                            

@@ -7,7 +7,8 @@ config_params_tri_sq_rot;
 
 verbose = true;
 
-arch = input('Chose architecture (1 = lenet5_maxpool): ');
+%arch = input('Choose architecture (1 = lenet5_maxpool): ');
+arch = 2;
 %% load MAT files with data
 load(test_images_full_fname);
 num_test_images = size(test_images,1);
@@ -26,15 +27,22 @@ if verbose
      disp(['Reshaped ', num2str(num_test_images) ,' test labels']);
 end
 
+if arch == 2
+   % reshape data
+   test_images = reshape(test_images, [size(test_images,1), 32^2]);
+end
+
 %% load the model
 switch arch
     case 1
         lenet = model_io.read(lenet5_maxpool_full_model_fname);
+    case 2
+        lenet = model_io.read(short_relu_full_model_fname);
     otherwise
         error("Unknown architecture!");
 end
 if verbose
-    disp('Loading the pre-trained model...');
+    disp('Loaded the pre-trained model.');
 end
 
 %% pass the test data through the trained model
@@ -42,4 +50,4 @@ Pred = lenet.forward(test_images);
 [~,argmaxPred]  = max(Pred,[],2);
 [~,argmaxTruth] = max(test_labels,[],2);
 acc = mean(argmaxPred == argmaxTruth);
-disp(['Accuracy on the test set: ' num2str(acc*100)]);
+disp(['Accuracy (in %) on the test set: ' num2str(acc*100)]);
