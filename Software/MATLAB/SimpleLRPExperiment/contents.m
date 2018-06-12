@@ -46,3 +46,7 @@
 %**************************************************************************
 % config_params.m - setting configurable parameters for BabyAIShapes experiments
 % config_params_tri_sq_rot.m - setting configurable parameters for Tringles and Squares rotation experiments
+%**************************************************************************
+%% data generation
+% create_shapes_2 - generating triangles and squares dataset
+% create_bands_1.m - generating bands around edge of triangle and square shape
