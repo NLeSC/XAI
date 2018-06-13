@@ -18,7 +18,10 @@ if visualize
 end
 
 %partial = input('Use subset [1=true|0=false]?: ');
-partial = false; % flag indicating if part of the dataset is used
+partial = true; % flag indicating if part of the dataset is used
+
+% masks  = input('Use band masks around shape contour [1=true|0=false]?: ');
+masks =  false;
 
 % threshold for the relevance heatmap values
 thresh = 0;
@@ -44,6 +47,7 @@ end
 % load MAT files with data
 load(test_labels_full_fname);
 load(test_images_full_fname);
+load(test_bands_full_fname);
 num_test_images = size(test_images,1);
 if verbose
     disp(['Loaded ', num2str(num_test_images) ,' test images']);
@@ -224,8 +228,13 @@ else
          disp(['Computing statistic: ' statistic ' for ', num2str(num_test_images) ,' test images']);
         end
         for j = 1:num_test_images
-            evidence_square(j) = compute_evidence(rel_matrix_sq(j,:), statistic, thresh, []);
-            evidence_triangle(j) = compute_evidence(rel_matrix_tri(j,:), statistic, thresh, []);
+            if masks
+                mask = test_bands(j,:);
+            else
+                mask =[];
+            end
+            evidence_square(j) = compute_evidence(rel_matrix_sq(j,:), statistic, thresh, mask);
+            evidence_triangle(j) = compute_evidence(rel_matrix_tri(j,:), statistic, thresh, mask);
         end
         
         
@@ -248,10 +257,16 @@ else
             xlabel('Evidence for class square'); ylabel('Evidence for class triangle');
             if titles
                 if binary
-                    title(['Binary dataset: ' statistic]);
+                    title_str = ['Binary dataset: ' statistic];                    
                 else
-                    title(['Gray dataset: ' statistic]);
+                    title_str = ['Gray dataset: ' statistic];
                 end
+                if masks
+                    title_str = [title_str ' using band masks'];
+                else
+                    title_str = [title_str ' using all pixels'];
+                end
+                title(title_str);
             end
             hold off
             
