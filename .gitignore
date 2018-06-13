@@ -4,5 +4,6 @@
 /Data/MNIST/images
 /Data/MNIST/imageDatastores
 /Data/TrianglesAndSquaresRotation/Gray/
-/Results/Experiments/TrianglesAndSquares/Binary/*.mat
-/Results/Experiments/TrianglesAndSquares/Gray/*.mat
+/Data/TrianglesAndSquaresScaleRotation
+/Results/Experiments/TrianglesAndSquares/
+/Papers/
