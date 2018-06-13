@@ -14,7 +14,7 @@ verbose = true;
 visualize = true;
 num_examples = 15;
 start_index = 1;
-start_indicies = 1:15:31; %1500-75;
+start_indicies = 1;% :15:31; %1500-75;
 step = 1;
 
 %arch = input('Chose architecture (1 = lenet5_maxpool, 2= short_relu): ');
@@ -157,8 +157,9 @@ for s = 1:length(shape_labels)
                     switch arch
                         case 1
                             titl_str = [tit_str ', model: lenet5\_maxpool'];
-                       case 2
-                            titl_str = [tit_str ', model: short\_relu (name??)'];                            
+                        case 2
+                            titl_str = [tit_str ', model: short\_relu'];
+
                     end
                     
                     if visualize

@@ -44,8 +44,6 @@ pred_classes = model.forward(data);
 [~,index_pred_class] = max(pred_classes);
 pred_class = shape_labels(index_pred_class);
 
-
-
 % compute the relevance after LRP
 switch lrp_method
     case 1
@@ -69,7 +67,8 @@ gray_diff = abs(max(or_data(:)) - min(or_data(:)));
 shape = render.shape_to_rgb(round(inp_shape*255),3);
 %shape = render.digit_to_rgb(inp_shape,3);
 shape = permute(shape,[2 1 3]);
-hm = render.hm_to_rgb(rel,data,3,[],2);
+cmap = gray(256); %jet(255);
+hm = render.hm_to_rgb(rel,data,3,[],2, cmap);
 comp_hm = render.save_image({shape,hm},'../heatmap.png');
 %delete('../heatmap.png');
 
