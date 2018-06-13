@@ -26,12 +26,21 @@ New one keras-oriented is coming up!
 [LRP tutorial](http://www.heatmapping.org/tutorial/) (orginial);
 [LRP tutorial](https://github.com/NLeSC/XAI/tree/master/Software/Python/LRP%20Tutorial) (redone by me)
 
-### CLEAR - CLass-Enhanced Attentive Response (CLEAR) maps - fix link!
+### CLEAR - CLass-Enhanced Attentive Response (CLEAR) maps
 [Paper](https://github.com/NLeSC/XAI/tree/master/State-of-the-art/CLEAR) in State-of-the-art-folder
+
+### DeepLIFT
+[Paper](https://github.com/NLeSC/XAI/tree/master/State-of-the-art/DeepLIFT) in State-of-the-art-folder
+
+### SHAP
+[Paper](https://github.com/NLeSC/XAI/tree/master/State-of-the-art/SHAP) in State-of-the-art-folder
 
 ### Other
 [Building blocks for interpretability](https://distill.pub/2018/building-blocks/) Distill article
 
 ## Prototyping 
 March, April 2018: [simple experiment](https://github.com/NLeSC/XAI/tree/master/Software/MATLAB/SimpleLRPExperiment) to find out the informativeness of LRP heatmaps on a squares vs triangles classification via CNN task
-later in 2018: Testing model 'adaptor' idea, pilot- [MATLAB NNToolbox <-> LRP Toolbox](https://github.com/NLeSC/XAI/tree/master/Software/MATLAB/NN2LRPToolboxMNISTDemo) ?
+
+Later in 2018: Testing model 'adaptor' idea, pilot- [MATLAB NNToolbox <-> LRP Toolbox](https://github.com/NLeSC/XAI/tree/master/Software/MATLAB/NN2LRPToolboxMNISTDemo) ?
+
+May, June 2018: Simple LRP experiemtn with Triangles and Squares dataset.
