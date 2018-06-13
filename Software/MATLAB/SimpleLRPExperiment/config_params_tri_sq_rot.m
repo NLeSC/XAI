@@ -26,7 +26,8 @@ end
 if binary
     path2matTrianglesAndSquaresShapes = fullfile(project_path,'/Data/TrianglesAndSquaresRotation/Binary');
 else
-    path2matTrianglesAndSquaresShapes = fullfile(project_path,'/Data/TrianglesAndSquaresRotation/Gray');
+   % path2matTrianglesAndSquaresShapes = fullfile(project_path,'/Data/TrianglesAndSquaresRotation/Gray');
+   path2matTrianglesAndSquaresShapes = fullfile(project_path,'/Data/TrianglesAndSquaresScaleRotation/Gray');
 end
 train_images_mat_fname = 'TrianglesAndSquares_images_train_50k.mat';
 test_images_mat_fname = 'TrianglesAndSquares_images_test_30k.mat';
@@ -60,11 +61,12 @@ end
 lenet5_maxpool_full_model_fname = fullfile(path2models, lenet5_maxpool_model_fname);
 
 
-linear_model_basename = 'short_relu';
+linear_model_basename = 'two_layer_short_relu';
 if binary
     short_relu_model_fname = [linear_model_basename '_binary_triangles_and_squares_rotation.mat'];
 else
-    short_relu_model_fname = [linear_model_basename '_gray_triangles_and_squares_rotation.mat'];
+    %short_relu_model_fname = [linear_model_basename '_gray_triangles_and_squares_rotation.mat'];
+    short_relu_model_fname = [linear_model_basename '_gray_triangles_and_squares_scale_rotation.mat'];
 end
 short_relu_full_model_fname = fullfile(path2models, short_relu_model_fname);
 
@@ -83,7 +85,7 @@ if save_relevance
         case 2
            path2experiments = fullfile(path2experiments, 'short-relu');  
     end
-    predictions_fname_base = 'TrianglesAndSquares_test_30k_predicitons.mat';
+    predictions_fname_base = 'TrianglesAndSquares_test_30k_predictions.mat';
     predictions_fullfname = fullfile(path2experiments,predictions_fname_base);
     
 end
@@ -106,7 +108,8 @@ if save_evidence
 end
 
 % image dimentions and reshape order
-im_dim = [32 32];
+%im_dim = [32 32];
+im_dim = [64 64];
 num_channels = 1;
 reshape_order = [1 3 2 4];
 res_order = [2 1 3];

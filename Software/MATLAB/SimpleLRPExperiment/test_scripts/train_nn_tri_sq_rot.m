@@ -50,16 +50,16 @@ end
 
 if arch == 2
    % reshape data
-   train_images = reshape(train_images, [size(train_images,1), 32^2]);
-   valid_images = reshape(valid_images, [size(valid_images,1), 32^2]);
+   train_images = reshape(train_images, [size(train_images,1), im_dim(1)^2]);
+   valid_images = reshape(valid_images, [size(valid_images,1), im_dim(1)^2]);
 end
 
 %% create LeNet CNN
 switch arch
     case 1
-        [lenet] = lenet5_maxpool_arch2();
+        [net] = lenet5_maxpool_arch2();
     case 2
-        [lenet] = short_relu_arch();
+        [net] = short_relu_arch();
     otherwise
         error("Unknown architecture!");
 end
@@ -69,7 +69,7 @@ end
 if verbose
      disp('Training LeNet on the training images using the validation images');
 end
-lenet.train(train_images,train_labels,valid_images,valid_labels,25,num_train_iter,0.0001);
+net.train(train_images,train_labels,valid_images,valid_labels,25,num_train_iter,0.0001);
 
 %% save the model
 if save
@@ -81,7 +81,7 @@ if save
         otherwise
             error("Unknown architecture!");
     end
-    model_io.write(lenet, full_model_fname);
+    model_io.write(net, full_model_fname);
     if verbose
         disp('Saving the model...');
     end

@@ -1,7 +1,7 @@
 % visualize_1shape - visualize 1 shape from the simple shapes datasets
 % **************************************************************************
 % function [] = visualize_1shape(shape_images, shape_label, num2display, ...
-%                   start_index, step)
+%                   start_index, step, im_dim)
 %
 % author: Elena Ranguelova, NLeSc
 % date created: 02-02-2018
@@ -14,6 +14,7 @@
 % num2display    number of imges to display in 1 figure
 % start_index    the index of the first image to display
 % step           the index step betweeen 2 images to display
+% im_dim         image dimensions
 %**************************************************************************
 % OUTPUTS:
 %**************************************************************************
@@ -26,7 +27,7 @@
 % REFERENCES:
 %**************************************************************************
 function [] = visualize_1shape(shape_images, shape_label, num2display, ...
-    start_index, step)
+    start_index, step, im_dim)
 
 
 %% check input parameters => error
@@ -35,6 +36,9 @@ if (num2display > num_images) || (start_index + num2display*step > num_images)
     error("The number or index of images to display exeeds the total number of shape images!");
 elseif num2display > 30
     error("The number of images to display exeeds the number of images to dusplay in 1 figure!");
+end
+if isempty(im_dim)
+    im_dim = [32 32];
 end
 
 %% figure and subplots
@@ -48,7 +52,7 @@ for i = 1:step:num2display*step
     %disp(['Start_index + i:', num2str(start_index + i)]);
     count = count + 1;
     subplot(sbplt_rows, sbplt_cols,count);
-    shape = reshape(shape_images(start_index + i,:),32,32);
+    shape = reshape(shape_images(start_index + i,:),im_dim(1),im_dim(2));
     imshow(shape);
     hold on;
 end
