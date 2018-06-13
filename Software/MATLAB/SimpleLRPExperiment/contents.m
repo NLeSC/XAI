@@ -24,6 +24,7 @@
 % normalize_relevance_map - normalize relevance map, so max value is 1
 % sum_pixels_evidence_2class - agreggated pixel evidence for, against or neutral for 2 classes
 % compute_evidence - selected statistical evidence from an LRP within a mask
+% swap_colors - Swaps the background and foreground color in an image described by a vector v.
 %**************************************************************************
 %% test_scripts
 %**************************************************************************

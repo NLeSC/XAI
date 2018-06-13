@@ -1,0 +1,33 @@
+Some random comments by Joost:
+- It seems that the function numSubplots is missing. I downloaded it at: https://nl.mathworks.com/matlabcentral/fileexchange/26310-numsubplots-neatly-arrange-subplots
+- I was a bit confused about where to place the data from the Dropbox in the current repository. When binary = false, it couldn't find the data. I now placed the "gray" folder in \XAI\Data\TrianglesAndSquaresRotation.
+- Where can I find information about how work with "modules" and setting up a neural network with LRP toolbox? The doc in Matlab does not contain a lot of information. Wait! It is contained in the manual! Hmm, modules.Convolution() is not explained there... Ah, see code for details: https://github.com/sebastian-lapuschkin/lrp_toolbox/blob/master/matlab/%2Bmodules/Convolution.m
+- Documentation https://github.com/sebastian-lapuschkin/lrp_toolbox/blob/master/matlab/%2Bmodules/Flatten.m is confusing because it states that it is a rectification layer?
+- Why do the rows in Pred = lenet.forward(test_images); do not add up to one (in test_lenet_tri_sq_rot.m)?
+- '...\XAI\Data\TrianglesAndSquaresRotation\Gray\TrianglesAndSquares_images_train_50k.mat'. No such file or directory. Do I miss something?
+- Where are the training and validate sets of grey variant? (asked question to Elena by mail). Elena added it to the shared Dropbox folder.
+- It seems that "The sum of pred_classes and sum of relevance scores (after LRP)" are not equal to each other... It should be, right?
+- For more details about how to setup a nn see: https://github.com/sebastian-lapuschkin/lrp_toolbox/blob/master/matlab/training_test.m
+- Even the neural network 
+
+net = modules.Sequential({
+                            modules.Linear(32^2, 2),...
+                            modules.SoftMax()
+                            });
+
+already seems to give roughly the same results. Is that logical? On the other hand
+
+net = modules.Sequential({
+                            modules.Linear(32^2, 2),...
+                            });
+
+does not and seems to be independent on the selected shape.
+- Why does neural network
+
+net = modules.Sequential({
+                            modules.Linear(32^2, 2),...
+                            modules.Linear(2, 2),...
+                            });
+							
+give NaN numbers in the heatmap?
+- Warning: if you have some commented lines in the Sequential constructor, it does not work when setting the neural network.
