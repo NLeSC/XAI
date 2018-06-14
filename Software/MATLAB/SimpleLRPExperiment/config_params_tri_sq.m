@@ -5,7 +5,9 @@ binary = false;
 %save_relevance = input('Save relevance matrix and predicted classes? [1=true|0=false]: ');
 save_relevance = true;
 %save_evidence = input('Save evidence statistics? [1=true|0=false]: ');
-save_evidence = true;
+save_evidence = false;
+
+test10k = true;
 
 scaling =  false; % true means scaling dataset 64 x 64
 
@@ -35,11 +37,19 @@ else
     end
 end
 train_images_mat_fname = 'TrianglesAndSquares_images_train_50k.mat';
-test_images_mat_fname = 'TrianglesAndSquares_images_test_30k.mat';
+if test10k
+    test_images_mat_fname = 'TrianglesAndSquares_images_test_10k.mat';
+else
+    test_images_mat_fname = 'TrianglesAndSquares_images_test_30k.mat';
+end
 valid_images_mat_fname = 'TrianglesAndSquares_images_valid_20k.mat';
 
 train_labels_mat_fname = 'TrianglesAndSquares_labels_train_50k.mat';
-test_labels_mat_fname = 'TrianglesAndSquares_labels_test_30k.mat';
+if test10k
+    test_labels_mat_fname = 'TrianglesAndSquares_labels_test_10k.mat';
+else
+    test_labels_mat_fname = 'TrianglesAndSquares_labels_test_30k.mat';
+end
 valid_labels_mat_fname = 'TrianglesAndSquares_labels_valid_20k.mat';
 
 test_bands_mat_fname = 'TrianglesAndSquares_bands_test_30k.mat';
@@ -81,7 +91,11 @@ short_relu_full_model_fname = fullfile(path2models, short_relu_model_fname);
 %% relevance
 if save_relevance
     path2vid = fullfile(project_path, '/Results/Experiments/TrianglesAndSquares');
-    relevance_fname_base = 'TrianglesAndSquares_test_30k_relevance';
+    if test10k
+        relevance_fname_base = 'TrianglesAndSquares_test_10k_relevance';
+    else
+        relevance_fname_base = 'TrianglesAndSquares_test_30k_relevance';
+    end
     if binary
         path2experiments = fullfile(path2vid, 'Binary');
     else
@@ -93,7 +107,11 @@ if save_relevance
         case 2
             path2experiments = fullfile(path2experiments, 'short-relu');
     end
-    predictions_fname_base = 'TrianglesAndSquares_test_30k_predictions.mat';
+    if test10k
+        predictions_fname_base = 'TrianglesAndSquares_test_10k_predictions.mat';
+    else
+        predictions_fname_base = 'TrianglesAndSquares_test_30k_predictions.mat';
+    end
     predictions_fullfname = fullfile(path2experiments,predictions_fname_base);
     
 end
