@@ -6,7 +6,7 @@
 % this script uses LRP Toolbox v.1.2.0
 
 %% parameters
-config_params_tri_sq_rot;
+config_params_tri_sq;
 
 unique_flag = true;
 

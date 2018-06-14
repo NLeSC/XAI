@@ -1,7 +1,7 @@
 % plot_relevance_maps - script to visualize relevance maps
 
 %% parameters
-config_params_tri_sq_rot;
+config_params_tri_sq;
 verbose = true;
 %normalize = input('Normalize relevance maps [1=true|0=false]?: ');
 normalize = false;

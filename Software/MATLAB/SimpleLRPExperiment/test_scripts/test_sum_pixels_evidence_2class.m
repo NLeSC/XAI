@@ -2,7 +2,7 @@
 % selected class
 
 %% parameters
-config_params_tri_sq_rot;
+config_params_tri_sq;
 
 verbose = true;
 

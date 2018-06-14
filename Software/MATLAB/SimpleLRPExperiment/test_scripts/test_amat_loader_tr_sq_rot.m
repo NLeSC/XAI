@@ -2,7 +2,7 @@
 % for the tr_sq_rot data.
 
 %% parameters
-config_params_tri_sq_rot;
+config_params_tri_sq;
 
 verbose = true;
 visualize = true;

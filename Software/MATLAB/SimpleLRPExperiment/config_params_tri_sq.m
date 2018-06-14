@@ -1,4 +1,4 @@
-% config_params_tri_sq_rot.m - setting configurable parameters for Tringles and Squares rotation experiments
+% config_params_tri_sq.m - setting configurable parameters for Tringles and Squares experiments
 
 %binary = input('Process Binary dataset? Binary=true, Gray=false. [1=true|0=false]: ');
 binary = false;
