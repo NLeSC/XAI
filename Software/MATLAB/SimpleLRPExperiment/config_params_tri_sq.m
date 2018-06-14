@@ -7,9 +7,11 @@ save_relevance = true;
 %save_evidence = input('Save evidence statistics? [1=true|0=false]: ');
 save_evidence = true;
 
+scaling =  false; % true means scaling dataset 64 x 64
+
 %arch = input('Chose architecture (1 = lenet5_maxpool, 2= short_relu): ');
 %arch = 1;  % lenet5_maxpool
-arch = 2;  % short relu 
+arch = 2;  % short relu
 
 num_train_iter = 20000;
 
@@ -26,8 +28,11 @@ end
 if binary
     path2matTrianglesAndSquaresShapes = fullfile(project_path,'/Data/TrianglesAndSquaresRotation/Binary');
 else
-   % path2matTrianglesAndSquaresShapes = fullfile(project_path,'/Data/TrianglesAndSquaresRotation/Gray');
-   path2matTrianglesAndSquaresShapes = fullfile(project_path,'/Data/TrianglesAndSquaresScaleRotation/Gray');
+    if scaling
+        path2matTrianglesAndSquaresShapes = fullfile(project_path,'/Data/TrianglesAndSquaresScaleRotation/Gray');
+    else
+        path2matTrianglesAndSquaresShapes = fullfile(project_path,'/Data/TrianglesAndSquaresRotation/Gray');
+    end
 end
 train_images_mat_fname = 'TrianglesAndSquares_images_train_50k.mat';
 test_images_mat_fname = 'TrianglesAndSquares_images_test_30k.mat';
@@ -65,8 +70,11 @@ linear_model_basename = 'two_layer_short_relu';
 if binary
     short_relu_model_fname = [linear_model_basename '_binary_triangles_and_squares_rotation.mat'];
 else
-    %short_relu_model_fname = [linear_model_basename '_gray_triangles_and_squares_rotation.mat'];
-    short_relu_model_fname = [linear_model_basename '_gray_triangles_and_squares_scale_rotation.mat'];
+    if scaling
+        short_relu_model_fname = [linear_model_basename '_gray_triangles_and_squares_scale_rotation.mat'];
+    else
+        short_relu_model_fname = [linear_model_basename '_gray_triangles_and_squares_rotation.mat'];
+    end
 end
 short_relu_full_model_fname = fullfile(path2models, short_relu_model_fname);
 
@@ -81,9 +89,9 @@ if save_relevance
     end
     switch arch
         case 1
-           path2experiments = fullfile(path2experiments, 'lenet5-maxpool');  
+            path2experiments = fullfile(path2experiments, 'lenet5-maxpool');
         case 2
-           path2experiments = fullfile(path2experiments, 'short-relu');  
+            path2experiments = fullfile(path2experiments, 'short-relu');
     end
     predictions_fname_base = 'TrianglesAndSquares_test_30k_predictions.mat';
     predictions_fullfname = fullfile(path2experiments,predictions_fname_base);
@@ -100,16 +108,19 @@ if save_evidence
     end
     switch arch
         case 1
-           path2evidence = fullfile(path2evidence, 'lenet5-maxpool');  
+            path2evidence = fullfile(path2evidence, 'lenet5-maxpool');
         case 2
-           path2evidence = fullfile(path2evidence, 'short-relu');  
+            path2evidence = fullfile(path2evidence, 'short-relu');
     end
-    evidence_fullfname = fullfile(path2evidence,evidence_fname_base);   
+    evidence_fullfname = fullfile(path2evidence,evidence_fname_base);
 end
 
 % image dimentions and reshape order
-%im_dim = [32 32];
-im_dim = [64 64];
+if scaling
+    im_dim = [64 64];
+else
+    im_dim = [32 32];
+end
 num_channels = 1;
 reshape_order = [1 3 2 4];
 res_order = [2 1 3];
