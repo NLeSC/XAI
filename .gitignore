@@ -6,3 +6,5 @@
 /Data/TrianglesAndSquaresRotation/Gray/
 /Results/Experiments/TrianglesAndSquares/Binary/*.mat
 /Results/Experiments/TrianglesAndSquares/Gray/*.mat
+*.mat
+*.dat
