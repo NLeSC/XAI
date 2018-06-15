@@ -68,6 +68,7 @@ disp('The original R-sum is: ')
 disp(sum(Y))
 disp('After LRP the R-sum is: ')
 disp(sum(lrp_scores))
-disp('Conclusions: the relevance conservation principle does not seem to holds...')
+disp('Conclusions: the relevance conservation principle does not seem to holds for the original LRP toolbox code...')
+disp('However, when I uncommented the lrp function in softmax() it does give the right results!')
 
 end
