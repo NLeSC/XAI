@@ -71,4 +71,49 @@ disp(sum(lrp_scores))
 disp('Conclusions: the relevance conservation principle does not seem to holds for the original LRP toolbox code...')
 disp('However, when I uncommented the lrp function in softmax() it does give the right results!')
 
+disp(newline)
+
+disp('Regarding second last layer:')
+disp('============================')
+second_last_layer = model.modules{numb_layers - 1};
+X = second_last_layer.X;
+Y = second_last_layer.Y;
+W = second_last_layer.W;
+B = second_last_layer.B;
+Y_manual = X * W + B;
+disp('Size(X)')
+disp(size(X))
+disp('Size(Y)')
+disp(size(Y))
+disp('Size(W)')
+disp(size(W))
+disp('Norm between Y values from model and manually calculating: ')
+disp(norm(Y - Y_manual));
+disp('The original R-sum is: ')
+disp(lrp_scores)
+disp('After LRP the R-sum is: ')
+lrp_scores = second_last_layer.lrp(lrp_scores, 'alphabeta', 2);
+disp(sum(lrp_scores))
+
+% only for small examples
+disp('X')
+disp(X)
+disp('W')
+disp(W)
+disp('B')
+disp(B)
+disp('X * W')
+disp(X * W)
+disp('X'' .* W(:,1)')
+disp(X' .* W(:,1))
+disp('X'' .* W(:,2)')
+disp(X' .* W(:,2))
+disp('Y')
+disp(Y)
+disp('lrp_scores')
+disp(lrp_scores)
+
+
+
+
 end
