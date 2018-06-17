@@ -1,4 +1,4 @@
-% demo_lrp_exp_nn_tri_sq_rot.m - demo experiment for LRP heatmaps on 
+% demo_lrp_exp_nn_tri_sq_rot_with_both_selected.m - demo experiment for LRP heatmaps on 
 % general neural networks (nn) on the Triangles and Squares dataset.
 % This script file is a copy of demo_lrp_exp_lenet_tri_sq_rot.m but then
 % created for general neural networks.
@@ -130,9 +130,11 @@ for s = 1:length(shape_labels)
                             or_image = or_triangles(index,:,:,:);
                     end
                     
-                    [comp_hm, RSquare, RTriangle, pred, gray_diff] = compute_both_lrp_heatmaps(or_image, test_image, im_dim, ...
+                    [comp_hm, RSquare, RTriangle, RPred, pred, gray_diff, pred_scores] = compute_both_lrp_heatmaps(or_image, test_image, im_dim, ...
                         net, method, select, shape_labels);
-                                        
+                    
+                    disp([sum(RSquare), sum(RTriangle), sum(RPred)])
+                    
                     if visualize
                         subplot(sbplt_rows, sbplt_cols, counter);
                         imshow(comp_hm); axis off ; drawnow;
@@ -162,8 +164,18 @@ for s = 1:length(shape_labels)
                             titl_str = [tit_str ', model: short\_relu'];
                     end
                     
+                    % find the colors for the modified image
+                    uniq_colors = unique(test_image);
+                    backgr_color = test_image(1,1);
+                    shape_color = uniq_colors(uniq_colors ~= backgr_color);
+                    
+                    % find the colors for the original image (or)
+                    or_uniq_colors = unique(or_image);
+                    or_backgr_color = or_image(1,1);
+                    or_shape_color = or_uniq_colors(or_uniq_colors ~= or_backgr_color);
+                    
                     if visualize
-                        title(['Pred.: ' pred_class ' | Selected square & triangle']);
+                        title(['Pred.: (' num2str(round(pred_scores(1), 3)) ', ' num2str(round(pred_scores(2), 3)) ') | Select. 0, 2 & f(x)' newline 'Backgr. and shape color ' num2str(round(backgr_color,2)) ', ' num2str(round(shape_color,2)) newline 'Orig. Backgr. and shape color ' num2str(round(or_backgr_color,2)) ', ' num2str(round(or_shape_color,2))]);
                         xlabel(['Abs. gray val. diff: ', num2str(gray_diff)]);
                     end
                 end
