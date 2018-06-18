@@ -6,9 +6,9 @@ verbose = true;
 %normalize = input('Normalize relevance maps [1=true|0=false]?: ');
 normalize = false;
 %subplots = input('Use subplots [1=true|0=false]?: ');
-subplots = true;
+subplots = false;
 %titles = input('Use titles [1=true|0=false]?: ');
-titles = true;
+titles = false;
 
 % select 2 images of the 2 shapes who are correctly classified
 if binary
@@ -16,8 +16,10 @@ if binary
     indecies_tri  = [4 9 32 799 6970 10686 16629 18765 22162 29999];
 else
     if test10k
-        indecies_sq = [2 66 6734 9749 ];
-        indecies_tri  = indecies_sq +1;
+        %indecies_sq = [2 66 6734 9749 ];
+        indecies_sq = 66;
+        %indecies_tri  = indecies_sq +1
+        indecies_tri = 9750;
     else
         
         indecies_sq = [2 66 6734 9749 17495 19954 21855 22801 26519 29995];
@@ -97,9 +99,11 @@ for i =  1:num_shape_pairs
     if subplots
         subplot(131);
     end
-    imagesc(image_sq_rgbimg); colormap(gca, gray); colorbar; axis square;
+    imagesc(image_sq_rgbimg); colormap(gca, gray);  axis square;
     if subplots
-        axis on, grid on;
+        axis on, grid on;colorbar;
+    else
+        axis off;
     end
     if titles
         title(['Shape ' num2str(index_sq) ': square']);
@@ -109,9 +113,11 @@ for i =  1:num_shape_pairs
     else
         figure('units','normalized','outerposition',[0 0 1 1]);
     end
-    imagesc(rel_map_sq_sq_rgbimg); colormap(gca, jet); colorbar;axis square;
+    imagesc(rel_map_sq_sq_rgbimg); colormap(gca, jet); axis square;
     if subplots
-        axis on, grid on;
+        axis on, grid on;colorbar;
+    else
+        axis off;
     end
     if titles
         title('Relevance: class square');
@@ -122,9 +128,11 @@ for i =  1:num_shape_pairs
     else
         figure('units','normalized','outerposition',[0 0 1 1]);
     end
-    imagesc(rel_map_sq_tri_rgbimg); colormap(gca, jet); colorbar; axis square;
+    imagesc(rel_map_sq_tri_rgbimg); colormap(gca, jet); axis square;
     if subplots
-        axis on, grid on;
+        axis on, grid on; colorbar;
+    else
+        axis off;
     end
     if titles
         title('Relevance: class triangle');
@@ -135,9 +143,11 @@ for i =  1:num_shape_pairs
     if subplots
         subplot(131);
     end
-    imagesc(image_tri_rgbimg); colormap(gca, gray); colorbar; axis square;
+    imagesc(image_tri_rgbimg); colormap(gca, gray);  axis square;
     if subplots
-        axis on, grid on;
+        axis on, grid on;colorbar;
+    else
+        axis off;
     end
     if titles
         title(['Shape ' num2str(index_tri) ': triangle']);
@@ -147,9 +157,11 @@ for i =  1:num_shape_pairs
     else
         figure('units','normalized','outerposition',[0 0 1 1]);
     end
-    imagesc(rel_map_tri_sq_rgbimg); colormap(gca, jet); axis square;colorbar;
+    imagesc(rel_map_tri_sq_rgbimg); colormap(gca, jet); axis square;
     if subplots
-        axis on, grid on;
+        axis on, grid on;colorbar;
+    else
+        axis off;
     end
     % if titles
     %     if normalize
@@ -167,7 +179,12 @@ for i =  1:num_shape_pairs
     else
         figure('units','normalized','outerposition',[0 0 1 1]);
     end
-    imagesc(rel_map_tri_tri_rgbimg); colormap(gca, jet); axis square; colorbar;axis on, grid on;
+    imagesc(rel_map_tri_tri_rgbimg); colormap(gca, jet); axis square;
+    if subplots
+        axis on, grid on; colorbar;
+    else
+        axis off;
+    end
     % if titles
     %      if normalize
     %         title('Normalized relevance: class "triangle"');
