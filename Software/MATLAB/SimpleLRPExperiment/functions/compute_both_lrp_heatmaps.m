@@ -79,7 +79,7 @@ hm2 = render.hm_to_rgb(rel2,data,3,[],2, cmap);
 hm3 = render.hm_to_rgb(rel3,data,3,[],2, cmap);
 comp_hm = render.save_image({shape,hm1,hm2,hm3},'../heatmap.png');
 pred_scores = pred_classes;
-%delete('../heatmap.png');
+delete('../heatmap.png');
 
 
 
