@@ -176,7 +176,7 @@ for method = 3
                 or_shape_color = or_uniq_colors(or_uniq_colors ~= or_backgr_color);
 
                 if visualize
-                    title(['Pred.: (' num2str(round(pred_scores(1), 3)) ', ' num2str(round(pred_scores(2), 3)) ') | Select. 0, 2 & f(x)' newline 'Backgr. and shape color ' num2str(round(backgr_color,2)) ', ' num2str(round(shape_color,2)) newline 'Orig. Backgr. and shape color ' num2str(round(or_backgr_color,2)) ', ' num2str(round(or_shape_color,2))]);
+                    title(['Pred.: (' num2str(round(pred_scores(1), 3)) ', ' num2str(round(pred_scores(2), 3)) ') | Select. 0, 2 & f(x)' newline 'Backgr. and shape color ' num2str(round(backgr_color,2)) ', ' num2str(round(shape_color,2)) newline 'Orig. Backgr. and shape color ' num2str(round(or_backgr_color,2)) ', ' num2str(round(or_shape_color,2)) newline 'Sum LRP scores: ' num2str(sum(RSquare)) ' ' num2str(sum(RTriangle)) ' ' num2str(sum(RPred))]);
                     xlabel(['Abs. gray val. diff: ', num2str(gray_diff)]);
                 end
             end

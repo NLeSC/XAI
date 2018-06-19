@@ -18,8 +18,8 @@ PCA_input = data_PCA*W;
 % PCA
 [coef, scores, L] = pca(PCA_input);
 
-% scores = PCA_input;
-% scores = scores + randn(size(scores))/10;
+scores = PCA_input;
+scores = scores + randn(size(scores))/10;
 
 % plot results PCA
 
