@@ -37,7 +37,7 @@
 % paper: DOI: 10.1371/journal.pone.0130140
 %**************************************************************************
 function [comp_hm, rel1, rel2, rel3, pred_class, gray_diff, pred_scores] = compute_both_lrp_heatmaps(or_data, data, im_dim, ...
-    model, lrp_method, select, shape_labels)
+    model, lrp_method, shape_labels)
 
 % pass the image trough the pre-trained model
 pred_classes = model.forward(data);
@@ -47,15 +47,16 @@ pred_class = shape_labels(index_pred_class);
 % compute the relevance after LRP
 switch lrp_method
     case 1
-        rel = model.lrp(select);
+        rel1 = model.lrp([1 0]);
+        rel2 = model.lrp([0 1]);
+        rel3 = model.lrp(pred_classes);
     case 2
-        rel = model.lrp(select,'epsilon',1.);
+        rel1 = model.lrp([1 0],'epsilon',1.);
+        rel2 = model.lrp([0 1],'epsilon',1.);
+        rel3 = model.lrp(pred_classes,'epsilon',1.);
     case 3
-%         disp('for square')
         rel1 = model.lrp([1 0],'alphabeta',2);
-%         disp('for triangle')
         rel2 = model.lrp([0 1],'alphabeta',2);
-%         disp('for pred_classes')
         rel3 = model.lrp(pred_classes,'alphabeta',2);
 end
 

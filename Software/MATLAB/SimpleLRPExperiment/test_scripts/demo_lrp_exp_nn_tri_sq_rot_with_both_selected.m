@@ -83,120 +83,105 @@ if verbose
     disp('Loaded the pre-trained model.');
 end
 
-%% compute and dispay heat maps per each of the selected classes and methods
-for s = 1:length(shape_labels)
-    % s is the index of the selected shape for heatmap
-    
-    % set variables regarding selected shape
-    selected_class = shape_labels(s);
-    switch s
-        case 1
-            select_label = 'square';            
-        case 2
-            select_label = 'triangle';            
-    end
-    select = (1:size(test_labels,2) == s)*1.;
-    
-    
-    for method = 3
-        for c = 1:length(shape_labels)
-            % c is the index of the true shape
-            
-            class = shape_labels(c);
-            switch class
-                case 0
-                    class_label = 'square';
-                case 2
-                    class_label = 'triangle';                    
+%% compute and dispay heat maps for all selected classes and methods
+for method = 3
+    for c = 1:length(shape_labels)
+        % c is the index of the true shape
+
+        class = shape_labels(c);
+        switch class
+            case 0
+                class_label = 'square';
+            case 2
+                class_label = 'triangle';                    
+        end
+        for start_index = start_indicies
+            if visualize
+                figure('units','normalized','outerposition',[0 0 1 1]);
+                %subplts = numSubplots(num_examples);
+                sbplt_rows = 3; sbplt_cols = 4;
+                hold on
             end
-            for start_index = start_indicies
-                if visualize
-                    figure('units','normalized','outerposition',[0 0 1 1]);
-                    %subplts = numSubplots(num_examples);
-                    sbplt_rows = 3; sbplt_cols = 4;
-                    hold on
+            counter = 0;
+            for i = 1:step:num_examples*step
+                counter = counter + 1;
+                switch c
+                    case 1
+                        index = i + start_index;
+                        test_image = squares(index,:,:,:);
+                        or_image = or_squares(index,:,:,:);                        
+                    case 2
+                        index = i + start_index;
+                        test_image = triangles(index,:,:,:);
+                        or_image = or_triangles(index,:,:,:);
                 end
-                counter = 0;
-                for i = 1:step:num_examples*step
-                    counter = counter + 1;
-                    switch c
-                        case 1
-                            index = i + start_index;
-                            test_image = squares(index,:,:,:);
-                            or_image = or_squares(index,:,:,:);                        
-                        case 2
-                            index = i + start_index;
-                            test_image = triangles(index,:,:,:);
-                            or_image = or_triangles(index,:,:,:);
-                    end
-                    
-                    [comp_hm, RSquare, RTriangle, RPred, pred, gray_diff, pred_scores] = compute_both_lrp_heatmaps(or_image, test_image, im_dim, ...
-                        net, method, select, shape_labels);
-                    
+
+                [comp_hm, RSquare, RTriangle, RPred, pred, gray_diff, pred_scores] = compute_both_lrp_heatmaps(or_image, test_image, im_dim, ...
+                    net, method, shape_labels);
+
 %                     disp([sum(RSquare), sum(RTriangle), sum(RPred)])
-%                     [comp_hm, net, rel_first_layer] = inspect_layer_with_lrp(net, test_image, or_image, im_dim, true);
-                    
+                [comp_hm, net, rel_first_layer] = inspect_layer_with_lrp(net, test_image, or_image, im_dim, true);
+
 %                     rel_first_layer = reshape(rel_first_layer, im_dim);
 %                     figure('units','normalized','outerposition',[0 0 1 1])
 %                     heatmap(rel_first_layer)
 %                     title([select_label ' ' pred])
 
-                    if visualize
-                        subplot(sbplt_rows, sbplt_cols, counter);
-                        imshow(comp_hm); axis off ; drawnow;
-                    end
-                    
-                    switch pred
-                        case 0  % I think this should be 0 instead of 1?
-                            pred_class = 'square';
-                        case 2
-                            pred_class = 'triangle';                            
-                    end
+                if visualize
+                    subplot(sbplt_rows, sbplt_cols, counter);
+                    imshow(comp_hm); axis off ; drawnow;
+                end
+
+                switch pred
+                    case 0  % I think this should be 0 instead of 1?
+                        pred_class = 'square';
+                    case 2
+                        pred_class = 'triangle';                            
+                end
 %                     if verbose
 %                         fprintf('Predicted Class: %d: %s \n\n', pred-1, pred_class);
 %                     end
-                    switch method
-                        case 1
-                            tit_str = ' LRP: ratio local and global pre-activtatons';
-                        case 2
-                            tit_str = 'LRP: Using stabilizer  epsilon: 1';
-                        case 3
-                            tit_str = ' LRP: Using alpha-beta rule: 2';
-                    end
-                    switch arch
-                        case 1
-                            titl_str = [tit_str ', model: lenet5\_maxpool'];
-                        case 2
-                            titl_str = [tit_str ', model: short\_relu'];
-                    end
-                    
-                    % find the colors for the modified image
-                    uniq_colors = unique(test_image);
-                    backgr_color = test_image(1,1);
-                    shape_color = uniq_colors(uniq_colors ~= backgr_color);
-                    
-                    % find the colors for the original image (or)
-                    or_uniq_colors = unique(or_image);
-                    or_backgr_color = or_image(1,1);
-                    or_shape_color = or_uniq_colors(or_uniq_colors ~= or_backgr_color);
-                    
-                    if visualize
-                        title(['Pred.: (' num2str(round(pred_scores(1), 3)) ', ' num2str(round(pred_scores(2), 3)) ') | Select. 0, 2 & f(x)' newline 'Backgr. and shape color ' num2str(round(backgr_color,2)) ', ' num2str(round(shape_color,2)) newline 'Orig. Backgr. and shape color ' num2str(round(or_backgr_color,2)) ', ' num2str(round(or_shape_color,2))]);
-                        xlabel(['Abs. gray val. diff: ', num2str(gray_diff)]);
-                    end
+                switch method
+                    case 1
+                        tit_str = ' LRP: ratio local and global pre-activtatons';
+                    case 2
+                        tit_str = 'LRP: Using stabilizer  epsilon: 1';
+                    case 3
+                        tit_str = ' LRP: Using alpha-beta rule: 2';
                 end
+                switch arch
+                    case 1
+                        titl_str = [tit_str ', model: lenet5\_maxpool'];
+                    case 2
+                        titl_str = [tit_str ', model: short\_relu'];
+                end
+
+                % find the colors for the modified image
+                uniq_colors = unique(test_image);
+                backgr_color = test_image(1,1);
+                shape_color = uniq_colors(uniq_colors ~= backgr_color);
+
+                % find the colors for the original image (or)
+                or_uniq_colors = unique(or_image);
+                or_backgr_color = or_image(1,1);
+                or_shape_color = or_uniq_colors(or_uniq_colors ~= or_backgr_color);
+
                 if visualize
-                    title_str = ['LRP on test set: 15 ' class_label ...
-                        ' images starting at image ' num2str(start_index) ...
-                        ' with step of ' num2str(step) '.' titl_str];
-                    axes('Position',[0 0 1 1],'Xlim',[0 1],'Ylim',[0  1],'Box','off','Visible','off','Units','normalized', 'clipping' , 'off');
-                    t = text(0.3, 0.98,title_str); t.FontSize = 14; t.FontWeight = 'bold';
+                    title(['Pred.: (' num2str(round(pred_scores(1), 3)) ', ' num2str(round(pred_scores(2), 3)) ') | Select. 0, 2 & f(x)' newline 'Backgr. and shape color ' num2str(round(backgr_color,2)) ', ' num2str(round(shape_color,2)) newline 'Orig. Backgr. and shape color ' num2str(round(or_backgr_color,2)) ', ' num2str(round(or_shape_color,2))]);
+                    xlabel(['Abs. gray val. diff: ', num2str(gray_diff)]);
                 end
-                
             end
+            if visualize
+                title_str = ['LRP on test set: 15 ' class_label ...
+                    ' images starting at image ' num2str(start_index) ...
+                    ' with step of ' num2str(step) '.' titl_str];
+                axes('Position',[0 0 1 1],'Xlim',[0 1],'Ylim',[0  1],'Box','off','Visible','off','Units','normalized', 'clipping' , 'off');
+                t = text(0.3, 0.98,title_str); t.FontSize = 14; t.FontWeight = 'bold';
+            end
+
         end
-        
     end
-    
+
 end
+  
 
