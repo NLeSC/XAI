@@ -65,6 +65,7 @@ end
 %disp('The sum of pred_classes and sum of relevance scores (after LRP):')
 %disp([sum(pred_classes) sum(sum(rel))])
 
+% PLOTTING HEATMAPS
 % reshape the input data to an image
 inp_shape = reshape(or_data,im_dim);
 % quantify contrast

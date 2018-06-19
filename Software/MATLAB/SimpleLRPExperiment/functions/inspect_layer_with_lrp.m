@@ -88,5 +88,25 @@ heatmap(rel_first_layer)
 title('[0, 1]')
 end
 
+
+% some images of the weights
+figure('units','normalized','outerposition',[0 0 1 1])
+imagesc(reshapeW1Column)
+title(['First column W reshaped' num2str(B(1))])
+
+figure('units','normalized','outerposition',[0 0 1 1])
+imagesc(reshapeW2Column)
+title(['Second column W reshaped' num2str(B(2))])
+
+eps = 0.05;
+
+figure('units','normalized','outerposition',[0 0 1 1])
+imagesc(reshapeW1Column.*(abs(reshapeW1Column) > eps))
+title(['Filtered First column W reshaped' num2str(B(1))])
+
+figure('units','normalized','outerposition',[0 0 1 1])
+imagesc(reshapeW2Column.*(abs(reshapeW2Column) > eps))
+title(['Filtered Second column W reshaped' num2str(B(2))])
+
 end
 

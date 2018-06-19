@@ -11,7 +11,7 @@ save_evidence = true;
 %arch = 1;  % lenet5_maxpool
 arch = 2;  % short relu 
 
-num_train_iter = 60000;
+num_train_iter = 80000;
 
 shape_labels = [0,2]; % [square triangle]
 
@@ -61,7 +61,7 @@ lenet5_maxpool_full_model_fname = fullfile(path2models, lenet5_maxpool_model_fna
 
 
 % linear_model_basename = '1024_to_2_to_2_short_relu';
-linear_model_basename = '1024_to_10_to_2_short_relu';
+linear_model_basename = '1024_to_2_to_2_short_tanh';
 if binary
     short_relu_model_fname = [linear_model_basename '_binary_triangles_and_squares_rotation.mat'];
 else

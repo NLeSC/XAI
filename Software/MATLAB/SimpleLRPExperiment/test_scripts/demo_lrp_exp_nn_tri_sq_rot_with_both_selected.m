@@ -119,8 +119,17 @@ for method = 3
                 [comp_hm, RSquare, RTriangle, RPred, pred, gray_diff, pred_scores] = compute_both_lrp_heatmaps(or_image, test_image, im_dim, ...
                     net, method, shape_labels);
 
+%                 % PLOTTING IMAGES
+%                 rel1Reshaped = reshape(RSquare, im_dim);
+%                 rel2Reshaped = reshape(RTriangle, im_dim);
+%                 rel3Reshaped = reshape(RPred, im_dim);
+%                 bundleRelReshaped = [rel1Reshaped, rel2Reshaped, rel3Reshaped];                
+%                 figure('units','normalized','outerposition',[0 0 1 1])
+%                 imagesc(bundleRelReshaped)
+%                 title(['imagesc instead of heatmap'])
+                
 %                     disp([sum(RSquare), sum(RTriangle), sum(RPred)])
-                [comp_hm, net, rel_first_layer] = inspect_layer_with_lrp(net, test_image, or_image, im_dim, true);
+%                 [comp_hm, net, rel_first_layer] = inspect_layer_with_lrp(net, test_image, or_image, im_dim, true);
 
 %                     rel_first_layer = reshape(rel_first_layer, im_dim);
 %                     figure('units','normalized','outerposition',[0 0 1 1])
