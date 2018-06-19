@@ -119,13 +119,13 @@ classdef Linear < modules.Module
 
        function R = alphabeta_lrp(obj,R,alpha)
            % LRP according to Eq(60) in DOI: 10.1371/journal.pone.0130140
-           N = size(obj.X,1);
+           N = size(obj.X,1);  % number of X values I guess (as in rows)
            Wr = repmat(reshape(obj.W,[1,obj.m,obj.n]),[N,1,1]);
            Xr = repmat(obj.X,[1,1,obj.n]);
            Rr = repmat(reshape(R,[N,1,obj.n]),[1,obj.m,1]);
 
            
-           beta = 1 - alpha;
+           beta = 1 - alpha;  % condition for the relevance conservation principle (RCP)
            Z = Wr .* Xr ; %localized preactivations
            
            if ~(alpha == 0)
@@ -137,14 +137,43 @@ classdef Linear < modules.Module
            end
 
            if ~(beta == 0)
-                Zn = Z .* (Z < 0);
-                Zsn = sum(Zn,2) + repmat(reshape(obj.B .* (obj.B < 0),[1,1,obj.n]),[N,1,1]);
-                Rbeta = beta .* sum((Zn ./ repmat(Zsn,[1,obj.m,1])) .* Rr,3);
+                Zn = Z .* (Z < 0);  % z_{ij}^{-} in LRP paper
+                Zsn = sum(Zn,2) + repmat(reshape(obj.B .* (obj.B < 0),[1,1,obj.n]),[N,1,1]);  % Z sum negative part, I guess z_{j}^{-} in LRP paper
+                Rbeta = beta .* sum((Zn ./ repmat(Zsn,[1,obj.m,1])) .* Rr,3);  % beta * z_{ij}^{-} / z_{j}^{-} R_j^{(l+1)} in LRP paper
            else
                 Rbeta = 0;
            end
            
            R = Ralpha + Rbeta;
+           
+%            % code to ensure that the RCP holds
+%            if sum(abs(Ralpha)) < 10^(-5) && sum(abs(Rbeta)) < 10^(-5)
+%                disp('Ralpha and Rbeta in alphabeta_lrp are almost zero. To ensure that the RCP holds, R unmodified is returned.')
+%                R = R;
+%            elseif sum(abs(Rbeta)) < 10^(-5)
+%                disp('Rbeta in alphabeta_lrp is almost zero. To ensure that the RCP holds, a rescaling is done on Ralpha.')
+%                disp(Rbeta)
+%                R = Ralpha / sum(Ralpha);
+%            elseif sum(abs(Ralpha)) < 10^(-5)
+%                disp('Ralpha in alphabeta_lrp is almost zero. To ensure that the RCP holds, a rescaling is done on Rbeta.')
+%                disp(Ralpha)
+%                R = Rbeta / sum(Rbeta);
+%            else
+%                R = Ralpha + Rbeta;
+%            end
+           
+%            new_R = Ralpha + Rbeta;
+%            eps = 10^(-5);  % a precision value
+% 
+%            if abs(sum(R) - sum(new_R)) > eps
+%                % RCP does not hold
+%                
+%                if sum(Ralpha) < alpha*R - eps
+%                    % RCP fails at positive relevance distribution
+                   
+                   
+
+           
        end
 
 

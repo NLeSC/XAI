@@ -133,8 +133,14 @@ for s = 1:length(shape_labels)
                     [comp_hm, RSquare, RTriangle, RPred, pred, gray_diff, pred_scores] = compute_both_lrp_heatmaps(or_image, test_image, im_dim, ...
                         net, method, select, shape_labels);
                     
-                    disp([sum(RSquare), sum(RTriangle), sum(RPred)])
+%                     disp([sum(RSquare), sum(RTriangle), sum(RPred)])
+%                     [comp_hm, net, rel_first_layer] = inspect_layer_with_lrp(net, test_image, or_image, im_dim, true);
                     
+%                     rel_first_layer = reshape(rel_first_layer, im_dim);
+%                     figure('units','normalized','outerposition',[0 0 1 1])
+%                     heatmap(rel_first_layer)
+%                     title([select_label ' ' pred])
+
                     if visualize
                         subplot(sbplt_rows, sbplt_cols, counter);
                         imshow(comp_hm); axis off ; drawnow;

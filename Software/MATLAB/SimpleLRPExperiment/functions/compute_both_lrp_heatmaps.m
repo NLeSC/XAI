@@ -36,7 +36,7 @@
 % REFERENCES:
 % paper: DOI: 10.1371/journal.pone.0130140
 %**************************************************************************
-function [comp_hm, rel1, rel2, pred_class, gray_diff] = compute_both_lrp_heatmaps(or_data, data, im_dim, ...
+function [comp_hm, rel1, rel2, rel3, pred_class, gray_diff, pred_scores] = compute_both_lrp_heatmaps(or_data, data, im_dim, ...
     model, lrp_method, select, shape_labels)
 
 % pass the image trough the pre-trained model
@@ -51,8 +51,12 @@ switch lrp_method
     case 2
         rel = model.lrp(select,'epsilon',1.);
     case 3
+%         disp('for square')
         rel1 = model.lrp([1 0],'alphabeta',2);
+%         disp('for triangle')
         rel2 = model.lrp([0 1],'alphabeta',2);
+%         disp('for pred_classes')
+        rel3 = model.lrp(pred_classes,'alphabeta',2);
 end
 
 % For testing whether the relevance scores sum up to the sum of predictions
@@ -72,7 +76,9 @@ shape = permute(shape,[2 1 3]);
 cmap = jet(255);
 hm1 = render.hm_to_rgb(rel1,data,3,[],2, cmap);
 hm2 = render.hm_to_rgb(rel2,data,3,[],2, cmap);
-comp_hm = render.save_image({shape,hm1,hm2},'../heatmap.png');
+hm3 = render.hm_to_rgb(rel3,data,3,[],2, cmap);
+comp_hm = render.save_image({shape,hm1,hm2,hm3},'../heatmap.png');
+pred_scores = pred_classes;
 %delete('../heatmap.png');
 
 
