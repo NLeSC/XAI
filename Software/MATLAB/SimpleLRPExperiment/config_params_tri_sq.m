@@ -7,7 +7,7 @@ save_relevance = true;
 %save_evidence = input('Save evidence statistics? [1=true|0=false]: ');
 save_evidence = false;
 
-test10k = true;
+test10k = false;
 
 scaling =  false; % true means scaling dataset 64 x 64
 
@@ -15,7 +15,8 @@ scaling =  false; % true means scaling dataset 64 x 64
 %arch = 1;  % lenet5_maxpool
 arch = 2;  % short relu
 
-num_train_iter = 20000;
+%num_train_iter = 20000;
+num_train_iter = 60000;
 
 shape_labels = [0,2]; % [square triangle]
 
