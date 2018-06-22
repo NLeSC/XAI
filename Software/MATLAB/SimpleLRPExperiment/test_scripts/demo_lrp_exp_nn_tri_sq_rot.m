@@ -96,8 +96,8 @@ for s = 1:length(shape_labels)
 %         fprintf('Selected Class:      %d: %s\n', s, select_label);
 %     end
     select = (1:size(test_labels,2) == s)*1.;
-    for method = 1:3
-    %for method = 3
+    %for method = 1:3
+    for method = 3
         for c = 1:length(shape_labels)
             % c is the index of the true shape
             
