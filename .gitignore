@@ -1,4 +1,4 @@
-*.ipynb
+Software/lrp_toolbox-1.2.0/caffe-master-lrp/examples/
 *.pyc
 *.asv
 /Data/MNIST/images
@@ -9,3 +9,5 @@
 /Papers/
 /Software/.cache
 /Software/ONNX
+/Software/pytorch/data
+Software/pytorch/.ipynb_checkpoints/
