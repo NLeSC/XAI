@@ -27,6 +27,7 @@ import render
 
 #load a neural network, as well as the MNIST test data and some labels
 nn = model_io.read('../models/MNIST/LeNet-5.nn') # 99.23% prediction accuracy
+#nn = model_io.read('../models/MNIST/LeNet-5.txt')
 X = data_io.read('../data/MNIST/test_images.npy')
 Y = data_io.read('../data/MNIST/test_labels.npy')
 
@@ -53,8 +54,8 @@ for i in I[:10]:
 
     #forward pass and prediction
     ypred = nn.forward(x)
-    print 'True Class:     ', np.argmax(Y[i])
-    print 'Predicted Class:', np.argmax(ypred),'\n'
+    print('True Class:     ', np.argmax(Y[i]))
+    print('Predicted Class:', np.argmax(ypred),'\n')
 
 
     #compute first layer relevance according to prediction
