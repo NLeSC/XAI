@@ -61,8 +61,8 @@ class SumPool(Module):
         hstride, wstride = self.stride
 
         #assume the given pooling and stride parameters are carefully chosen.
-        Hout = (H - hpool) / hstride + 1
-        Wout = (W - wpool) / wstride + 1
+        Hout = int((H - hpool) / hstride + 1)
+        Wout = int((W - wpool) / wstride + 1)
 
         normalizer = 1./np.sqrt(hpool*wpool)
 
@@ -105,8 +105,8 @@ class SumPool(Module):
         hstride, wstride = self.stride
 
         #assume the given pooling and stride parameters are carefully chosen.
-        Hout = (H - hpool) / hstride + 1
-        Wout = (W - wpool) / wstride + 1
+        Hout = int((H - hpool) / hstride + 1)
+        Wout = int((W - wpool) / wstride + 1)
 
         normalizer = 1./np.sqrt(hpool * wpool)
 
@@ -132,8 +132,8 @@ class SumPool(Module):
         hstride, wstride = self.stride
 
         #assume the given pooling and stride parameters are carefully chosen.
-        Hout = (H - hpool) / hstride + 1
-        Wout = (W - wpool) / wstride + 1
+        Hout = int((H - hpool) / hstride + 1)
+        Wout = int((W - wpool) / wstride + 1)
 
         Rx = np.zeros(self.X.shape)
         for i in range(Hout):
@@ -157,8 +157,8 @@ class SumPool(Module):
         hstride, wstride = self.stride
 
         #assume the given pooling and stride parameters are carefully chosen.
-        Hout = (H - hpool) / hstride + 1
-        Wout = (W - wpool) / wstride + 1
+        Hout = int((H - hpool) / hstride + 1)
+        Wout = int((W - wpool) / wstride + 1)
 
         Rx = np.zeros_like(self.X,dtype=np.float)
 
@@ -185,8 +185,8 @@ class SumPool(Module):
         hstride, wstride = self.stride
 
         #assume the given pooling and stride parameters are carefully chosen.
-        Hout = (H - hpool) / hstride + 1
-        Wout = (W - wpool) / wstride + 1
+        Hout = int((H - hpool) / hstride + 1)
+        Wout = int((W - wpool) / wstride + 1)
 
         Rx = np.zeros(self.X.shape)
         for i in range(Hout):
@@ -214,8 +214,8 @@ class SumPool(Module):
         hstride, wstride = self.stride
 
         #assume the given pooling and stride parameters are carefully chosen.
-        Hout = (H - hpool) / hstride + 1
-        Wout = (W - wpool) / wstride + 1
+        Hout = int((H - hpool) / hstride + 1)
+        Wout = int((W - wpool) / wstride + 1)
 
         #distribute the gradient towards across all inputs evenly
         Rx = np.zeros(self.X.shape)

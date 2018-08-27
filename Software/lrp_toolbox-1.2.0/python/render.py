@@ -40,8 +40,10 @@ def vec2im(V, shape = () ):
     '''
 
     if len(shape) < 2:
-        shape = [np.sqrt(V.size)]*2
-
+        shape = [np.sqrt(V.size)]*2       
+    # make the elements of shape integers
+    shape = [int(sh) for sh in shape]
+    
     return np.reshape(V, shape)
 
 

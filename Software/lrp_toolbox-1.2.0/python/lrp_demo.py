@@ -26,6 +26,7 @@ import render
 
 #load a neural network, as well as the MNIST test data and some labels
 nn = model_io.read('../models/MNIST/long-rect.nn') # 99.17% prediction accuracy
+#nn = model_io.read('../models/MNIST/long-rect.txt') # 99.17% prediction accuracy
 X = data_io.read('../data/MNIST/test_images.npy')
 Y = data_io.read('../data/MNIST/test_labels.npy')
 
