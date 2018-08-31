@@ -15,7 +15,6 @@ scaling =  false; % true means scaling dataset 64 x 64
 %arch = 1;  % lenet5_maxpool
 arch = 2;  % short relu
 
-%num_train_iter = 20000;
 num_train_iter = 60000;
 
 shape_labels = [0,2]; % [square triangle]
@@ -77,7 +76,11 @@ end
 lenet5_maxpool_full_model_fname = fullfile(path2models, lenet5_maxpool_model_fname);
 
 
+<<<<<<< HEAD:Software/MATLAB/SimpleLRPExperiment/config_params_tri_sq.m
 linear_model_basename = 'two_layer_short_relu';
+=======
+linear_model_basename = '1024_to_2_to_2_short_relu';
+>>>>>>> fad5b0126835e2b39bbe8159a0d9057a964d2fa6:Software/MATLAB/SimpleLRPExperiment/config_params_tri_sq_rot.m
 if binary
     short_relu_model_fname = [linear_model_basename '_binary_triangles_and_squares_rotation.mat'];
 else

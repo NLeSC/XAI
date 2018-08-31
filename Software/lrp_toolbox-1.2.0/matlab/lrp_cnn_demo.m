@@ -44,7 +44,7 @@ I = 1:size(X,1);
 %I = randperm(size(X,1));
 
 %predict and perform LRP for the first 10 samples
-for i = I(1:10)
+for i = I(1:3)
     x = X(i,:,:,:);
 
     %forward pass and prediction
