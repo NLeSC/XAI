@@ -44,6 +44,10 @@ After having obtained the toolbox code, data and models of choice, simply move i
 
 Make sure to at least skim through the installation scripts! For more details and instructions please refer to [the manual](https://github.com/sebastian-lapuschkin/lrp_toolbox/blob/master/doc/manual/manual.pdf).
 
+#### Note (ER, 24.07.2018): Following the above installation instructions might cause the error "TyprError: 'numpy.float64' object cannot be interpreted as an index.". The solution is to install a newer version of numpy: 
+    sudo pip install -U numpy==1.11.0 
+and then run the installation script.
+
 ### The LRP Toolbox Paper
 
 When using (any part) of this toolbox, please cite [our paper](http://jmlr.org/papers/volume17/15-618/15-618.pdf)

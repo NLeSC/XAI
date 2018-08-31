@@ -37,7 +37,7 @@ classdef SoftMax < modules.Module
         function R = lrp(obj, R, varargin)
             % just propagate R further down.
             % makes sure subroutines never get called.
-%             R = R .* obj.X; % for testing uncommented
+             R = R .* obj.X; % for testing uncommented
         end
 
     end

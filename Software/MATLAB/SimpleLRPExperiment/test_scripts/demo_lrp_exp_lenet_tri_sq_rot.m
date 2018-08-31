@@ -3,7 +3,7 @@
 % this script uses LRP Toolbox v.1.2.0
 
 %% parameters
-config_params_tri_sq_rot;
+config_params_tri_sq;
 
 unique_flag = true;
 
@@ -44,8 +44,8 @@ if verbose
     disp(['Splited ', num2str(num_test_images) ,' test images by shape type']);
 end
 if visualize
-    visualize_1shape(or_squares, 0, num_examples, start_index, step);
-    visualize_1shape(or_triangles, 2, num_examples, start_index, step);
+    visualize_1shape(or_squares, 0, num_examples, start_index, step, im_dim);
+    visualize_1shape(or_triangles, 2, num_examples, start_index, step, im_dim);
 end
 %% normalize & reshape the data and labels
 [squares] = normalize_input4lenet(or_squares, im_dim, num_channels, reshape_order);

@@ -46,7 +46,7 @@
 %% misc
 %**************************************************************************
 % config_params.m - setting configurable parameters for BabyAIShapes experiments
-% config_params_tri_sq_rot.m - setting configurable parameters for Tringles and Squares rotation experiments
+% config_params_tri_sq.m - setting configurable parameters for Tringles and Squares experiments
 %**************************************************************************
 %% data generation
 % create_shapes_2 - generating triangles and squares dataset

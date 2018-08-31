@@ -61,16 +61,16 @@ class SumPool(Module):
         hstride, wstride = self.stride
 
         #assume the given pooling and stride parameters are carefully chosen.
-        Hout = (H - hpool) / hstride + 1
-        Wout = (W - wpool) / wstride + 1
+        Hout = int((H - hpool) / hstride + 1)
+        Wout = int((W - wpool) / wstride + 1)
 
         normalizer = 1./np.sqrt(hpool*wpool)
 
         #initialize pooled output
         self.Y = np.zeros((N,Hout,Wout,D))
 
-        for i in xrange(Hout):
-            for j in xrange(Wout):
+        for i in range(Hout):
+            for j in range(Wout):
                 self.Y[:,i,j,:] = X[:, i*hstride:i*hstride+hpool , j*wstride:j*wstride+wpool , : ].sum(axis=(1,2)) * normalizer #normalizer to keep the output well conditioned
         return self.Y
 
@@ -105,15 +105,15 @@ class SumPool(Module):
         hstride, wstride = self.stride
 
         #assume the given pooling and stride parameters are carefully chosen.
-        Hout = (H - hpool) / hstride + 1
-        Wout = (W - wpool) / wstride + 1
+        Hout = int((H - hpool) / hstride + 1)
+        Wout = int((W - wpool) / wstride + 1)
 
         normalizer = 1./np.sqrt(hpool * wpool)
 
         #distribute the gradient (1 * DY) towards across all contributing inputs evenly
         DX = np.zeros_like(self.X)
-        for i in xrange(Hout):
-            for j in xrange(Wout):
+        for i in range(Hout):
+            for j in range(Wout):
                 DX[:,i*hstride:i*hstride+hpool: , j*wstride:j*wstride+wpool: , : ] += DY[:,i:i+1,j:j+1,:] * normalizer # 0normalizer to produce well-conditioned gradients
         return DX
 
@@ -132,12 +132,12 @@ class SumPool(Module):
         hstride, wstride = self.stride
 
         #assume the given pooling and stride parameters are carefully chosen.
-        Hout = (H - hpool) / hstride + 1
-        Wout = (W - wpool) / wstride + 1
+        Hout = int((H - hpool) / hstride + 1)
+        Wout = int((W - wpool) / wstride + 1)
 
         Rx = np.zeros(self.X.shape)
-        for i in xrange(Hout):
-            for j in xrange(Wout):
+        for i in range(Hout):
+            for j in range(Wout):
                 Z = self.X[:, i*hstride:i*hstride+hpool , j*wstride:j*wstride+wpool , : ] #input activations.
                 Zs = Z.sum(axis=(1,2),keepdims=True)
                 Zs += 1e-12*((Zs >= 0)*2-1) # add a weak numerical stabilizer to cushion an all-zero input
@@ -157,13 +157,13 @@ class SumPool(Module):
         hstride, wstride = self.stride
 
         #assume the given pooling and stride parameters are carefully chosen.
-        Hout = (H - hpool) / hstride + 1
-        Wout = (W - wpool) / wstride + 1
+        Hout = int((H - hpool) / hstride + 1)
+        Wout = int((W - wpool) / wstride + 1)
 
         Rx = np.zeros_like(self.X,dtype=np.float)
 
-        for i in xrange(Hout):
-            for j in xrange(Wout):
+        for i in range(Hout):
+            for j in range(Wout):
                 Z = np.ones([N,hpool,wpool,D])
                 Zs = Z.sum(axis=(1,2),keepdims=True)
                 Rx[:,i*hstride:i*hstride+hpool , j*wstride:j*wstride+wpool,:] += (Z / Zs) * R[:,i:i+1,j:j+1,:]
@@ -185,12 +185,12 @@ class SumPool(Module):
         hstride, wstride = self.stride
 
         #assume the given pooling and stride parameters are carefully chosen.
-        Hout = (H - hpool) / hstride + 1
-        Wout = (W - wpool) / wstride + 1
+        Hout = int((H - hpool) / hstride + 1)
+        Wout = int((W - wpool) / wstride + 1)
 
         Rx = np.zeros(self.X.shape)
-        for i in xrange(Hout):
-            for j in xrange(Wout):
+        for i in range(Hout):
+            for j in range(Wout):
                 Z = self.X[:, i*hstride:i*hstride+hpool , j*wstride:j*wstride+wpool , : ] #input activations.
                 Zs = Z.sum(axis=(1,2),keepdims=True)
                 Zs += epsilon*((Zs >= 0)*2-1) # add a epsilon stabilizer to cushion an all-zero input
@@ -214,13 +214,13 @@ class SumPool(Module):
         hstride, wstride = self.stride
 
         #assume the given pooling and stride parameters are carefully chosen.
-        Hout = (H - hpool) / hstride + 1
-        Wout = (W - wpool) / wstride + 1
+        Hout = int((H - hpool) / hstride + 1)
+        Wout = int((W - wpool) / wstride + 1)
 
         #distribute the gradient towards across all inputs evenly
         Rx = np.zeros(self.X.shape)
-        for i in xrange(Hout):
-            for j in xrange(Wout):
+        for i in range(Hout):
+            for j in range(Wout):
                 Z = self.X[:, i*hstride:i*hstride+hpool , j*wstride:j*wstride+wpool , : ] #input activations.
 
                 if not alpha == 0:

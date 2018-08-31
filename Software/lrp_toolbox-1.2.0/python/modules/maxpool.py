@@ -61,14 +61,14 @@ class MaxPool(Module):
         hstride, wstride = self.stride
 
         #assume the given pooling and stride parameters are carefully chosen.
-        Hout = (H - hpool) / hstride + 1
-        Wout = (W - wpool) / wstride + 1
+        Hout = int((H - hpool) / hstride + 1)
+        Wout = int((W - wpool) / wstride + 1)
 
         #initialize pooled output
         self.Y = np.zeros((N,Hout,Wout,D))
 
-        for i in xrange(Hout):
-            for j in xrange(Wout):
+        for i in range(Hout):
+            for j in range(Wout):
                 self.Y[:,i,j,:] = X[:, i*hstride:i*hstride+hpool: , j*wstride:j*wstride+wpool: , : ].max(axis=(1,2))
         return self.Y
 
@@ -102,14 +102,14 @@ class MaxPool(Module):
         hstride, wstride = self.stride
 
         #assume the given pooling and stride parameters are carefully chosen.
-        Hout = (H - hpool) / hstride + 1
-        Wout = (W - wpool) / wstride + 1
+        Hout = int((H - hpool) / hstride + 1)
+        Wout = int((W - wpool) / wstride + 1)
 
         #distribute the gradient towards the max activation(s)
         #the max activation value is already known via self.Y
         DX = np.zeros_like(self.X,dtype=np.float)
-        for i in xrange(Hout):
-            for j in xrange(Wout):
+        for i in range(int(Hout)):
+            for j in range(int(Wout)):
                 DX[:,i*hstride:i*hstride+hpool , j*wstride:j*wstride+wpool,:] += DY[:,i:i+1,j:j+1,:] * (self.Y[:,i:i+1,j:j+1,:] == self.X[:, i*hstride:i*hstride+hpool , j*wstride:j*wstride+wpool , : ])
         return DX
 
@@ -155,7 +155,7 @@ class MaxPool(Module):
         elif lrp_var.lower() == 'alphabeta' or lrp_var.lower() == 'alpha':
             return self._simple_lrp(R) # defaults to naive variant
         else:
-            print 'Unknown lrp variant', lrp_var
+            print('Unknown lrp variant', lrp_var)
 
 
 
@@ -166,13 +166,13 @@ class MaxPool(Module):
         hstride, wstride = self.stride
 
         #assume the given pooling and stride parameters are carefully chosen.
-        Hout = (H - hpool) / hstride + 1
-        Wout = (W - wpool) / wstride + 1
+        Hout = int((H - hpool) / hstride + 1)
+        Wout = int((W - wpool) / wstride + 1)
 
         Rx = np.zeros_like(self.X,dtype=np.float)
 
-        for i in xrange(Hout):
-            for j in xrange(Wout):
+        for i in range(int(Hout)):
+            for j in range(int(Wout)):
                 Z = self.Y[:,i:i+1,j:j+1,:] == self.X[:, i*hstride:i*hstride+hpool , j*wstride:j*wstride+wpool , : ]
                 Zs = Z.sum(axis=(1,2),keepdims=True)
                 Rx[:,i*hstride:i*hstride+hpool , j*wstride:j*wstride+wpool,:] += (Z / Zs) * R[:,i:i+1,j:j+1,:]
@@ -189,13 +189,13 @@ class MaxPool(Module):
         hstride, wstride = self.stride
 
         #assume the given pooling and stride parameters are carefully chosen.
-        Hout = (H - hpool) / hstride + 1
-        Wout = (W - wpool) / wstride + 1
+        Hout = int((H - hpool) / hstride + 1)
+        Wout = int((W - wpool) / wstride + 1)
 
         Rx = np.zeros_like(self.X,dtype=np.float)
 
-        for i in xrange(Hout):
-            for j in xrange(Wout):
+        for i in range(Hout):
+            for j in range(Wout):
                 Z = np.ones([N,hpool,wpool,D])
                 Zs = Z.sum(axis=(1,2),keepdims=True)
                 Rx[:,i*hstride:i*hstride+hpool , j*wstride:j*wstride+wpool,:] += (Z / Zs) * R[:,i:i+1,j:j+1,:]

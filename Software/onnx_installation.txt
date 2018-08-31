@@ -1,0 +1,66 @@
+Attempts which DIDN'T work:
+------------------------------
+1. Installing from binaries. Missing funcitons like save.
+
+2. Installing from source
+
+elena@elena-VirtualBox:~$ cd eStep/XAI/Software/
+elena@elena-VirtualBox:~/eStep/XAI/Software$ conda update -n base -c defaults conda
+elena@elena-VirtualBox:~/eStep/XAI/Software$ conda create --name onnx_elena
+elena@elena-VirtualBox:~/eStep/XAI/Software$ source activate onnx_elena
+(onnx_elena) elena@elena-VirtualBox:~/eStep/XAI/Software$ conda config --add channels conda-forge
+(onnx_elena) elena@elena-VirtualBox:~/eStep/XAI/Software$ conda install -c conda-forge protobuf numpy
+(onnx_elena) elena@elena-VirtualBox:~/eStep/XAI/Software$ git clone https://github.com/onnx/onnx.git
+(onnx_elena) elena@elena-VirtualBox:~/eStep/XAI/Software$ cd onnx
+(onnx_elena) elena@elena-VirtualBox:~/eStep/XAI/Software/onnx$ git submodule update --init --recursive
+(onnx_elena) elena@elena-VirtualBox:~/eStep/XAI/Software/onnx$ python setup.py install
+(onnx_elena) elena@elena-VirtualBox:~/eStep/XAI/Software/onnx$ cd onnx
+(onnx_elena) elena@elena-VirtualBox:~/eStep/XAI/Software/onnx/onnx$ python -c "import onnx"
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/home/elena/anaconda3/envs/onnx_elena/lib/python3.6/site-packages/onnx-1.2.2-py3.6-linux-x86_64.egg/onnx/__init__.py", line 11, in <module>
+    import onnx.helper  # noqa
+  File "/home/elena/anaconda3/envs/onnx_elena/lib/python3.6/site-packages/onnx-1.2.2-py3.6-linux-x86_64.egg/onnx/helper.py", line 13, in <module>
+    import onnx.defs as defs
+  File "/home/elena/anaconda3/envs/onnx_elena/lib/python3.6/site-packages/onnx-1.2.2-py3.6-linux-x86_64.egg/onnx/defs/__init__.py", line 7, in <module>
+    import onnx.onnx_cpp2py_export.defs as C
+ImportError: /home/elena/anaconda3/envs/onnx_elena/lib/python3.6/site-packages/onnx-1.2.2-py3.6-linux-x86_64.egg/onnx/onnx_cpp2py_export.cpython-36m-x86_64-linux-gnu.so: undefined symbol: _ZNK6google8protobuf7Message11GetTypeNameB5cxx11Ev
+----------------------------------------
+(onnx_elena) elena@elena-VirtualBox:~/eStep/XAI/Software$ pip uninstall onnx
+(onnx_elena) elena@elena-VirtualBox:~/eStep/XAI/Software$ conda install protobuf numpy
+(onnx_elena) elena@elena-VirtualBox:~/eStep/XAI/Software$ cd onnx
+(onnx_elena) elena@elena-VirtualBox:~/eStep/XAI/Software/onnx$ python setup.py install
+(onnx_elena) elena@elena-VirtualBox:~/eStep/XAI/Software/onnx$ cd onnx
+(onnx_elena) elena@elena-VirtualBox:~/eStep/XAI/Software/onnx/onnx$ python -c "import onnx"
+(onnx_elena) elena@elena-VirtualBox:~/eStep/XAI/Software/onnx/onnx$ python -c "import onnx"
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/home/elena/anaconda3/envs/onnx_elena/lib/python3.6/site-packages/onnx-1.2.2-py3.6-linux-x86_64.egg/onnx/__init__.py", line 11, in <module>
+    import onnx.helper  # noqa
+  File "/home/elena/anaconda3/envs/onnx_elena/lib/python3.6/site-packages/onnx-1.2.2-py3.6-linux-x86_64.egg/onnx/helper.py", line 13, in <module>
+    import onnx.defs as defs
+  File "/home/elena/anaconda3/envs/onnx_elena/lib/python3.6/site-packages/onnx-1.2.2-py3.6-linux-x86_64.egg/onnx/defs/__init__.py", line 7, in <module>
+    import onnx.onnx_cpp2py_export.defs as C
+ImportError: /home/elena/anaconda3/envs/onnx_elena/lib/python3.6/site-packages/onnx-1.2.2-py3.6-linux-x86_64.egg/onnx/onnx_cpp2py_export.cpython-36m-x86_64-linux-gnu.so: undefined symbol: _ZNK6google8protobuf7Message11GetTypeNameB5cxx11Ev
+
+*********************************************
+
+Attempts which DID work:
+------------------------------
+Installing with pip:
+
+elena@elena-VirtualBox:~/eStep/XAI/Software$ conda create --name onnx_ely
+elena@elena-VirtualBox:~/eStep/XAI/Software$ source activate onnx_ely
+(onnx_ely) elena@elena-VirtualBox:~/eStep/XAI/Software$ conda install protobuf numpy
+(onnx_ely) elena@elena-VirtualBox:~/eStep/XAI/Software$ pip install onnx
+(onnx_ely) elena@elena-VirtualBox:~/eStep/XAI/Software$ python -c "import onnx"
+(onnx_ely) elena@elena-VirtualBox:~/eStep/XAI/Software$ python
+Python 3.6.6 | packaged by conda-forge | (default, Jul 26 2018, 09:53:17) 
+[GCC 4.8.2 20140120 (Red Hat 4.8.2-15)] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import onnx
+>>> onnx.load
+<function load_model at 0x7f0af6be4d90>
+>>> onnx.save
+<function save_model at 0x7f0af6b81048>
+>>> exit()

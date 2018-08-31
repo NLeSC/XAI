@@ -1,7 +1,7 @@
 % test_compute_evidence - compute evidence statistics from KRP  heatmaps
 
 %% parameters
-config_params_tri_sq_rot;
+config_params_tri_sq;
 
 verbose = true;
 
