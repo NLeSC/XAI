@@ -36,14 +36,14 @@ nn.train(X['train'],
          iters=numbIters)
 
 # determine training name of neural net
-nnName = 'nn_' + nn.name + ('_(batchsize_{}_number_iterations_{})'
-                            .format(batchsize, numbIters))
+nnTrainName = 'nn_' + nn.name + ('_(batchsize_{}_number_iterations_{})'
+                                 .format(batchsize, numbIters))
 
 # save neural network
 tools.model_io.write(nn,
-                     settings.modelPath + nnName + '.txt')
+                     settings.modelPath + nnTrainName + '.txt')
 
 # log train_nn.py that produced neural net
 PythonScriptName = 'train_nn.py'
-nameLogScript = 'log_' + PythonScriptName + '_for_' + nnName + '.py'
+nameLogScript = 'log_' + PythonScriptName + '_for_' + nnTrainName
 shutil.copyfile(PythonScriptName, settings.modelPath + nameLogScript)

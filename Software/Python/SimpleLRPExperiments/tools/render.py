@@ -17,6 +17,8 @@ import skimage.io
 import skimage.feature
 
 
+# TODO: make a im2vec function?
+
 def vec2im(V, shape = () ):
     '''
     Transform an array V into a specified shape - or if no shape is given assume a square output format.
@@ -208,7 +210,6 @@ def hm_to_rgb(R, X = None, scaling = 3, shape = (), sigma = 2, cmap = 'jet', nor
     if normalize:
         R = R / np.max(np.abs(R)) # normalize to [-1,1] wrt to max relevance magnitude
         R = (R + 1.)/2. # shift/normalize to [0,1] for color mapping
-
 
     R = enlarge_image(vec2im(R,shape), scaling)
     rgb = cmap(R.flatten())[...,0:3].reshape([R.shape[0],R.shape[1],3])
