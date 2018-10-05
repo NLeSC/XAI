@@ -14,8 +14,8 @@ import shutil
 import settings
 
 # user init
-batchsize = 25
-numbIters = 1000
+batchsize = 10
+numbIters = 10000
 
 # load data
 X, Y = tools.data_loader.load_data()
@@ -36,14 +36,14 @@ nn.train(X['train'],
          iters=numbIters)
 
 # determine training name of neural net
-nnTrainName = 'nn_' + nn.name + ('_(batchsize_{}_number_iterations_{})'
-                                 .format(batchsize, numbIters))
+nnName = 'nn_' + nn.name + ('_(batchsize_{}_number_iterations_{})'
+                            .format(batchsize, numbIters))
 
 # save neural network
 tools.model_io.write(nn,
-                     settings.modelPath + nnTrainName + '.txt')
+                     settings.modelPath + nnName + '.txt')
 
 # log train_nn.py that produced neural net
 PythonScriptName = 'train_nn.py'
-nameLogScript = 'log_' + PythonScriptName + '_for_' + nnTrainName
+nameLogScript = 'log_' + PythonScriptName + '_for_' + nnName + '.py'
 shutil.copyfile(PythonScriptName, settings.modelPath + nameLogScript)

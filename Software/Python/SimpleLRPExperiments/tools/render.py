@@ -229,7 +229,7 @@ def hm_to_rgb(R, X = None, scaling = 3, shape = (), sigma = 2, cmap = 'jet', nor
             edges = np.invert(np.dstack([edges]*3))*1.0
             rgb *= edges # set outline pixels to black color
 
-    return rgb
+    return rgb, R
 
 
 def save_image(rgb_images, path, gap = 2):

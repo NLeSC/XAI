@@ -15,3 +15,10 @@ Software/pytorch/.ipynb_checkpoints/
 /Results/Experiments/TrianglesAndSquares/Gray/*.mat
 *.mat
 *.dat
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# PyCharm project settings
+.idea/

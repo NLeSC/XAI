@@ -22,7 +22,7 @@ X, Y = tools.data_loader.load_data()
 
 # setup neural network
 nn = modules.Sequential([modules.Linear(32**2, 2),
-                         modules.Rect(),
+                         modules.Tanh(),
                          modules.Linear(2, 2),
                          modules.SoftMax()
                          ])

@@ -13,10 +13,12 @@ import matplotlib.pyplot as plt
 import numpy as np
 import settings
 import math
+import mpl_toolkits.axes_grid1 as axes_grid1
 
 
 # load trained neural network (nn)
 nnName = 'nn_Linear_1024_3_Rect_Linear_3_2_SoftMax_(batchsize_10_number_iterations_100000).txt'
+
 nn = model_io.read(settings.modelPath + nnName)
 
 # I do not want to load the data every time, therefore the if statement
@@ -26,13 +28,8 @@ if 'X' not in locals():
 
 # test result
 
-# init figure
-fig, axes = plt.subplots(figsize=(15, 4), nrows=1, ncols=3)
-fig.suptitle('LRP Heatmaps for Varying Choices')
-fig.tight_layout(rect=[0, 0, 1, .9])
-
-# choose data
-idx = 0
+# choose data for lrp
+idx = 1
 x = X['test'][[idx]]
 y = Y['test'][[idx]]
 
@@ -42,13 +39,14 @@ relevanceValues = {'nn prediction': nnPred,
                    'square': np.array([[1., 0.]]),
                    'triangle': np.array([[0., 1.]])}
 lrpRelevance = {}
+hmComp = {}
 for idx, (key, relVal) in enumerate(relevanceValues.iteritems()):
 
     # find and save lrp relevance
     lrpRelevance[key] = nn.lrp(relVal, 'alphabeta', 2)
 
     # generate compound heatmap
-    hmComp, R = render.hm_to_rgb(render.vec2im(lrpRelevance[key]),
+    hmComp[key], R = render.hm_to_rgb(render.vec2im(lrpRelevance[key]),
                                  X=render.vec2im(x),
                                  scaling=3,
                                  shape=(),
@@ -56,8 +54,29 @@ for idx, (key, relVal) in enumerate(relevanceValues.iteritems()):
                                  cmap='jet',
                                  normalize=True)
 
+#    hmComp[key] = render.vec2im(lrpRelevance[key])
+
+
+
+# init figure
+fig = plt.figure()
+grid = axes_grid1.AxesGrid(fig,
+                           111,
+                           nrows_ncols=(1, 3),
+                           axes_pad=0.5,
+                           cbar_location="right",
+                           cbar_mode="single",
+                           cbar_size="15%",
+                           cbar_pad="5%",)
+fig.suptitle('LRP Heatmaps for Varying Choices')
+#fig.tight_layout(rect=[0, 0, 1, .9])
+
+for idx, (key, relVal) in enumerate(relevanceValues.iteritems()):
+
     # plot result
-    axes[idx].set_title(key + ': ' + str(np.round(relVal[0], 2)))
-    img = axes[idx].imshow(hmComp)
-    axes[idx].axis('off')
-    fig.colorbar(img, ax=axes[idx])
+    grid[idx].set_title(key + ': ' + str(np.round(relVal[0], 2)))
+    img = grid[idx].imshow(hmComp[key], cmap='jet')#, interpolation='nearest')
+    grid[idx].axis('off')
+#    fig.colorbar(img, ax=axes[idx])
+
+grid.cbar_axes[0].colorbar(img)
