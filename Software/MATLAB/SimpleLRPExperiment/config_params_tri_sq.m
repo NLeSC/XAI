@@ -9,13 +9,13 @@ save_evidence = false;
 
 test10k = false;
 
-scaling =  false; % true means scaling dataset 64 x 64
+scaling =  true; % true means scaling dataset 64 x 64
 
 %arch = input('Chose architecture (1 = lenet5_maxpool, 2= short_relu): ');
 %arch = 1;  % lenet5_maxpool
 arch = 2;  % short relu
 
-num_train_iter = 60000;
+num_train_iter = 20000;
 
 shape_labels = [0,2]; % [square triangle]
 
@@ -75,7 +75,12 @@ else
 end
 lenet5_maxpool_full_model_fname = fullfile(path2models, lenet5_maxpool_model_fname);
 
-linear_model_basename = '1024_to_2_to_2_short_relu';
+
+if scaling
+    linear_model_basename = '7096_to_1296_to_2_short_relu';
+else
+   linear_model_basename = '1024_to_1296_to_2_short_relu'; 
+end
 
 if binary
     short_relu_model_fname = [linear_model_basename '_binary_triangles_and_squares_rotation.mat'];
