@@ -7,16 +7,18 @@ Author: Joost Berkhout (CWI, email: j.berkhout@cwi.nl)
 Description: Bundling of some settings that can be loaded throughout.
 """
 
+dataName = 'TrianglesAndSquares'
+
 # path locations
 dataPath = 'C:/Users/berkhout/Desktop/XAI/Data/TrianglesAndSquaresRotation/Gray/'
-modelPath = 'models/TrianglesAndSquares/'
+modelPath = 'models/' + dataName + '/'
 
 # data names
 kinds = ['train', 'test', 'valid']
-imagesNames = {'train': 'TrianglesAndSquares_images_train_50k.mat',
-               'test': 'TrianglesAndSquares_images_test_30k.mat',
-               'valid': 'TrianglesAndSquares_images_valid_20k.mat'}
-labelsNames = {'train': 'TrianglesAndSquares_labels_train_50k.mat',
-               'test': 'TrianglesAndSquares_labels_test_30k.mat',
-               'valid': 'TrianglesAndSquares_labels_valid_20k.mat'}
-bandsNameTest = 'TrianglesAndSquares_bands_test_30k.mat';
+imagesNames = {'train': dataName + '_images_train_50k.mat',
+               'test': dataName + '_images_test_30k.mat',
+               'valid': dataName + '_images_valid_20k.mat'}
+labelsNames = {'train': dataName + '_labels_train_50k.mat',
+               'test': dataName + '_labels_test_30k.mat',
+               'valid': dataName + '_labels_valid_20k.mat'}
+bandsNameTest = dataName + '_bands_test_30k.mat';
