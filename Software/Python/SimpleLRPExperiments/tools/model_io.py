@@ -11,7 +11,7 @@
 import os
 import pickle
 import numpy as np
-from modules import Sequential,Linear,Tanh,Rect,SoftMax,Convolution,Flatten,SumPool,MaxPool
+from modules import Sequential,Linear,Tanh,Rect,SoftMax,Convolution,Flatten,SumPool,MaxPool,BinStep,NegAbs
 
 #--------------------
 #   model reading
@@ -168,6 +168,10 @@ def _read_txt(path):
                     modules.append(Tanh()) ; c+= 1 #one line of parameterless layer description
                 elif line.startswith(SoftMax.__name__): # @UndefinedVariable import error suppression for PyDev users
                     modules.append(SoftMax()) ; c+= 1 #one line of parameterless layer description
+                elif line.startswith(BinStep.__name__): # @UndefinedVariable import error suppression for PyDev users
+                    modules.append(BinStep()) ; c+= 1 #one line of parameterless layer description
+                elif line.startswith(NegAbs.__name__): # @UndefinedVariable import error suppression for PyDev users
+                    modules.append(NegAbs()) ; c+= 1 #one line of parameterless layer description
                 else:
                     raise ValueError('Layer type identifier' + [s for s in line.split() if len(s) > 0][0] +  ' not supported for reading from plain text file')
 
@@ -221,6 +225,10 @@ def _read_txt_old(path):
                 modules.append(Tanh())
             elif line.startswith(SoftMax.__name__): # @UndefinedVariable import error suppression for PyDev users
                 modules.append(SoftMax())
+            elif line.startswith(BinStep.__name__): # @UndefinedVariable import error suppression for PyDev users
+                modules.append(BinStep())
+            elif line.startswith(NegAbs.__name__): # @UndefinedVariable import error suppression for PyDev users
+                modules.append(NegAbs())
             else:
                 raise ValueError('Layer type ' + [s for s in line.split() if len(s) > 0][0] +  ' not supported by legacy plain text format.')
 
