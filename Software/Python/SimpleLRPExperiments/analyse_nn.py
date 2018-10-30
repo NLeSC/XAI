@@ -17,6 +17,9 @@ import mpl_toolkits.axes_grid1 as axes_grid1
 
 
 # load trained neural network (nn)
+#nnName = 'nn_Linear_1024_2_Tanh_Linear_2_2_SoftMax_(batchsize_10_number_iterations_10000).txt'
+#nnName = 'nn_Linear_1024_2_Rect_SoftMax_(batchsize_10_number_iterations_10000).txt'
+#nnName = 'nn_Linear_1024_1_Rect_Linear_1_2_SoftMax_(batchsize_10_number_iterations_10000).txt'
 nnName = 'nn_Linear_1024_2_Rect_Linear_2_2_SoftMax_(batchsize_10_number_iterations_10000).txt'
 nn = model_io.read(settings.modelPath + nnName)
 
@@ -29,8 +32,10 @@ if 'X' not in locals():
 idx = 2
 x = X['train'][[idx]]
 y = Y['train'][[idx]]
-#x[0][x[0] == np.max(x[0])] = .55
-#x[0][x[0] == np.min(x[0])] = .45
+x[0][x[0] == np.max(x[0])] = .1
+x[0][x[0] == np.min(x[0])] = .2
+nnPred = nn.forward(x)
+print nnPred
 #plt.matshow(render.vec2im(x[0] + innerCircleSq))
 
 # inspect first linear layer
@@ -69,12 +74,14 @@ innerCircleSq, innerCircleTr, ring = data_analysis.inner_circles()
 
 print 'For W11:'
 print 'Sum of outside innercircle square weights = {}'.format(sum((1-innerCircleSq)*W11))
+print 'Sum of outside innercircle triangle weights = {}'.format(sum((1-innerCircleTr)*W11))
 print 'Sum of innercircle square weights = {}'.format(sum(innerCircleSq*W11))
 print 'Sum of innercircle triangle weights = {}'.format(sum(innerCircleTr*W11))
 print 'Sum of ring weights = {}'.format(sum(ring*W11))
 
 print 'For W12:'
 print 'Sum of outside innercircle square weights = {}'.format(sum((1-innerCircleSq)*W12))
+print 'Sum of outside innercircle triangle weights = {}'.format(sum((1-innerCircleTr)*W12))
 print 'Sum of innercircle square weights = {}'.format(sum(innerCircleSq*W12))
 print 'Sum of innercircle triangle weights = {}'.format(sum(innerCircleTr*W12))
 print 'Sum of ring weights = {}'.format(sum(ring*W12))
@@ -82,8 +89,16 @@ print 'Sum of ring weights = {}'.format(sum(ring*W12))
 # calculate weights inside and outside squares and triangles
 weightsInSq1 = []
 weightsOutsideSq1 = []
+weightsSq1OutsideInnerCircle = []
+weightsInSq2 = []
+weightsOutsideSq2 = []
+weightsSq2OutsideInnerCircle = []
 weightsInTr1 = []
 weightsOutsideTr1 = []
+weightsInTr2 = []
+weightsOutsideTr2 = []
+weightsInRingTr1 = []
+weightsInRingTr2 = []
 for idx in range(len(X['train'])):
     x = X['train'][[idx]]
     y = Y['train'][[idx]]
@@ -96,10 +111,38 @@ for idx in range(len(X['train'])):
         # a square
         weightsInSq1.append(W11.dot(x[0]))
         weightsOutsideSq1.append(W11.dot(1 - x[0]))
+        weightsSq1OutsideInnerCircle.append(W11.dot((1 - innerCircleSq)*x[0]))
+        weightsInSq2.append(W12.dot(x[0]))
+        weightsOutsideSq2.append(W12.dot(1 - x[0]))
+        weightsSq2OutsideInnerCircle.append(W12.dot((1 - innerCircleSq)*x[0]))
     else:
         # a triangle
         weightsInTr1.append(W11.dot(x[0]))
         weightsOutsideTr1.append(W11.dot(1 - x[0]))
+        weightsInRingTr1.append(W11.dot(x[0]*(1 - innerCircleTr)))
+        weightsInTr2.append(W12.dot(x[0]))
+        weightsOutsideTr2.append(W12.dot(1 - x[0]))
+        weightsInRingTr2.append(W12.dot(x[0]*(1 - innerCircleTr)))
+
+print '====================================='
+
+print 'The average total weight of W11 inside a square is {}'.format(np.mean(weightsInSq1))
+print 'The average total weight of W11 outside a square is {}'.format(np.mean(weightsOutsideSq1))
+print 'The average total weight of W11 outside inner circle of a square is {}'.format(np.mean(weightsSq1OutsideInnerCircle))
+print 'The average total weight of W12 inside a square is {}'.format(np.mean(weightsInSq2))
+print 'The average total weight of W12 outside a square is {}'.format(np.mean(weightsOutsideSq2))
+print 'The average total weight of W12 outside inner circle of a square is {}'.format(np.mean(weightsSq2OutsideInnerCircle))
+
+print '====================================='
+
+print 'The average total weight of W11 inside a triangle is {}'.format(np.mean(weightsInTr1))
+print 'The average total weight of W11 outside a triangle is {}'.format(np.mean(weightsOutsideTr1))
+print 'The average total weight of W11 of triangle in ring is {}'.format(np.mean(weightsInRingTr1))
+print 'The average total weight of W12 inside a triangle is {}'.format(np.mean(weightsInTr2))
+print 'The average total weight of W12 outside a triangle is {}'.format(np.mean(weightsOutsideTr2))
+print 'The average total weight of W12 of triangle in ring is {}'.format(np.mean(weightsInRingTr2))
+
+print '====================================='
 
 ## find how much pixels are outside the inner circle of the square
 #pixelsOutsideSq = []

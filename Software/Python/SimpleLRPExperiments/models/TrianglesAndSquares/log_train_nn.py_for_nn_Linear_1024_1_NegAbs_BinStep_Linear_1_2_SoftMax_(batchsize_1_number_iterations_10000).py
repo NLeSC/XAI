@@ -14,7 +14,7 @@ import shutil
 import settings
 
 # user init
-batchsize = 10
+batchsize = 1
 numbIters = 10000
 
 # load data

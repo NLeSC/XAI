@@ -14,7 +14,8 @@ import numpy as np
 import settings
 
 # load trained neural network (nn)
-nnName = 'nn_Linear_1024_2_Rect_Linear_2_2_SoftMax_(batchsize_10_number_iterations_10000).txt'
+nnName = 'nn_Linear_1024_1_Rect_Linear_1_2_SoftMax_(batchsize_10_number_iterations_10000).txt'
+#nnName = 'nn_Linear_1024_2_Rect_Linear_2_2_SoftMax_(batchsize_10_number_iterations_10000).txt'
 nn = model_io.read(settings.modelPath + nnName)
 
 # I do not want to load the data every time, therefore the if statement

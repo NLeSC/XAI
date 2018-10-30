@@ -69,11 +69,16 @@ def inner_circles():
             pickle.dump(res, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
         # plot shapes
-        plt.matshow(render.vec2im(innerCircleSq))
-        plt.matshow(render.vec2im(innerCircleTr))
-        plt.matshow(render.vec2im(ring))
+        plot_vector_as_image(innerCircleSq)
+        plot_vector_as_image(innerCircleTr)
+        plot_vector_as_image(ring)
 
         return res
+
+
+def plot_vector_as_image(vector):
+    """ Quickly plots a vector as image. """
+    plt.matshow(render.vec2im(vector))
 
 
 if __name__ == "__main__":
