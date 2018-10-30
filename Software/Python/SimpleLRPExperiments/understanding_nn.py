@@ -151,8 +151,8 @@ W3Sympy = Matrix(W3)
 B3Sympy = Matrix(1, 2, B3)
 outputLayer3Sq = outputLayer1Sq*W3Sympy + B3Sympy  # square
 outputLayer3Tr = outputLayer1Tr*W3Sympy + B3Sympy  # triangle
-outputLayer3SqRounded = N(simplify(outputLayer3Sq), 2)
-outputLayer3TrRounded = N(simplify(outputLayer3Sq), 2)
+outputLayer3SqRounded = N(simplify(outputLayer3Sq), 1)
+outputLayer3TrRounded = N(simplify(outputLayer3Tr), 1)
 
 # sympy output
 sympyOutputSq = Matrix(1,
@@ -229,7 +229,7 @@ percCorrect = 100.0*np.sum(diffPredTrue == 0)/len(diffPredTrue)
 print('Of the test dataset is {}% correctly predicted.'.format(percCorrect))
 
 try:
-    with open('results\sympyPredTest', 'rb') as handle:
+    with open('results\sympyPredTest.pickle', 'rb') as handle:
         sympyPredTest = pickle.load(handle)
 except (OSError, IOError):
 
@@ -255,11 +255,20 @@ except (OSError, IOError):
         sympyPredTest[idx] = sympyPred[0]
 
     # save result
-    with open('results\sympyPredTest', 'wb') as handle:
+    with open('results\sympyPredTest.pickle', 'wb') as handle:
         pickle.dump(sympyPredTest, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
 # compare neural network and sympy representation
 meanDiff = np.mean((nnPredTest - sympyPredTest)[:, 0])
 stdDiff = np.std((nnPredTest - sympyPredTest)[:, 0])
 print 'Results comparison neural network and sympy representation predictions:'
-print 'The average difference of square prob. is: {}'.format(meanDiff)
+print 'The average difference of square probability is: {}'.format(meanDiff)
+CIWidth = 2.0*stdDiff/math.sqrt(len(nnPredTest))
+print 'With 95% confidence interval: [{}, {}]'.format(meanDiff - CIWidth,
+                                                      meanDiff + CIWidth)
+print 'Conclusion: the sympy is a really good representative of the neural network.'
+print 'In other words: analyzing the sympy representation gives some intuition about the strategy.'
+
+# save sympy representation
+with open('results\sympyRepresentationNN.pickle', 'wb') as handle:
+    handle.write(pickle.dumps(outputLayer3TrRounded))
