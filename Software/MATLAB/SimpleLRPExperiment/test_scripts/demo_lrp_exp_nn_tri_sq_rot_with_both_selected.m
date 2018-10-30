@@ -9,7 +9,7 @@
 % this script uses LRP Toolbox v.1.2.0
 
 %% parameters
-config_params_tri_sq_rot;
+config_params_tri_sq;
 
 unique_flag = true;
 
@@ -84,7 +84,7 @@ if verbose
 end
 
 %% compute and dispay heat maps for all selected classes and methods
-for method = 3
+for method = 2
     for c = 1:length(shape_labels)
         % c is the index of the true shape
 

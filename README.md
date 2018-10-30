@@ -44,3 +44,5 @@ March, April 2018: [simple experiment](https://github.com/NLeSC/XAI/tree/master/
 Later in 2018: Testing model 'adaptor' idea, pilot- [MATLAB NNToolbox <-> LRP Toolbox](https://github.com/NLeSC/XAI/tree/master/Software/MATLAB/NN2LRPToolboxMNISTDemo) ?
 
 May, June 2018: Simple LRP experiemtn with Triangles and Squares dataset.
+
+October 2018: Code  and small experiemtns for the IEEE poster.
