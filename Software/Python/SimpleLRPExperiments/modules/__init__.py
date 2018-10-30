@@ -8,3 +8,5 @@ from sumpool import SumPool
 from flatten import Flatten
 from convolution import Convolution
 from sequential import Sequential
+from binstep import BinStep
+from negabs import NegAbs
