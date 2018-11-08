@@ -8,7 +8,7 @@ Description: Load a trained neural network from train_nn.py and put lrp to
 the test. Please check whether the settings in settings.py are correct.
 """
 
-from tools import data_loader, model_io, render
+from tools import data_loader, model_io, render, data_analysis
 import matplotlib.pyplot as plt
 import numpy as np
 import settings
@@ -16,7 +16,7 @@ import math
 
 
 # load trained neural network (nn)
-nnName = 'nn_Linear_1024_3_Rect_Linear_3_2_SoftMax_(batchsize_10_number_iterations_100000).txt'
+nnName = 'nn_Linear_1024_2_Rect_Linear_2_2_SoftMax_(batchsize_10_number_iterations_10000).txt'
 nn = model_io.read(settings.modelPath + nnName)
 
 # I do not want to load the data every time, therefore the if statement
@@ -61,3 +61,8 @@ for idx, (key, relVal) in enumerate(relevanceValues.iteritems()):
     img = axes[idx].imshow(hmComp)
     axes[idx].axis('off')
     fig.colorbar(img, ax=axes[idx])
+
+# just a simple plot of weights without normalization
+titlePlot = 'LRP Heatmaps for Varying Choices (Without Scaling at SoftMax Layer)'
+data_analysis.plot_multiple_vectors_as_images(lrpRelevance,
+                                              titlePlot)

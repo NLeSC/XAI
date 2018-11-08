@@ -193,8 +193,8 @@ results = np.empty((len(colorVals), len(colorVals)))
 for idx, (xColor, yColor) in enumerate(itertools.product(colorVals, colorVals)):
 
     # set color in test image
-    im[0][idxShapeColor] = xColor
-    im[0][idxBackgroundColor] = yColor
+    im[0][im[0] == im[0][idxShapeColor]] = xColor
+    im[0][im[0] == im[0][idxBackgroundColor]] = yColor
 
     # determine output of neural network (nn)
     nnPred = nn.forward(im)
@@ -270,5 +270,5 @@ print 'Conclusion: the sympy is a really good representative of the neural netwo
 print 'In other words: analyzing the sympy representation gives some intuition about the strategy.'
 
 # save sympy representation
-with open('results\sympyRepresentationNN.pickle', 'wb') as handle:
-    handle.write(pickle.dumps(outputLayer3TrRounded))
+with open('results\sympyRepresentationOutputLayer3SqNN.pickle', 'wb') as handle:
+    handle.write(pickle.dumps(outputLayer3SqRounded))
