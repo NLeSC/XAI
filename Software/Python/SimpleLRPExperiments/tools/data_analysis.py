@@ -15,6 +15,7 @@ import math
 import data_loader
 import matplotlib.pyplot as plt
 import os
+import mpl_toolkits.axes_grid1 as axes_grid1
 
 
 def inner_circles():
@@ -76,11 +77,115 @@ def inner_circles():
         return res
 
 
-def plot_vector_as_image(vector):
-    """ Quickly plots a vector as image. """
-    plt.matshow(render.vec2im(vector))
+def plot_vector_as_image(vector, title=None):
+    """ Plots a vector as image with colorbar. """
+
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    if title is not None:
+        ax.set_title(title)
+    cax = ax.matshow(render.vec2im(vector))
+    fig.colorbar(cax)
+
+
+def plot_multiple_vectors_as_images(dVectors, title=None):
+    """ Based on dictionary dVectors, multiple vectors are
+    plotted next to each other. """
+
+    numbVectors = len(dVectors)
+
+    # init figure
+    fig = plt.figure(figsize=(15, 4))
+    grid = axes_grid1.AxesGrid(fig,
+                               111,
+                               nrows_ncols=(1, numbVectors),
+                               axes_pad=0.55,
+                               share_all=True,
+                               cbar_location="right",
+                               cbar_mode="each",
+                               cbar_size="5%",
+                               cbar_pad="2%",)
+    if title is not None:
+        fig.suptitle(title)
+
+    # plot vectors from dVectors
+    for idx, (key, relVal) in enumerate(dVectors.iteritems()):
+        im = grid[idx].imshow(render.vec2im(relVal),
+                              cmap='jet')
+        grid[idx].set_title(key)
+        grid[idx].axis('off')
+        grid.cbar_axes[idx].colorbar(im)
+
+    # finalize figure
+    if title is None:
+        fig.tight_layout()
+    else:
+        fig.tight_layout(rect=[0, 0, 1, .95])
+
+
+def unique_shapes():
+    """Finds the unique shapes w.r.t. rotation. """
+
+    # check whether calling function is appropriate
+    errorMessage = "Only meant for TrianglesAndSquares dataset"
+    assert settings.dataName == 'TrianglesAndSquares', errorMessage
+
+    dirPath = os.path.dirname(os.path.realpath(__file__))
+    fileName = dirPath + r"\results_tools\uniqueShapes.pickle"
+
+    try:
+        return pickle.load(open(fileName, "rb"))
+    except (OSError, IOError):
+
+        # load data
+        X, Y = data_loader.load_data()
+        imageDim = len(X['train'][0])
+
+        uniqueShapeRotSq = np.empty((0, imageDim))
+        uniqueShapeRotTr = np.empty((0, imageDim))
+
+        for idx in range(len(X['train'])):
+
+            x = X['train'][[idx]]
+            y = Y['train'][[idx]]
+
+            # find xMid in the middle of the image of x
+            xImage = render.vec2im(x)
+            halfIdx = int(math.floor(len(xImage)/2))
+            xMid = xImage[halfIdx, halfIdx]
+
+            # set shape color to 1 and background color to 0
+            x[0][x[0] == xMid] = 1
+            x[0][np.logical_not(x[0] == 1)] = 0
+
+            if y[0][0] == 1:
+                # a square
+                considered = any(np.equal(uniqueShapeRotSq, x[0]).all(1))
+                if not considered:
+                    uniqueShapeRotSq = np.vstack([uniqueShapeRotSq, x[0]])
+            else:
+                # a triangle
+                considered = any(np.equal(uniqueShapeRotTr, x[0]).all(1))
+                if not considered:
+                    uniqueShapeRotTr = np.vstack([uniqueShapeRotTr, x[0]])
+
+        # sort results
+        uniqueShapeRotSq = uniqueShapeRotSq[np.argsort([min(np.flatnonzero(im)) for im in uniqueShapeRotSq])]
+        uniqueShapeRotTr = uniqueShapeRotTr[np.argsort([min(np.flatnonzero(im)) for im in uniqueShapeRotTr])]
+
+        # save results
+        uniqShapeRot = {'square': uniqueShapeRotSq,
+                        'triangle': uniqueShapeRotTr}
+        with open(fileName, 'wb') as handle:
+            pickle.dump(uniqShapeRot, handle, protocol=pickle.HIGHEST_PROTOCOL)
+
+        return uniqShapeRot
 
 
 if __name__ == "__main__":
     # can be used for testing
     results = inner_circles()
+    uniqShapeRot = unique_shapes()
+
+    for im in uniqShapeRot['triangle']:
+        plot_vector_as_image(im)
