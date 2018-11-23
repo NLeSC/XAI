@@ -55,7 +55,7 @@ idxBackgroundColor = 0
 # -------------------------
 
 # get a test image (im) with known classification
-imageIdx = 0
+imageIdx = 1
 im = X['train'][[imageIdx]]
 classification = Y['train'][[imageIdx]]
 
@@ -70,8 +70,8 @@ numbRotTr = len(uniqShapeRotTr)
 shapeColorIm = im[0][idxShapeColor]
 backgroundColorIm = im[0][idxBackgroundColor]
 
-xColor = 0.9
-yColor = .1
+xColor = .4
+yColor = .6
 imOwnColors = np.array(im)
 imOwnColors[0][im[0] == shapeColorIm] = xColor
 imOwnColors[0][im[0] == backgroundColorIm] = yColor
@@ -164,10 +164,9 @@ def shape_update(label):
 
 
 def switch_colors(val):
-    shapeColor = sShapeColor.val
-    backgroundColor = sBackgroundColor.val
-    sShapeColor.val = backgroundColor
-    sBackgroundColor.val = shapeColor
+    sShapeColor.val, sBackgroundColor.val = sBackgroundColor.val, sShapeColor.val
+    sShapeColor.set_val(sShapeColor.val)
+    sBackgroundColor.set_val(sBackgroundColor.val)
     plot_shape_and_lrp(val)
 
 
