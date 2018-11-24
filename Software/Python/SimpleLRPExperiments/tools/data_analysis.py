@@ -77,6 +77,65 @@ def inner_circles():
         return res
 
 
+def union_shapes():
+    """Returns the union of all squares and triangle, respectively. """
+
+    # check whether calling function is appropriate
+    errorMessage = "Only meant for TrianglesAndSquares dataset"
+    assert settings.dataName == 'TrianglesAndSquares', errorMessage
+
+    dirPath = os.path.dirname(os.path.realpath(__file__))
+    fileName = dirPath + r"\results_tools\unionShapes.pickle"
+
+    try:
+        return pickle.load(open(fileName, "rb"))
+    except (OSError, IOError):
+
+        # load data
+        X, Y = data_loader.load_data()
+        imageDim = len(X['train'][0])
+
+        # init images of inner circles
+        unionSq = np.zeros((imageDim,))
+        unionTr = np.zeros((imageDim,))
+
+        for idx in range(len(X['train'])):
+
+            x = X['train'][[idx]]
+            y = Y['train'][[idx]]
+
+            # find xMid in the middle of the image of x
+            xImage = render.vec2im(x)
+            halfIdx = int(math.floor(len(xImage)/2))
+            xMid = xImage[halfIdx, halfIdx]
+
+            # set shape color to 1 and background color to 0
+            x[0][x[0] == xMid] = 1
+            x[0][np.logical_not(x[0] == 1)] = 0
+
+            if y[0][0] == 1:
+                # a square
+                unionSq += x[0]
+            else:
+                # a triangle
+                unionTr += x[0]
+
+        # rescale result
+        unionSq[unionSq > 0] = 1
+        unionTr[unionTr > 0] = 1
+
+        # save results
+        res = (unionSq, unionTr)
+        with open(fileName, 'wb') as handle:
+            pickle.dump(res, handle, protocol=pickle.HIGHEST_PROTOCOL)
+
+        # plot shapes
+        plot_vector_as_image(unionSq)
+        plot_vector_as_image(unionTr)
+
+        return res
+
+
 def plot_vector_as_image(vector, title=None):
     """ Plots a vector as image with colorbar. """
 
@@ -120,7 +179,7 @@ def plot_multiple_vectors_as_images(dVectors, title=None):
     if title is None:
         fig.tight_layout()
     else:
-        fig.tight_layout(rect=[0, 0, 1, .95])
+        fig.tight_layout(rect=[0, 0, 0.95, .95])
 
 
 def unique_shapes():
