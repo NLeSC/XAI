@@ -21,10 +21,9 @@ numbIters = 10000
 X, Y = tools.data_loader.load_data()
 
 # setup neural network
-nn = modules.Sequential([modules.Linear(32**2, 1),
-                         modules.NegAbs(),
-                         modules.BinStep(),
-                         modules.Linear(1, 2),
+nn = modules.Sequential([modules.Linear(32**2, 2),
+                         modules.Rect(),
+                         modules.Linear(2, 2),
                          modules.SoftMax()
                          ])
 

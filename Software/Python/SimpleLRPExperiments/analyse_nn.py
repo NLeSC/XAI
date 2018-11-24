@@ -17,9 +17,6 @@ import mpl_toolkits.axes_grid1 as axes_grid1
 
 
 # load trained neural network (nn)
-#nnName = 'nn_Linear_1024_2_Tanh_Linear_2_2_SoftMax_(batchsize_10_number_iterations_10000).txt'
-#nnName = 'nn_Linear_1024_2_Rect_SoftMax_(batchsize_10_number_iterations_10000).txt'
-#nnName = 'nn_Linear_1024_1_Rect_Linear_1_2_SoftMax_(batchsize_10_number_iterations_10000).txt'
 nnName = 'nn_Linear_1024_2_Rect_Linear_2_2_SoftMax_(batchsize_10_number_iterations_10000).txt'
 nn = model_io.read(settings.modelPath + nnName)
 
@@ -34,7 +31,6 @@ x = X['train'][[idx]]
 y = Y['train'][[idx]]
 x[0][x[0] == np.max(x[0])] = .05
 x[0][x[0] == np.min(x[0])] = .95
-# x[0][0] = 10
 nnPred = nn.forward(x)
 print nnPred
 # lrpScores = nn.lrp(nnPred, 'alphabeta', 2)
@@ -74,6 +70,8 @@ for i in range(dim):
 
 # calculate innercircles to find (hidden) relationships
 innerCircleSq, innerCircleTr, ring = data_analysis.inner_circles()
+unionSq, unionTr = data_analysis.union_shapes()
+data_analysis.plot_vector_as_image(unionSq - unionTr)
 
 def rounded_sum(x):
     return round(sum(x), 2)
