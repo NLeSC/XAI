@@ -15,7 +15,7 @@ scaling =  true; % true means scaling dataset 64 x 64
 %arch = 1;  % lenet5_maxpool
 arch = 2;  % short relu
 
-num_train_iter = 20000;
+num_train_iter = 100000;
 
 shape_labels = [0,2]; % [square triangle]
 
@@ -77,9 +77,9 @@ lenet5_maxpool_full_model_fname = fullfile(path2models, lenet5_maxpool_model_fna
 
 
 if scaling
-    linear_model_basename = '7096_to_1296_to_2_short_relu';
+    linear_model_basename = '7096_to_8_to_2_short_relu';
 else
-   linear_model_basename = '1024_to_1296_to_2_short_relu'; 
+   linear_model_basename = '1024_to_2_to_2_short_relu'; 
 end
 
 if binary
