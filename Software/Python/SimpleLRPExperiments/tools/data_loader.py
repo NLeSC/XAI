@@ -73,4 +73,4 @@ def reshape_labels_to_vectors(Y):
 
 
 if __name__ == "__main__":
-    print 'Is it a module or a script?'
+    print('Is it a module or a script?')

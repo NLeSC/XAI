@@ -156,7 +156,7 @@ class MaxPool(Module):
         elif lrp_var.lower() == 'alphabeta' or lrp_var.lower() == 'alpha':
             return self._simple_lrp(R) # defaults to naive variant
         else:
-            print 'Unknown lrp variant', lrp_var
+            print('Unknown lrp variant', lrp_var)
 
 
 
@@ -172,8 +172,8 @@ class MaxPool(Module):
 
         Rx = np.zeros_like(self.X,dtype=np.float)
 
-        for i in xrange(Hout):
-            for j in xrange(Wout):
+        for i in range(Hout):
+            for j in range(Wout):
                 Z = self.Y[:,i:i+1,j:j+1,:] == self.X[:, i*hstride:i*hstride+hpool , j*wstride:j*wstride+wpool , : ]
                 Zs = Z.sum(axis=(1,2),keepdims=True)
                 Rx[:,i*hstride:i*hstride+hpool , j*wstride:j*wstride+wpool,:] += (Z / Zs) * R[:,i:i+1,j:j+1,:]
@@ -195,8 +195,8 @@ class MaxPool(Module):
 
         Rx = np.zeros_like(self.X,dtype=np.float)
 
-        for i in xrange(Hout):
-            for j in xrange(Wout):
+        for i in range(Hout):
+            for j in range(Wout):
                 Z = np.ones([N,hpool,wpool,D])
                 Zs = Z.sum(axis=(1,2),keepdims=True)
                 Rx[:,i*hstride:i*hstride+hpool , j*wstride:j*wstride+wpool,:] += (Z / Zs) * R[:,i:i+1,j:j+1,:]

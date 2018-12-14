@@ -72,7 +72,7 @@ def enlarge_image(img, scaling = 3):
     '''
 
     if scaling < 1 or not isinstance(scaling,int):
-        print 'scaling factor needs to be an int >= 1'
+        print('scaling factor needs to be an int >= 1')
 
     if len(img.shape) == 2:
         H,W = img.shape
@@ -221,9 +221,9 @@ def hm_to_rgb(R, X = None, scaling = 3, shape = (), sigma = 2, cmap = 'jet', nor
         Rdims = R.shape
 
         if not np.all(xdims == Rdims):
-            print 'transformed heatmap and data dimension mismatch. data dimensions differ?'
-            print 'R.shape = ',Rdims, 'X.shape = ', xdims
-            print 'skipping drawing of outline\n'
+            print('transformed heatmap and data dimension mismatch. data dimensions differ?')
+            print('R.shape = ',Rdims, 'X.shape = ', xdims)
+            print('skipping drawing of outline\n')
         else:
             edges = skimage.feature.canny(X, sigma=sigma)
             edges = np.invert(np.dstack([edges]*3))*1.0
@@ -265,16 +265,16 @@ def save_image(rgb_images, path, gap = 2):
             gap = np.zeros((sz[0],gap,sz[2]))
             continue
         if not sz[0] == rgb_images[i].shape[0] and sz[1] == rgb_images[i].shape[2]:
-            print 'image',i, 'differs in size. unable to perform horizontal alignment'
-            print 'expected: Hx_xD = {0}x_x{1}'.format(sz[0],sz[1])
-            print 'got     : Hx_xD = {0}x_x{1}'.format(rgb_images[i].shape[0],rgb_images[i].shape[1])
-            print 'skipping image\n'
+            print('image',i, 'differs in size. unable to perform horizontal alignment')
+            print('expected: Hx_xD = {0}x_x{1}'.format(sz[0],sz[1]))
+            print('got     : Hx_xD = {0}x_x{1}'.format(rgb_images[i].shape[0],rgb_images[i].shape[1]))
+            print('skipping image\n')
         else:
             image = np.hstack((image,gap,rgb_images[i]))
 
     image *= 255
     image = image.astype(np.uint8)
 
-    print 'saving image to ', path
+    print('saving image to ', path)
     skimage.io.imsave(path,image)
     return image

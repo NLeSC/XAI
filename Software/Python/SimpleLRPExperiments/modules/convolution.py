@@ -81,8 +81,8 @@ class Convolution(Module):
         #initialize pooled output
         self.Y = np.zeros((N,Hout,Wout,numfilters))
 
-        for i in xrange(Hout):
-            for j in xrange(Wout):
+        for i in range(Hout):
+            for j in range(Wout):
                 self.Y[:,i,j,:] = np.tensordot(X[:, i*hstride:i*hstride+hf: , j*wstride:j*wstride+wf: , : ],self.W,axes = ([1,2,3],[0,1,2])) + self.B
         return self.Y
 
@@ -123,8 +123,8 @@ class Convolution(Module):
                 DX[:,i*hstride:i*hstride+hf , j*wstride:j*wstride+wf , : ] += (self.W[na,...] * DY[:,i:i+1,j:j+1,na,:]).sum(axis=4)  #sum over all the filters
         '''
 
-        for i in xrange(hf):
-            for j in xrange(wf):
+        for i in range(hf):
+            for j in range(wf):
                 DX[:,i:i+Hy:hstride,j:j+Wy:wstride,:] += np.dot(DY,self.W[i,j,:,:].T)
         return DX #* (hf*wf*df)**.5 / (NF*Hy*Wy)**.5
 
@@ -170,8 +170,8 @@ class Convolution(Module):
 
         Rx = np.zeros_like(self.X,dtype=np.float)
 
-        for i in xrange(Hout):
-            for j in xrange(Wout):
+        for i in range(Hout):
+            for j in range(Wout):
                 Z = self.W[na,...] * self.X[:, i*hstride:i*hstride+hf , j*wstride:j*wstride+wf , : , na]
                 Zs = Z.sum(axis=(1,2,3),keepdims=True) + self.B[na,na,na,na,...]
                 Zs += 1e-12*((Zs >= 0)*2 - 1.) # add a weak numerical stabilizer to cushion division by zero
@@ -189,8 +189,8 @@ class Convolution(Module):
 
         Rx = np.zeros_like(self.X,dtype=np.float)
 
-        for i in xrange(Hout):
-            for j in xrange(Wout):
+        for i in range(Hout):
+            for j in range(Wout):
                 Z = np.ones((N,hf,wf,df,NF))
                 Zs = Z.sum(axis=(1,2,3),keepdims=True)
 
@@ -208,8 +208,8 @@ class Convolution(Module):
 
         Rx = np.zeros_like(self.X,dtype=np.float)
 
-        for i in xrange(Hout):
-            for j in xrange(Wout):
+        for i in range(Hout):
+            for j in range(Wout):
                 Z = self.W[na,...]**2
                 Zs = Z.sum(axis=(1,2,3),keepdims=True)
 
@@ -227,8 +227,8 @@ class Convolution(Module):
 
         Rx = np.zeros_like(self.X,dtype=np.float)
 
-        for i in xrange(Hout):
-            for j in xrange(Wout):
+        for i in range(Hout):
+            for j in range(Wout):
                 Z = self.W[na,...] * self.X[:, i*hstride:i*hstride+hf , j*wstride:j*wstride+wf , : , na]
                 Zs = Z.sum(axis=(1,2,3),keepdims=True) + self.B[na,na,na,na,...]
                 Zs += epsilon*((Zs >= 0)*2-1)
@@ -249,8 +249,8 @@ class Convolution(Module):
 
         Rx = np.zeros_like(self.X,dtype=np.float)
 
-        for i in xrange(Hout):
-            for j in xrange(Wout):
+        for i in range(Hout):
+            for j in range(Wout):
                 Z = self.W[na,...] * self.X[:, i*hstride:i*hstride+hf , j*wstride:j*wstride+wf , : , na]
 
                 if not alpha == 0:

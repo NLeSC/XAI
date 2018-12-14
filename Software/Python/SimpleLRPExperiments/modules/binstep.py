@@ -15,7 +15,7 @@ more smooth.
 
 """
 
-import numpy as np
+#import numpy as np
 from module import Module
 
 # -------------------------------

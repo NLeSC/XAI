@@ -97,7 +97,7 @@ shape = 'square'
 def shape_update(label):
     global rotateIdx, shape
     shape = label
-    print label
+    print(label)
     if shape == 'square':
         rotateIdx = rotateIdx % numbRotSq
     else:
