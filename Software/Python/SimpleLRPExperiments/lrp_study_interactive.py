@@ -16,6 +16,10 @@ import settings
 import math
 
 
+# load trained neural network (nn)
+nnName = 'nn_Linear_1024_2_Rect_Linear_2_2_SoftMax_(batchsize_10_number_iterations_10000).txt'
+nn = model_io.read(settings.modelPath + nnName)
+
 # unique shape rotation of squares and triangles
 uniqShapeRot = data_analysis.unique_shapes()
 uniqShapeRotSq = uniqShapeRot['square']
@@ -65,50 +69,42 @@ def plot_shape_and_lrp(val):
 
     nnPred = nn.forward(np.array([im]))
     lrpScores = nn.lrp(nnPred, 'alphabeta', 2)
+    if np.isnan(np.sum(lrpScores[0])):
+        print('Warning: NaN values. Most likely because score after first layer'
+              ' gives two negative numbers and you get division by 0.')
     caxNnPred = axNnPred.imshow(render.vec2im(lrpScores[0]), cmap='jet')
     fig.colorbar(caxNnPred, cax=axColormapLRP, shrink=0.0001)
     infoNNPred = 'NN probabilities: square = {}, triangle = {}'.format(round(nnPred[0][0], 2), round(nnPred[0][1], 2))
     axNnPred.set_title(infoNNPred)
+    fig.canvas.draw()
     fig.canvas.draw_idle()
+    print('Done (re)drawing figure.')
 
 
 rotateIdx = 0
 def rotate_update_left(val):
-    global rotateIdx, shape
+    global rotateIdx
     rotateIdx -= 1
-    if shape == 'square':
-        rotateIdx = rotateIdx % numbRotSq
-    else:
-        rotateIdx = rotateIdx % numbRotTr
     plot_shape_and_lrp(val)
 
 
 def rotate_update_right(val):
-    global rotateIdx, shape
+    global rotateIdx
     rotateIdx += 1
-    if shape == 'square':
-        rotateIdx = rotateIdx % numbRotSq
-    else:
-        rotateIdx = rotateIdx % numbRotTr
     plot_shape_and_lrp(val)
 
 
 shape = 'square'
 def shape_update(label):
-    global rotateIdx, shape
+    global shape
     shape = label
-    print(label)
-    if shape == 'square':
-        rotateIdx = rotateIdx % numbRotSq
-    else:
-        rotateIdx = rotateIdx % numbRotTr
     plot_shape_and_lrp(label)
 
 
 def switch_colors(val):
-    sShapeColor.val, sBackgroundColor.val = sBackgroundColor.val, sShapeColor.val
-    sShapeColor.set_val(sShapeColor.val)
-    sBackgroundColor.set_val(sBackgroundColor.val)
+    oldShapeColor, oldBackgroundColor = sBackgroundColor.val, sShapeColor.val
+    sShapeColor.set_val(oldShapeColor)
+    sBackgroundColor.set_val(oldBackgroundColor)
     plot_shape_and_lrp(val)
 
 
