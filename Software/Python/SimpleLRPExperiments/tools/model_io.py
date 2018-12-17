@@ -98,7 +98,7 @@ def _read_txt(path):
     print('loading plain text model from',path)
 
     def _read_txt_helper(path):
-        with open(path,'rb') as f:
+        with open(path, 'r') as f:
             content = f.read().split('\n')
 
             modules = []

@@ -46,8 +46,8 @@ axRotateRight = plt.axes([0.25, 0.12, 0.1, 0.1], facecolor=axcolor)
 axColormapLRP = fig.add_axes([0.95, 0.125, 0.01, 0.75])
 
 # set sliders
-sShapeColor = Slider(axShapeColor, 'Shape color', 0, 1, valinit=.4, valstep=.01)
-sBackgroundColor = Slider(axBackgroundColor, 'Background color', 0, 1, valinit=.5, valstep=.01)
+sShapeColor = Slider(axShapeColor, 'Shape color', 0, 1, valinit=.4)
+sBackgroundColor = Slider(axBackgroundColor, 'Background color', 0, 1, valinit=.5)
 sRotateLeft = Button(axRotateLeft, 'Rotate shape left')
 sRotateRight = Button(axRotateRight, 'Rotate shape right')
 sShape = RadioButtons(axShape, ('square', 'triangle'), active=0)
@@ -73,7 +73,7 @@ def plot_shape_and_lrp(val):
         print('Warning: NaN values. Most likely because score after first layer'
               ' gives two negative numbers and you get division by 0.')
     caxNnPred = axNnPred.imshow(render.vec2im(lrpScores[0]), cmap='jet')
-    fig.colorbar(caxNnPred, cax=axColormapLRP, shrink=0.0001)
+    fig.colorbar(caxNnPred, cax=axColormapLRP)
     infoNNPred = 'NN probabilities: square = {}, triangle = {}'.format(round(nnPred[0][0], 2), round(nnPred[0][1], 2))
     axNnPred.set_title(infoNNPred)
     fig.canvas.draw()
