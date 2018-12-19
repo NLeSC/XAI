@@ -8,7 +8,8 @@ Description: In this script the LRP can be studied in an interactive way using
 sliders and buttons.
 """
 
-from tools import data_loader, model_io, render, data_analysis
+#from tools import data_loader, model_io, render, data_analysis
+from tools import model_io, render, data_analysis
 import matplotlib.pyplot as plt
 from matplotlib.widgets import Slider, Button, RadioButtons
 import numpy as np
@@ -50,16 +51,17 @@ axColormapLRP = fig.add_axes([0.95, 0.125, 0.01, 0.75])
 # set sliders
 sShapeColor = Slider(axShapeColor, 'Shape color', 0, 1, valinit=.4)
 sBackgroundColor = Slider(axBackgroundColor, 'Background color', 0, 1, valinit=.5)
-sRotateLeft = Button(axRotateLeft, 'Rotate shape left')
-sRotateRight = Button(axRotateRight, 'Rotate shape right')
-sShape = RadioButtons(axShape, ('square', 'triangle'), active=0)
-sSwitchColor = Button(axSwitchColor, 'Switch color')
+bRotateLeft = Button(axRotateLeft, 'Rotate shape left')
+bRotateRight = Button(axRotateRight, 'Rotate shape right')
+rbShape = RadioButtons(axShape, ('square', 'triangle'), active=0)
+bSwitchColor = Button(axSwitchColor, 'Switch color')
 
 
 def plot_shape_and_lrp(val):
-    global rotateIdx, shape, nn
+    global rotateIdx, shape, nn, method
     shapeColor = sShapeColor.val
     backgroundColor = sBackgroundColor.val
+    typeMethod = method
 
     im = np.array(uniqShapeRot[shape][rotateIdx])
     im[im == 1] = shapeColor
@@ -70,7 +72,8 @@ def plot_shape_and_lrp(val):
     axOrigImage.imshow(render.vec2im(im), cmap='gray_r', vmin=0, vmax=1)
 
     nnPred = nn.forward(np.array([im]))
-    lrpScores = nn.lrp(nnPred, 'alphabeta', 2)
+    #lrpScores = nn.lrp(nnPred, 'alphabeta', 2)
+    lrpScores = nn.lrp(nnPred, typeMethod, 2)
     if np.isnan(np.sum(lrpScores[0])):
         print('Warning: NaN values. Most likely because score after first layer'
               ' gives two negative numbers and you get division by 0.')
@@ -97,10 +100,11 @@ def rotate_update_right(val):
 
 
 shape = 'square'
-def shape_update(label):
+method = 'alphabeta'
+def shape_update(shape_label):
     global shape
-    shape = label
-    plot_shape_and_lrp(label)
+    shape = shape_label
+    plot_shape_and_lrp(shape_label)
 
 
 def switch_colors(val):
@@ -113,9 +117,9 @@ def switch_colors(val):
 shape_update(shape)
 sShapeColor.on_changed(plot_shape_and_lrp)
 sBackgroundColor.on_changed(plot_shape_and_lrp)
-sRotateLeft.on_clicked(rotate_update_left)
-sRotateRight.on_clicked(rotate_update_right)
-sShape.on_clicked(shape_update)
-sSwitchColor.on_clicked(switch_colors)
+bRotateLeft.on_clicked(rotate_update_left)
+bRotateRight.on_clicked(rotate_update_right)
+rbShape.on_clicked(shape_update)
+bSwitchColor.on_clicked(switch_colors)
 
 plt.show()
