@@ -56,21 +56,30 @@ bRotateRight = Button(axRotateRight, 'Rotate shape right')
 rbShape = RadioButtons(axShape, ('square', 'triangle'), active=0)
 bSwitchColor = Button(axSwitchColor, 'Switch color')
 
-
-def plot_shape_and_lrp(val):
-    global rotateIdx, shape, nn, method
+def plot_shape(val):
+    global rotateIdx, shape    
     shapeColor = sShapeColor.val
     backgroundColor = sBackgroundColor.val
-    typeMethod = method
 
     im = np.array(uniqShapeRot[shape][rotateIdx])
     im[im == 1] = shapeColor
-    im[im == 0] = backgroundColor
+    im[im == 0] = backgroundColor    
 
     info = 'shape color = {}, background color = {}, rotateIdx = {}, shape = {}.'.format(shapeColor, backgroundColor, rotateIdx, shape)
     fig.suptitle(info)
+
+
     axOrigImage.imshow(render.vec2im(im), cmap='gray_r', vmin=0, vmax=1)
 
+    print('Done plotting the shape')
+    
+    return(fig, im)
+        
+def plot_lrp(fig, im):
+    global method
+    
+    typeMethod = method
+    
     nnPred = nn.forward(np.array([im]))
     #lrpScores = nn.lrp(nnPred, 'alphabeta', 2)
     lrpScores = nn.lrp(nnPred, typeMethod, 2)
@@ -81,8 +90,22 @@ def plot_shape_and_lrp(val):
     fig.colorbar(caxNnPred, cax=axColormapLRP)
     infoNNPred = 'NN probabilities: square = {}, triangle = {}'.format(round(nnPred[0][0], 2), round(nnPred[0][1], 2))
     axNnPred.set_title(infoNNPred)
-    fig.canvas.draw()
+    
+    print('Done plotting the LRP map')
+    return(fig)    
+    
+
+def plot_shape_and_lrp(val):    
+
+    # plot the shape
+    fig, im = plot_shape(val) 
+    
+    # LRP
+    fig = plot_lrp(fig, im)
+    
+    fig.canvas.draw()    
     fig.canvas.draw_idle()
+    
     print('Done (re)drawing figure.')
 
 
