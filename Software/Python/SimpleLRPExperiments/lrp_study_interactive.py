@@ -110,6 +110,7 @@ def switch_colors(val):
     plot_shape_and_lrp(val)
 
 
+shape_update(shape)
 sShapeColor.on_changed(plot_shape_and_lrp)
 sBackgroundColor.on_changed(plot_shape_and_lrp)
 sRotateLeft.on_clicked(rotate_update_left)
