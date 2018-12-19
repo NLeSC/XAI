@@ -7,14 +7,24 @@ Author: Joost Berkhout (CWI, email: j.berkhout@cwi.nl)
 Description: Bundling of some settings that can be loaded throughout.
 """
 
+import os
+
+vm_elena  = True # To work on another machine make this flag False
+
 # TrianglesAndSquares
 # ===================
 
 dataName = 'TrianglesAndSquares'
 
 # path locations
-dataPath = 'C:/Users/berkhout/Desktop/XAI/Data/TrianglesAndSquaresRotation/Gray/'
-modelPath = 'models/' + dataName + '/'
+if vm_elena:
+    basePath = os.path.join(os.path.sep, 'home','elena', 'eStep', 'XAI')
+    dataPath = os.path.join(basePath,'Data', 'TrianglesAndSquaresRotation', 'Gray')    
+    modelPath = os.path.join(basePath, 'Software', 'Python', 'SimpleLRPExperiments', 'models', dataName, '')
+else:                              
+    dataPath = 'C:/Users/berkhout/Desktop/XAI/Data/TrianglesAndSquaresRotation/Gray/'
+    modelPath = 'models/' + dataName + '/'
+
 
 # data names
 kinds = ['train', 'test', 'valid']

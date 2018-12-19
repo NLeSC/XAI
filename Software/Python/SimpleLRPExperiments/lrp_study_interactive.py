@@ -13,12 +13,14 @@ import matplotlib.pyplot as plt
 from matplotlib.widgets import Slider, Button, RadioButtons
 import numpy as np
 import settings
-import math
+#import math
+import os
+
 
 
 # load trained neural network (nn)
 nnName = 'nn_Linear_1024_2_Rect_Linear_2_2_SoftMax_(batchsize_10_number_iterations_10000).txt'
-nn = model_io.read(settings.modelPath + nnName)
+nn = model_io.read(os.path.join(settings.modelPath, nnName))
 
 # unique shape rotation of squares and triangles
 uniqShapeRot = data_analysis.unique_shapes()
