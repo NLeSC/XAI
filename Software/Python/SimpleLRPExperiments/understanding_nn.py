@@ -182,7 +182,7 @@ im = X['train'][[imageIdx]]
 classification = Y['train'][[imageIdx]]
 
 # determine index of a color in shape and background
-idxShapeColor = np.ravel_multi_index([16, 16], (32, 32))
+idxShapeColor = settings.ixdShapeColor
 idxBackgroundColor = 0
 
 # init

@@ -10,6 +10,8 @@ Description: Data loading functions can be found here.
 from scipy.io import loadmat
 import settings
 import numpy as np
+import time
+import pandas as pd
 
 
 def load_data():
@@ -37,16 +39,34 @@ def load_data():
     Y = {}
 
     for kind in settings.kinds:
+
+        print('Start loading {} data'.format(kind))
+        startTime = time.time()
+
         pathX = settings.dataPath + settings.imagesNames[kind]
         pathY = settings.dataPath + settings.labelsNames[kind]
-        X[kind] = loadmat(pathX)[kind + '_images']
-        Y[kind] = reshape_labels_to_vectors(loadmat(pathY)[kind + '_labels'])
+
+        try:
+            X[kind] = loadmat(pathX)[kind + '_images']
+            Y[kind] = reshape_labels_to_vectors(loadmat(pathY)[kind + '_labels'])
+        except KeyError:
+            # in order to load the HorizontalVersusVertical data
+            X[kind] = loadmat(pathX)['Images']
+            Y[kind] = reshape_labels_to_vectors(loadmat(pathY)['Labels'])
+        except ValueError:
+            # in case of a csv file
+            # TODO: Maybe use pandas' HDF5 for a speed boost?
+            X[kind] = pd.read_csv(pathX, header=None).values
+            Y[kind] = reshape_labels_to_vectors(pd.read_csv(pathY, header=None).values)
+            
+        elapsedTime = time.time() - startTime
+        print('Loaded {} data in {}s'.format(kind, elapsedTime))
 
     return X, Y
 
 
 def reshape_labels_to_vectors(Y):
-    """Loads data based upon the settings in settings.py.
+    """Reshape label data into binary values.
 
     Parameters
     ----------

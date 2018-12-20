@@ -168,9 +168,8 @@ def plot_multiple_vectors_as_images(dVectors, title=None):
         fig.suptitle(title)
 
     # plot vectors from dVectors
-    for idx, (key, relVal) in enumerate(dVectors.iteritems()):
-        im = grid[idx].imshow(render.vec2im(relVal),
-                              cmap='jet')
+    for idx, (key, relVal) in enumerate(dVectors.items()):
+        im = grid[idx].imshow(render.vec2im(relVal), cmap='jet')
         grid[idx].set_title(key)
         grid[idx].axis('off')
         grid.cbar_axes[idx].colorbar(im)

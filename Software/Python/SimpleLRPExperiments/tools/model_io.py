@@ -296,7 +296,7 @@ def _write_txt(model,path):
     if not isinstance(model, Sequential):
         raise Exception('Argument "model" must be an instance of module.Sequential, wrapping a sequence of neural network computation layers, but is {0}'.format(type(model)))
 
-    with open(path, 'wb') as f:
+    with open(path, 'w') as f:
         for layer in model.modules:
             if isinstance(layer,Linear):
                 '''
