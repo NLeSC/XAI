@@ -7,6 +7,8 @@ A [github repository](https://github.com/dais-ita/interpretability-papers) colle
 
 Own collection of papers in the [State-of-the-art folder](https://github.com/NLeSC/XAI/tree/master/State-of-the-art)
 
+The data we use in the experiments are available in this [Dropbox folder](https://www.dropbox.com/home/XAI/Data).
+
 ### LIME - Local Interpretable Model-Agnostic Explanations
 [Paper](https://github.com/NLeSC/XAI/tree/master/State-of-the-art/LIME) in State-of-the-art folder
 
