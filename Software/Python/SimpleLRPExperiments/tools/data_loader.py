@@ -10,6 +10,7 @@ Description: Data loading functions can be found here.
 from scipy.io import loadmat
 import settings
 import numpy as np
+import os
 
 
 def load_data():
@@ -21,55 +22,55 @@ def load_data():
 
     Returns
     -------
-    X : dict
+    Data : dict
       A dictionary that contains the different datasets for the different
-      kinds as given in settings.py.
+      kinds (train/test/...) as given in settings.py.
 
-    Y : dict
-      Gives the labels corresponding to the data in X.
+    Labels : dict
+      Gives the labels corresponding to the data in Data.
 
     Notes
     -----
     """
 
     # init
-    X = {}
-    Y = {}
+    Data = {}
+    Labels = {}
 
     for kind in settings.kinds:
-        pathX = settings.dataPath + settings.imagesNames[kind]
-        pathY = settings.dataPath + settings.labelsNames[kind]
-        X[kind] = loadmat(pathX)[kind + '_images']
-        Y[kind] = reshape_labels_to_vectors(loadmat(pathY)[kind + '_labels'])
+        pathData = os.path.join(settings.dataPath, settings.imagesNames[kind])       
+        pathLabels = os.path.join(settings.dataPath, settings.labelsNames[kind])
+        Data[kind] = loadmat(pathData)[kind + '_images']
+        Labels[kind] = reshape_labels_to_vectors(loadmat(pathLabels)[kind + '_labels'])
 
-    return X, Y
+    return Data, Labels
 
 
-def reshape_labels_to_vectors(Y):
+def reshape_labels_to_vectors(Labels):
     """Loads data based upon the settings in settings.py.
 
     Parameters
     ----------
-    Y : np.array (n x 1)
+    Labels : np.array (n x 1)
       Array with image labels.
 
     Returns
     -------
-    reshapedY : np.array np.array (n x uniqueElements(Y))
-      Reshaped version of Y with binary values.
+    reshapedLabels : np.array np.array (n x uniqueElements(Labels))
+      Reshaped version of Labels with binary values.
 
     Notes
     -----
     """
 
     # init
-    uniqVals = np.unique(Y)
-    reshapedY = np.zeros((len(Y), len(uniqVals)))
+    uniqVals = np.unique(Labels)
+    reshapedLabels = np.zeros((len(Labels), len(uniqVals)))
 
     for idx, uniqVal in enumerate(uniqVals):
-        reshapedY[(Y == uniqVal)[:, 0], idx] = 1
+        reshapedLabels[(Labels == uniqVal)[:, 0], idx] = 1
 
-    return reshapedY
+    return reshapedLabels
 
 
 if __name__ == "__main__":
