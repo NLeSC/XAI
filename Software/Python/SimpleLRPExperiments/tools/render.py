@@ -11,8 +11,8 @@ provides methods to draw heatmaps beautifully.
 '''
 
 import numpy as np
-import matplotlib.cm
-from matplotlib.cm import ScalarMappable
+#import matplotlib.cm
+#from matplotlib.cm import ScalarMappable
 import skimage.io
 import skimage.feature
 
@@ -258,7 +258,7 @@ def save_image(rgb_images, path, gap = 2):
 
     sz = []
     image = []
-    for i in xrange(len(rgb_images)):
+    for i in range(len(rgb_images)):
         if not sz:
             sz = rgb_images[i].shape
             image = rgb_images[i]

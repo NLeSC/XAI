@@ -223,7 +223,9 @@ def unique_shapes():
     assert settings.dataName == 'TrianglesAndSquares', errorMessage
 
     dirPath = os.path.dirname(os.path.realpath(__file__))
-    fileName = dirPath + r"\results_tools\uniqueShapes.pickle"
+    #fileName = dirPath + r"\results_tools\uniqueShapes.pickle"
+    fileName = os.path.join(dirPath, "results_tools", "uniqueShapes.pickle")
+    
 
     try:
         return pickle.load(open(fileName, "rb"), encoding='latin1')  # the encoding was needed in order to load a Python 2.7 pickle in Python 3.6. Maybe this is not necessary anymore at a later stage.

@@ -8,17 +8,20 @@ Description: In this script the LRP can be studied in an interactive way using
 sliders and buttons.
 """
 
-from tools import data_loader, model_io, render, data_analysis
+#from tools import data_loader, model_io, render, data_analysis
+from tools import model_io, render, data_analysis
 import matplotlib.pyplot as plt
 from matplotlib.widgets import Slider, Button, RadioButtons
 import numpy as np
 import settings
-import math
+#import math
+import os
+
 
 
 # load trained neural network (nn)
 nnName = 'nn_Linear_1024_2_Rect_Linear_2_2_SoftMax_(batchsize_10_number_iterations_10000).txt'
-nn = model_io.read(settings.modelPath + nnName)
+nn = model_io.read(os.path.join(settings.modelPath, nnName))
 
 # unique shape rotation of squares and triangles
 uniqShapeRot = data_analysis.unique_shapes()
@@ -48,27 +51,38 @@ axColormapLRP = fig.add_axes([0.95, 0.125, 0.01, 0.75])
 # set sliders
 sShapeColor = Slider(axShapeColor, 'Shape color', 0, 1, valinit=.4)
 sBackgroundColor = Slider(axBackgroundColor, 'Background color', 0, 1, valinit=.5)
-sRotateLeft = Button(axRotateLeft, 'Rotate shape left')
-sRotateRight = Button(axRotateRight, 'Rotate shape right')
-sShape = RadioButtons(axShape, ('square', 'triangle'), active=0)
-sSwitchColor = Button(axSwitchColor, 'Switch color')
+bRotateLeft = Button(axRotateLeft, 'Rotate shape left')
+bRotateRight = Button(axRotateRight, 'Rotate shape right')
+rbShape = RadioButtons(axShape, ('square', 'triangle'), active=0)
+bSwitchColor = Button(axSwitchColor, 'Switch color')
 
-
-def plot_shape_and_lrp(val):
-    global rotateIdx, shape, nn
+def plot_shape(val):
+    global rotateIdx, shape    
     shapeColor = sShapeColor.val
     backgroundColor = sBackgroundColor.val
 
     im = np.array(uniqShapeRot[shape][rotateIdx])
     im[im == 1] = shapeColor
-    im[im == 0] = backgroundColor
+    im[im == 0] = backgroundColor    
 
     info = 'shape color = {}, background color = {}, rotateIdx = {}, shape = {}.'.format(shapeColor, backgroundColor, rotateIdx, shape)
     fig.suptitle(info)
+
+
     axOrigImage.imshow(render.vec2im(im), cmap='gray_r', vmin=0, vmax=1)
 
+    print('Done plotting the shape')
+    
+    return(fig, im)
+        
+def plot_lrp(fig, im):
+    global method
+    
+    typeMethod = method
+    
     nnPred = nn.forward(np.array([im]))
-    lrpScores = nn.lrp(nnPred, 'alphabeta', 2)
+    #lrpScores = nn.lrp(nnPred, 'alphabeta', 2)
+    lrpScores = nn.lrp(nnPred, typeMethod, 2)
     if np.isnan(np.sum(lrpScores[0])):
         print('Warning: NaN values. Most likely because score after first layer'
               ' gives two negative numbers and you get division by 0.')
@@ -76,8 +90,22 @@ def plot_shape_and_lrp(val):
     fig.colorbar(caxNnPred, cax=axColormapLRP)
     infoNNPred = 'NN probabilities: square = {}, triangle = {}'.format(round(nnPred[0][0], 2), round(nnPred[0][1], 2))
     axNnPred.set_title(infoNNPred)
-    fig.canvas.draw()
+    
+    print('Done plotting the LRP map')
+    return(fig)    
+    
+
+def plot_shape_and_lrp(val):    
+
+    # plot the shape
+    fig, im = plot_shape(val) 
+    
+    # LRP
+    fig = plot_lrp(fig, im)
+    
+    fig.canvas.draw()    
     fig.canvas.draw_idle()
+    
     print('Done (re)drawing figure.')
 
 
@@ -95,10 +123,11 @@ def rotate_update_right(val):
 
 
 shape = 'square'
-def shape_update(label):
+method = 'alphabeta'
+def shape_update(shape_label):
     global shape
-    shape = label
-    plot_shape_and_lrp(label)
+    shape = shape_label
+    plot_shape_and_lrp(shape_label)
 
 
 def switch_colors(val):
@@ -108,11 +137,12 @@ def switch_colors(val):
     plot_shape_and_lrp(val)
 
 
+shape_update(shape)
 sShapeColor.on_changed(plot_shape_and_lrp)
 sBackgroundColor.on_changed(plot_shape_and_lrp)
-sRotateLeft.on_clicked(rotate_update_left)
-sRotateRight.on_clicked(rotate_update_right)
-sShape.on_clicked(shape_update)
-sSwitchColor.on_clicked(switch_colors)
+bRotateLeft.on_clicked(rotate_update_left)
+bRotateRight.on_clicked(rotate_update_right)
+rbShape.on_clicked(shape_update)
+bSwitchColor.on_clicked(switch_colors)
 
 plt.show()
