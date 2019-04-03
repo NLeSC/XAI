@@ -50,9 +50,15 @@ def load_data():
             X[kind] = loadmat(pathX)[kind + '_images']
             Y[kind] = reshape_labels_to_vectors(loadmat(pathY)[kind + '_labels'])
         except KeyError:
-            # in order to load the HorizontalVersusVertical data
-            X[kind] = loadmat(pathX)['Images']
-            Y[kind] = reshape_labels_to_vectors(loadmat(pathY)['Labels'])
+            # TODO: Define dict keys corresponding to the datasets in settings.py and refer to those
+            try:
+                # in order to load the HorizontalVersusVertical data
+                X[kind] = loadmat(pathX)['Images']
+                Y[kind] = reshape_labels_to_vectors(loadmat(pathY)['Labels'])
+            except KeyError:
+                # in order to load the CountingCircles data
+                X[kind] = loadmat(pathX)['P']
+                Y[kind] = reshape_labels_to_vectors(loadmat(pathY)['C_actual'])
         except ValueError:
             # in case of a csv file
             # TODO: Maybe use pandas' HDF5 for a speed boost?
@@ -71,12 +77,12 @@ def reshape_labels_to_vectors(Y):
     Parameters
     ----------
     Y : np.array (n x 1)
-      Array with image labels.
+        Array with image labels.
 
     Returns
     -------
     reshapedY : np.array np.array (n x uniqueElements(Y))
-      Reshaped version of Y with binary values.
+        Reshaped version of Y with binary values.
 
     Notes
     -----
