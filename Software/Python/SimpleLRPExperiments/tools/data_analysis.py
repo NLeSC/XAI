@@ -181,6 +181,40 @@ def plot_multiple_vectors_as_images(dVectors, title=None):
         fig.tight_layout(rect=[0, 0, 0.95, .95])
 
 
+def plot_images(dImages, title=None):
+    """ Based on dictionary dVectors, multiple vectors are
+    plotted next to each other. """
+
+    numbImages = len(dImages)
+
+    # init figure
+    fig = plt.figure(figsize=(15, 4))
+    grid = axes_grid1.AxesGrid(fig,
+                               111,
+                               nrows_ncols=(1, numbImages),
+                               axes_pad=0.55,
+                               # share_all=True,
+                               cbar_location="right",
+                               cbar_mode="each",
+                               cbar_size="5%",
+                               cbar_pad="2%",)
+    if title is not None:
+        fig.suptitle(title)
+
+    # plot vectors from dVectors
+    for idx, (key, relVal) in enumerate(dImages.items()):
+        im = grid[idx].imshow(relVal, cmap='jet')
+        grid[idx].set_title(key)
+        grid[idx].axis('off')
+        grid.cbar_axes[idx].colorbar(im)
+
+    # finalize figure
+    if title is None:
+        fig.tight_layout()
+    else:
+        fig.tight_layout(rect=[0, 0, 0.95, .95])
+
+
 def unique_shapes():
     """Finds the unique shapes w.r.t. rotation. """
 
