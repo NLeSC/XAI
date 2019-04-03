@@ -11,13 +11,15 @@ from tools import data_loader, model_io, render, data_analysis
 import numpy as np
 import settings
 
-# choose color of loaded picture
-imageIdx = 2
-shapeColor = .5
-backgroundColor = .6
+# init
+imageIdx = 12  # index of the image that will be loaded
 
 # load trained neural network (nn)
-nnName = 'nn_Linear_4096_4_Rect_Linear_4_2_SoftMax_(batchsize_10_number_iterations_20000).txt'
+nnName = 'nn_Linear_4096_6_Rect_Linear_6_2_SoftMax_(batchsize_10_number_iterations_10000).txt'
+# nnName = 'nn_Linear_10000_4_Rect_Linear_4_3_SoftMax_(batchsize_10_number_iterations_100000).txt'
+# nnName = 'nn_Linear_10000_4_Tanh_Linear_4_4_SoftMax_(batchsize_10_number_iterations_1000).txt'
+# nnName = 'nn_Linear_10000_4_Rect_Linear_4_4_SoftMax_(batchsize_10_number_iterations_100).txt'
+# nnName = 'nn_Linear_4096_4_Rect_Linear_4_2_SoftMax_(batchsize_10_number_iterations_20000).txt'
 # nnName = 'nn_Linear_1024_2_Rect_Linear_2_2_SoftMax_(batchsize_10_number_iterations_10000).txt'
 nn = model_io.read(settings.modelPath + nnName)
 
@@ -29,45 +31,34 @@ if 'X' not in locals():
 # LRP test regarding strategy
 # ===========================
 
-# determine index of a color in shape and background
-imDim = settings.imageDimensions
-idxShapeColor = settings.idxShapeColor
-idxBackgroundColor = 0
-
 # get a test image (im) with known classification
-im = X['train'][[imageIdx]]
-classification = Y['train'][[imageIdx]]
-
-# # determine colors in test image
-# shapeColorIm = im[0][idxShapeColor]
-# backgroundColorIm = im[0][idxBackgroundColor]
-#
-# # set colors in test image
-# imOwnColors = np.array(im)
-# imOwnColors[0][im[0] == shapeColorIm] = shapeColor
-# imOwnColors[0][im[0] == backgroundColorIm] = backgroundColor
-
-imOwnColors = im
-
-data_analysis.plot_vector_as_image(imOwnColors)
+im = X['test'][[imageIdx]]
+classification = Y['test'][[imageIdx]]
+data_analysis.plot_vector_as_image(im, title=str(classification))
 
 # init neural network
-nnPred = nn.forward(imOwnColors)
+nnPred = nn.forward(im)
 
-# calculate lrpRelevance scores
+print('True classifictions is {}'.format(classification))
+print('Predictions is {}'.format(nnPred))
+
+# calculate lrpRelevance scores for manually set relevance values
 relevanceValues = {'nn prediction': nnPred,
-                   'square': np.array([[1., 0.]]),
-                   'triangle': np.array([[0., 1.]])}
+                   # '1 circles': np.array([[1., 0., 0.]]),
+                   # '2 circles': np.array([[0., 1., 0.]]),
+                   # '3 circles': np.array([[0., 0., 1.]])
+                   # 'square': np.array([[1., 0.]]),
+                   # 'triangle': np.array([[0., 1.]])
+                   }
 lrpRelevance = {}
 for idx, (key, relVal) in enumerate(relevanceValues.items()):
 
     # find and save lrp relevance
-    print(key, relVal)
     lrpRelevance[key] = nn.lrp(relVal, 'alphabeta', 2)
 
 # simple plot of weights without normalization
 titlePlot = ('LRP Heatmaps for Varying Choices (neural net prediction = {})'
              .format(np.round(nnPred, 2)[0]))
-lrpRelevance['originalImage'] = imOwnColors[0]  # also plot original image
+lrpRelevance['originalImage'] = im[0]  # also plot original image
 data_analysis.plot_multiple_vectors_as_images(lrpRelevance,
                                               titlePlot)
