@@ -11,3 +11,4 @@ Python code that tests the LRP toolbox on some simple datasets.
 ### Prerequisites
 
 Tested with Python 2.7.
+Code compatible with Python 3.6
