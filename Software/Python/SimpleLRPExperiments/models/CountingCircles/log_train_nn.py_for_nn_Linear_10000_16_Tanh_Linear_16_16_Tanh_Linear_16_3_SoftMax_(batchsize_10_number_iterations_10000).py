@@ -15,15 +15,17 @@ import settings
 
 # user init
 batchsize = 10
-numbIters = 20000
+numbIters = 10000
 
 # load data
 X, Y = tools.data_loader.load_data()
 
 # setup neural network
-nn = modules.Sequential([modules.Linear(settings.nrOfPixels, 4),
-                         modules.Rect(),
-                         modules.Linear(4, 2),
+nn = modules.Sequential([modules.Linear(settings.nrOfPixels, 16),
+                         modules.Tanh(),
+                         modules.Linear(16, 16),
+                         modules.Tanh(),
+                         modules.Linear(16, 3),
                          modules.SoftMax()
                          ])
 

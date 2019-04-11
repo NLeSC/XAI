@@ -7,50 +7,118 @@ Author: Joost Berkhout (CWI, email: j.berkhout@cwi.nl)
 Description: Bundling of some settings that can be loaded throughout.
 """
 
-import os
+import numpy as np
+from os.path import dirname
 
-vm_elena  = True # To work on another machine make this flag False
+# roots of project and data folder
+projectRootPath = dirname(dirname(dirname(dirname(__file__))))
+dataRootPath = projectRootPath + '/Data'
 
-# TrianglesAndSquares
-# ===================
 
-dataName = 'TrianglesAndSquares'
+# # TrianglesAndSquares
+# # ===================
+#
+# dataName = 'TrianglesAndSquares'
+# imageDimensions = (32, 32)
+#
+# # path locations
+# dataPath = dataRootPath + '/TrianglesAndSquaresRotation/Gray/'
+# modelPath = 'models/' + dataName + '/'
+#
+# # data names
+# kinds = ['train', 'test', 'valid']
+# imagesNames = {'train': dataName + '_images_train_50k.mat',
+#                'test': dataName + '_images_test_30k.mat',
+#                'valid': dataName + '_images_valid_20k.mat'}
+# labelsNames = {'train': dataName + '_labels_train_50k.mat',
+#                'test': dataName + '_labels_test_30k.mat',
+#                'valid': dataName + '_labels_valid_20k.mat'}
+# bandsNameTest = dataName + '_bands_test_30k.mat'
+
+
+# # HorizontalVersusVertical
+# # ========================
+#
+# dataName = 'HorizontalVersusVertical'
+# imageDimensions = (32, 32)
+#
+# # path locations
+# dataPath = dataRootPath + '/HorizontalVersusVertical/'
+# modelPath = 'models/' + dataName + '/'
+#
+# # data names
+# kinds = ['train', 'test', 'valid']
+# imagesNames = {'train': 'Images_train.mat',
+#                'test': 'Images_test.mat',
+#                'valid': 'Images_validation.mat'}
+# labelsNames = {'train': 'Labels_train.mat',
+#                'test': 'Labels_test.mat',
+#                'valid': 'Labels_validation.mat'}
+
+
+# # TrianglesAndSquaresScaleRotation
+# # ================================
+#
+# dataName = 'TrianglesAndSquaresScaleRotation'
+# imageDimensions = (64, 64)
+#
+# # path locations
+# dataPath = dataRootPath + 'TrianglesAndSquaresScaleRotation/Gray/'
+# modelPath = 'models/' + dataName + '/'
+#
+# # data names
+# kinds = ['train', 'test', 'valid']
+# imagesNames = {'train': dataName + '_images_train_50k.csv',
+#                'test': dataName + '_images_test_30k.csv',
+#                'valid': dataName + '_images_valid_20k.csv'}
+# labelsNames = {'train': dataName + '_labels_train_50k.csv',
+#                'test': dataName + '_labels_test_30k.csv',
+#                'valid': dataName + '_labels_valid_20k.csv'}
+
+
+# TrianglesAndSquaresScaleRotation smaller data set
+# =================================================
+
+dataName = 'TrianglesAndSquaresScaleRotation'
+imageDimensions = (64, 64)
 
 # path locations
-if vm_elena:
-    basePath = os.path.join(os.path.sep, 'home','elena', 'eStep', 'XAI')
-    dataPath = os.path.join(basePath,'Data', 'TrianglesAndSquaresRotation', 'Gray')    
-    modelPath = os.path.join(basePath, 'Software', 'Python', 'SimpleLRPExperiments', 'models', dataName, '')
-else:                              
-    dataPath = 'C:/Users/berkhout/Desktop/XAI/Data/TrianglesAndSquaresRotation/Gray/'
-    modelPath = 'models/' + dataName + '/'
-
+dataPath = dataRootPath + '/TrianglesAndSquaresScaleRotation/Gray/'
+modelPath = 'models/' + dataName + '/'
 
 # data names
 kinds = ['train', 'test', 'valid']
-imagesNames = {'train': dataName + '_images_train_50k.mat',
-               'test': dataName + '_images_test_30k.mat',
-               'valid': dataName + '_images_valid_20k.mat'}
-labelsNames = {'train': dataName + '_labels_train_50k.mat',
-               'test': dataName + '_labels_test_30k.mat',
-               'valid': dataName + '_labels_valid_20k.mat'}
-bandsNameTest = dataName + '_bands_test_30k.mat';
+imagesNames = {'train': dataName + '_images_train_12k.csv',
+               'test': dataName + '_images_test_7k.csv',
+               'valid': dataName + '_images_valid_5k.csv'}
+labelsNames = {'train': dataName + '_labels_train_12k.csv',
+               'test': dataName + '_labels_test_7k.csv',
+               'valid': dataName + '_labels_valid_5k.csv'}
 
 
-## HorizontalVersusVertical
-## ===================
+# # TrianglesAndSquaresScaleRotation smaller data set
+# # =================================================
 #
-#dataName = 'HorizontalVersusVertical'
+# dataName = 'CountingCircles'
+# imageDimensions = (100, 100)
 #
-## path locations
-#dataPath = 'C:/Users/berkhout/Desktop/XAI/Data/HorizontalVersusVertical/'
-#modelPath = 'models/' + dataName + '/'
+# # path locations
+# dataPath = dataRootPath + '/' + dataName + '/'
+# modelPath = 'models/' + dataName + '/'
 #
-## data names
-#kinds = ['train', 'test', 'valid']
-#imagesNames = {'train': 'Images_train.mat',
-#               'test': 'Images_test.mat',
-#               'valid': 'Images_validation.mat'}
-#labelsNames = {'train': 'Labels_train.mat',
-#               'test': 'Labels_test.mat',
-#               'valid': 'Labels_validation.mat'}
+# # data names
+# kinds = ['train', 'test', 'valid']
+# imagesNames = {'train': 'P_train.mat',
+#                'test': 'P_test.mat',
+#                'valid': 'P_validation.mat'}
+# labelsNames = {'train': 'C_actual_train.mat',
+#                'test': 'C_actual_test.mat',
+#                'valid': 'C_actual_validation.mat'}
+
+
+
+
+"""Some common settings are being calculated below based on values above """
+nrOfPixels = np.prod(imageDimensions)  # number of pixels in the image
+idxShapeColor = np.ravel_multi_index([int(x/2) for x in imageDimensions],
+                                     imageDimensions)  # w.r.t. image as vector

@@ -62,8 +62,8 @@ class Linear(Module):
 
         self.X = X
         self.Y = np.dot(X,self.W)+self.B
-        if len(X[0]) > 2:
-            print('Score after first linear layer = {}'.format(self.Y[0]))
+        # if len(X[0]) > 2:
+            # print('Score after first linear layer = {}'.format(self.Y[0]))
         return self.Y
 
 

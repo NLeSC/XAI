@@ -1,0 +1,7 @@
+Data description of CountingCircles:
+
+Goal: count the number of circles.
+
+1, 2 or 3 circles are being randomly generated that have the same color but vary in size. On top of that some random noise is placed.
+
+There are two dataset types: planned and actual. It may happen that 3 shapes were drawn that all overlaped. In that case planned is 3 but actual is 1.

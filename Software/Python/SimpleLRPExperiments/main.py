@@ -42,7 +42,7 @@ relevanceValues = {'nn prediction': nnPred,
                    'square': np.array([[1., 0.]]),
                    'triangle': np.array([[0., 1.]])}
 lrpRelevance = {}
-for idx, (key, relVal) in enumerate(relevanceValues.iteritems()):
+for idx, (key, relVal) in enumerate(relevanceValues.items()):
 
     # find and save lrp relevance
     lrpRelevance[key] = nn.lrp(relVal, 'alphabeta', 2)

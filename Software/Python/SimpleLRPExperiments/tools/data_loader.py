@@ -10,6 +10,8 @@ Description: Data loading functions can be found here.
 from scipy.io import loadmat
 import settings
 import numpy as np
+import time
+import pandas as pd
 import os
 
 
@@ -38,26 +40,51 @@ def load_data():
     Labels = {}
 
     for kind in settings.kinds:
-        pathData = os.path.join(settings.dataPath, settings.imagesNames[kind])       
+
+        print('Start loading {} data'.format(kind))
+        startTime = time.time()
+
+        pathData = os.path.join(settings.dataPath, settings.imagesNames[kind])     
         pathLabels = os.path.join(settings.dataPath, settings.labelsNames[kind])
-        Data[kind] = loadmat(pathData)[kind + '_images']
-        Labels[kind] = reshape_labels_to_vectors(loadmat(pathLabels)[kind + '_labels'])
+
+        try:
+            Data[kind] = loadmat(pathData)[kind + '_images']
+            Labels[kind] = reshape_labels_to_vectors(loadmat(pathLabels)[kind + '_labels'])
+        except KeyError:
+            # TODO: Define dict keys corresponding to the datasets in settings.py and refer to those
+            try:
+                # in order to load the HorizontalVersusVertical data
+                Data[kind] = loadmat(pathData)['Images']
+                Labels[kind] = reshape_labels_to_vectors(loadmat(pathLabels)['Labels'])
+            except KeyError:
+                # in order to load the CountingCircles data
+                Data[kind] = loadmat(pathData)['P']
+                Labels[kind] = reshape_labels_to_vectors(loadmat(pathLabels)['C_actual'])
+        except ValueError:
+            # in case of a csv file
+            # TODO: Maybe use pandas' HDF5 for a speed boost?
+            Data[kind] = pd.read_csv(pathData, header=None).values
+            Labels[kind] = reshape_labels_to_vectors(pd.read_csv(pathLabels, header=None).values)
+            
+        elapsedTime = time.time() - startTime
+        print('Loaded {} data in {}s'.format(kind, elapsedTime))
 
     return Data, Labels
 
 
 def reshape_labels_to_vectors(Labels):
-    """Loads data based upon the settings in settings.py.
+    """Reshape label data into binary values.
 
     Parameters
     ----------
     Labels : np.array (n x 1)
-      Array with image labels.
+        Array with image labels.
 
     Returns
     -------
     reshapedLabels : np.array np.array (n x uniqueElements(Labels))
-      Reshaped version of Labels with binary values.
+        Reshaped version of Labels with binary values.
+
 
     Notes
     -----
