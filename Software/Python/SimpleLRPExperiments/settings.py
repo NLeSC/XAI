@@ -76,27 +76,27 @@ dataRootPath = projectRootPath + '/Data'
 #                'valid': dataName + '_labels_valid_20k.csv'}
 
 
-# TrianglesAndSquaresScaleRotation smaller data set
-# =================================================
+## TrianglesAndSquaresScaleRotation smaller data set
+## =================================================
+#
+#dataName = 'TrianglesAndSquaresScaleRotation'
+#imageDimensions = (64, 64)
+#
+## path locations
+#dataPath = dataRootPath + '/TrianglesAndSquaresScaleRotation/Gray/'
+#modelPath = 'models/' + dataName + '/'
+#
+## data names
+#kinds = ['train', 'test', 'valid']
+#imagesNames = {'train': dataName + '_images_train_12k.csv',
+#               'test': dataName + '_images_test_7k.csv',
+#               'valid': dataName + '_images_valid_5k.csv'}
+#labelsNames = {'train': dataName + '_labels_train_12k.csv',
+#               'test': dataName + '_labels_test_7k.csv',
+#               'valid': dataName + '_labels_valid_5k.csv'}
 
-dataName = 'TrianglesAndSquaresScaleRotation'
-imageDimensions = (64, 64)
 
-# path locations
-dataPath = dataRootPath + '/TrianglesAndSquaresScaleRotation/Gray/'
-modelPath = 'models/' + dataName + '/'
-
-# data names
-kinds = ['train', 'test', 'valid']
-imagesNames = {'train': dataName + '_images_train_12k.csv',
-               'test': dataName + '_images_test_7k.csv',
-               'valid': dataName + '_images_valid_5k.csv'}
-labelsNames = {'train': dataName + '_labels_train_12k.csv',
-               'test': dataName + '_labels_test_7k.csv',
-               'valid': dataName + '_labels_valid_5k.csv'}
-
-
-# # TrianglesAndSquaresScaleRotation smaller data set
+# # Counting (possibly overlappinng) circles data set
 # # =================================================
 #
 # dataName = 'CountingCircles'
@@ -116,7 +116,24 @@ labelsNames = {'train': dataName + '_labels_train_12k.csv',
 #                'valid': 'C_actual_validation.mat'}
 
 
+# Counting non-overlappinng objects (circles) data set
+# =================================================
 
+dataName = 'Distinct_Objects'
+imageDimensions = (100, 100)
+
+# path locations
+dataPath = dataRootPath + '/' + dataName + '/'
+modelPath = 'models/' + dataName + '/'
+
+ # data names
+kinds = ['train', 'test', 'valid']
+imagesNames = {'train': 'P_distinct_train.mat',
+               'test': 'P_distinct_test.mat',
+               'valid': 'P_distinct_validate.mat'}
+labelsNames = {'train': 'C_distinct_actual_train.mat',
+               'test': 'C_distinct_actual_test.mat',
+               'valid': 'C_distinct_actual_validate.mat'}
 
 """Some common settings are being calculated below based on values above """
 nrOfPixels = np.prod(imageDimensions)  # number of pixels in the image
