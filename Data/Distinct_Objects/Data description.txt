@@ -1,0 +1,7 @@
+Data description of DistinctObjects:
+
+Goal: count the number of objects (circles).
+
+1, 2 or 3 circles are being randomly generated that have the same color but vary in size. On top of that some random noise is placed.
+
+There are two dataset types: planned and actual. The shapes do not overlap, but might barely touch (so, planned and actual are almost identical).
