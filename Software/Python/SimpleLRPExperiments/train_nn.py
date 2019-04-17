@@ -23,7 +23,7 @@ X, Y = tools.data_loader.load_data()
 # setup neural network
 nn = modules.Sequential([modules.Linear(settings.nrOfPixels, 4),
                          modules.Rect(),
-                         modules.Linear(4, 2),
+                         modules.Linear(4, Y[settings.kinds[0]].shape[-1]),
                          modules.SoftMax()
                          ])
 
