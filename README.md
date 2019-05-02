@@ -28,6 +28,14 @@ New one keras-oriented is coming up!
 [LRP tutorial](http://www.heatmapping.org/tutorial/) (orginial);
 [LRP tutorial](https://github.com/NLeSC/XAI/tree/master/Software/Python/LRP%20Tutorial) (redone by me)
 
+### iNNvestigate (the latest LRP & more Toolbox)
+[Paper](https://github.com/NLeSC/XAI/blob/master/State-of-the-art/iNNvestigate/iNNvestigatePaper.pdf)
+[git repo](https://github.com/albermax/innvestigate)
+
+### SpRAy - Spectral Relevance Analysis (connected to LRP)
+[Paper](https://github.com/NLeSC/XAI/blob/master/State-of-the-art/SpRAy/UnmaskingCleverHansPaper.pdf) in State-of-the-art-folder
+and especially the [supplementary material](https://github.com/NLeSC/XAI/blob/master/State-of-the-art/SpRAy/UnmaskingCleverHansSuppMaterial.pdf) (much longer than the paper)
+
 ### CLEAR - CLass-Enhanced Attentive Response (CLEAR) maps
 [Paper](https://github.com/NLeSC/XAI/tree/master/State-of-the-art/CLEAR) in State-of-the-art-folder
 
