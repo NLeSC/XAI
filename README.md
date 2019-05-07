@@ -19,17 +19,21 @@ Open-source Python (BSD-2) [LIME software](https://github.com/marcotcr/lime)
 ### LRP - Layer-wise Relevance Propagation
 [Papers](https://github.com/NLeSC/XAI/tree/master/State-of-the-art/LRP) in State-of-the-art folder
 
-[Interactive LRP demos](http://www.heatmapping.org/) (public page);
+[Interactive LRP demos](http://www.heatmapping.org/) (public page)
+
 [Interactive LRP demos](https://lrpserver.hhi.fraunhofer.de/Demos) (research group page)
 
-[LRP Toolbox](https://github.com/sebastian-lapuschkin/lrp_toolbox) (BSD-2), MATLAB, Python and Caffe;
+[LRP Toolbox](https://github.com/sebastian-lapuschkin/lrp_toolbox) (BSD-2), MATLAB, Python and Caffe
+
 New one keras-oriented is coming up!
 
-[LRP tutorial](http://www.heatmapping.org/tutorial/) (orginial);
+[LRP tutorial](http://www.heatmapping.org/tutorial/) (orginial)
+
 [LRP tutorial](https://github.com/NLeSC/XAI/tree/master/Software/Python/LRP%20Tutorial) (redone by me)
 
 ### iNNvestigate (the latest LRP & more Toolbox)
 [Paper](https://github.com/NLeSC/XAI/blob/master/State-of-the-art/iNNvestigate/iNNvestigatePaper.pdf)
+
 [git repo](https://github.com/albermax/innvestigate)
 
 ### SpRAy - Spectral Relevance Analysis (connected to LRP)
