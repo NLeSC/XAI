@@ -40,6 +40,9 @@ New one keras-oriented is coming up!
 [Paper](https://github.com/NLeSC/XAI/blob/master/State-of-the-art/SpRAy/UnmaskingCleverHansPaper.pdf) in State-of-the-art-folder
 and especially the [supplementary material](https://github.com/NLeSC/XAI/blob/master/State-of-the-art/SpRAy/UnmaskingCleverHansSuppMaterial.pdf) (much longer than the paper)
 
+### PatternNet and PatternAttribution
+[Paper](https://github.com/NLeSC/XAI/tree/master/State-of-the-art/PatternNetAndPatternAttribution)
+
 ### CLEAR - CLass-Enhanced Attentive Response (CLEAR) maps
 [Paper](https://github.com/NLeSC/XAI/tree/master/State-of-the-art/CLEAR) in State-of-the-art-folder
 
