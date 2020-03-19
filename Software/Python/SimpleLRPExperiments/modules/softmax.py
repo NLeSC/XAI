@@ -29,11 +29,11 @@ class SoftMax(Module):
         self.Y = np.exp(X) / np.exp(X).sum(axis=1,keepdims=True)
         return self.Y
 
-
     def lrp(self,R,*args,**kwargs):
         # just propagate R further down.
         # makes sure subroutines never get called.
-        return R*self.X
+#        return R*self.X
+        return R
 
     def clean(self):
         self.X = None

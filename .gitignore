@@ -17,8 +17,12 @@ Software/pytorch/.ipynb_checkpoints/
 *.dat
 
 # Spyder project settings
-.spyderproject
-.spyproject
+.spyderproject/
+.spyproject/
 
 # PyCharm project settings
 .idea/
+
+# other
+*.pickle
+*.csv

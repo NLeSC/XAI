@@ -28,10 +28,8 @@ class Tanh(Module):
         self.Y = np.tanh(X)
         return self.Y
 
-
     def backward(self,DY):
         return DY*(1.0-self.Y**2)
-
 
     def clean(self):
         self.Y = None

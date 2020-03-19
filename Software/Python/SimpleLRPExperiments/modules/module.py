@@ -44,8 +44,6 @@ class Module:
         ''' clean can be used to remove any temporary variables from the layer, e.g. just before serializing the layer object'''
         pass
 
-
-
     def set_lrp_parameters(self,lrp_var=None,param=None):
         ''' pre-sets lrp parameters to use for this layer. see the documentation of Module.lrp for details '''
         self.lrp_var = lrp_var
@@ -120,7 +118,7 @@ class Module:
         elif lrp_var.lower() == 'alphabeta' or lrp_var.lower() == 'alpha':
             return self._alphabeta_lrp(R,param)
         else:
-            print 'Unknown lrp variant', lrp_var
+            print('Unknown lrp variant', lrp_var)
 
 
     # ---------------------------------------------------------
