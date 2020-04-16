@@ -54,6 +54,9 @@ and especially the [supplementary material](https://github.com/NLeSC/XAI/blob/ma
 ### SHAP
 [Paper](https://github.com/NLeSC/XAI/tree/master/State-of-the-art/SHAP) in State-of-the-art-folder
 
+### Captum - Model interpretability and understanding for PyTorch
+[git repo](https://github.com/pytorch/captum) in Software
+
 ### Other
 [Building blocks for interpretability](https://distill.pub/2018/building-blocks/) Distill article
 
@@ -62,6 +65,8 @@ March, April 2018: [simple experiment](https://github.com/NLeSC/XAI/tree/master/
 
 Later in 2018: Testing model 'adaptor' idea, pilot- [MATLAB NNToolbox <-> LRP Toolbox](https://github.com/NLeSC/XAI/tree/master/Software/MATLAB/NN2LRPToolboxMNISTDemo) ?
 
-May, June 2018: Simple LRP experiemtn with Triangles and Squares dataset.
+May, June 2018: Simple LRP experiement with Triangles and Squares dataset.
 
 October 2018: Code  and small experiemtns for the IEEE poster.
+
+April 2020: SImple experiment with counting shapes (in Software/cnn-count)
