@@ -5,6 +5,7 @@ Software/lrp_toolbox-1.2.0/caffe-master-lrp/examples/
 /Data/MNIST/imageDatastores
 /Data/TrianglesAndSquaresRotation/Gray/
 /Data/TrianglesAndSquaresScaleRotation
+/Data/CountingShapes
 /Results/Experiments/TrianglesAndSquares/
 /Papers/
 /Software/.cache
