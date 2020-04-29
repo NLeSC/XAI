@@ -2,11 +2,13 @@ import numpy as np
 from skimage.morphology import disk, diamond, square
 import matplotlib.pyplot as plt
 
+# type of shapes (morphological SE from skimage)
 def my_square(radius, dtype):
     return square(radius*2+1, dtype)
 
 SHAPES = [disk, diamond, my_square]
 
+# generating a single binary shape image
 def generate_image(img_size, shapes, allow_occlusion=2):
     img = np.zeros((img_size, img_size), bool)
     i = 0
@@ -26,17 +28,20 @@ def generate_image(img_size, shapes, allow_occlusion=2):
             i += 1
     return img
 
-if __name__ == '__main__':
-    NIM = 10 #nbr of images
-    NMIN, NMAX = 1, 3  # nbr of shapes
-    RMIN, RMAX = 2, 6  # shape radius
-
-    for im in range(NIM):
-        n = int(np.random.randint(NMIN, NMAX+1))
-        shapes = [(np.random.randint(len(SHAPES)), np.random.randint(RMIN, RMAX))
-                  for i in range(n)]
-    
-        img = generate_image(64, shapes)
-        plt.imshow(img)
-        plt.title('n = %d' % n)
-        plt.show()
+# plot 12 random shape images
+def plot_12images(images, labels):
+    j=0
+    nim = len(labels)
+    for _ in range(12):
+        ind=int(np.random.randint(1,nim))
+        img=images[ind,:,:]
+        img=np.reshape(img,(64,64))
+        label=labels[ind]
+        j = j+1
+        plt.subplot(3, 4, j)
+        plt.imshow(img,cmap='binary')
+        plt.xticks([])
+        plt.yticks([])
+        plt.title('n=%d' %(label))
+           
+    plt.show()
