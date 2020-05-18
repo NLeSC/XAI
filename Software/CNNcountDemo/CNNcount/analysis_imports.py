@@ -34,6 +34,7 @@ if(K.tensorflow_backend):
     import tensorflow as tf
     tf.logging.set_verbosity(tf.logging.ERROR)
 from keras.utils import np_utils
+from keras.models import load_model
 
 from CNNcount import shape_images as si
 from CNNcount import model_count_shapes as mcs
