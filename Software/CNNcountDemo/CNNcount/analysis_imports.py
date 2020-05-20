@@ -17,7 +17,7 @@ from keras.models import load_model
 import innvestigate
 import innvestigate.utils as iutils
 mnistutils = imp.load_source("utils_mnist", "/home/elena/eStep/XAI/Software/innvestigate/examples/utils_mnist.py")
-
+eutils = imp.load_source("utils", "/home/elena/eStep/XAI/Software/innvestigate/examples/utils.py")
 
 
 # Imports
