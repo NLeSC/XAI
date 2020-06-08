@@ -219,7 +219,7 @@ class AnalyzerBase(object):
 
         :param fname: The file's name.
         """
-        f = np.load(fname)
+        f = np.load(fname, allow_pickle=True)
 
         class_name = f["class_name"].item()
         state = f["state"].item()
