@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/spyderlib/spyder.py", line 2331, in main
+    mainwindow = run_spyder(app, options, args)
+  File "/usr/local/lib/python2.7/dist-packages/spyderlib/spyder.py", line 2215, in run_spyder
+    main.setup()
+  File "/usr/local/lib/python2.7/dist-packages/spyderlib/spyder.py", line 734, in setup
+    message=_("Spyder Internal Console\n\n"
+  File "/usr/local/lib/python2.7/dist-packages/spyderlib/plugins/console.py", line 74, in __init__
+    self.find_widget.set_editor(self.shell)
+  File "/usr/local/lib/python2.7/dist-packages/spyderlib/widgets/findreplace.py", line 260, in set_editor
+    from spyderlib.qt.QtWebKit import QWebView
+  File "/usr/local/lib/python2.7/dist-packages/spyderlib/qt/QtWebKit.py", line 10, in <module>
+    from PyQt4.QtWebKit import *  # analysis:ignore
+ImportError: No module named QtWebKit
