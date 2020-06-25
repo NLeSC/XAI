@@ -64,9 +64,12 @@ def load_split_data(fname):
     return images_train, images_val, images_test, labels_train, labels_val, labels_test
 
 # plot 12 random shape images
-def plot_12images(images, labels):
+def plot_12images(images, labels, figsize=None):
     j=0
     nim = len(labels)
+    if figsize is None:
+        figsize = (8, 6)
+    plt.figure(figsize=figsize)
     for _ in range(12):
         ind=int(np.random.randint(1,nim))
         img=images[ind,:,:]
