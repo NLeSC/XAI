@@ -47,8 +47,8 @@ relevanceValues = {'nn prediction': nnPred,
                    # '1 circles': np.array([[1., 0., 0.]]),
                    # '2 circles': np.array([[0., 1., 0.]]),
                    # '3 circles': np.array([[0., 0., 1.]])
-                   # 'square': np.array([[1., 0.]]),
-                   # 'triangle': np.array([[0., 1.]])
+                   'square': np.array([[1., 0.]]),
+                   'triangle': np.array([[0., 1.]])
                    }
 lrpRelevance = {}
 for idx, (key, relVal) in enumerate(relevanceValues.items()):
