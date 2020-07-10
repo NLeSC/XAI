@@ -16,6 +16,7 @@ import data_loader
 import matplotlib.pyplot as plt
 import os
 import mpl_toolkits.axes_grid1 as axes_grid1
+from matplotlib.backends.backend_pdf import PdfPages
 
 
 def inner_circles():
@@ -274,6 +275,18 @@ def unique_shapes():
             pickle.dump(uniqShapeRot, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
         return uniqShapeRot
+
+
+def multipage(filename, figs=None):
+    """Saves all figures in figs to filename. If figs is None, saves all
+    Matplotlib figures that are open. """
+
+    pp = PdfPages(filename)
+    if figs is None:
+        figs = [plt.figure(n) for n in plt.get_fignums()]
+    for fig in figs:
+        fig.savefig(pp, format='pdf')
+    pp.close()
 
 
 if __name__ == "__main__":
