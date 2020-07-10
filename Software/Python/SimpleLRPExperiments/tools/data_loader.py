@@ -8,6 +8,7 @@ Description: Data loading functions can be found here.
 """
 
 from scipy.io import loadmat
+from sklearn.model_selection import train_test_split
 import settings
 import numpy as np
 import time
@@ -38,6 +39,26 @@ def load_data():
     # init
     Data = {}
     Labels = {}
+
+    if settings.imagesNames is None:
+        # assuming a .npz file to be loaded (meant for CountingCirclesDiffRaddiVar)
+        # warning: settings.kinds are hardcoded below 'as usual'
+
+        print('Start data loading ...')
+
+        # load data
+        data = np.load(settings.dataPath + settings.dataset_name)
+        data_size = len(data['images'])
+        images = data['images'].reshape(data_size, settings.nrOfPixels)  # ensure that it becomes vectors instead of matrices
+        labels = reshape_labels_to_vectors(data['labels'].reshape(data_size, 1))
+
+        # split data
+        Data['train'], X_valid_train, Labels['train'], y_valid_train = train_test_split(images, labels, test_size=0.6, random_state=42)
+        Data['valid'], Data['test'], Labels['valid'], Labels['test'] = train_test_split(X_valid_train, y_valid_train, test_size=0.5, random_state=42)
+
+        print('Data loaded!')
+
+        return Data, Labels
 
     for kind in settings.kinds:
 
