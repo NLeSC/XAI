@@ -86,12 +86,13 @@ class DkNN:
 
         # init data
         NN = self.NN_layers[layer_idx]
-        confirmation_perc_NN = 100*np.mean(np.argmax(NN['Y'], 1) == np.argmax(self.Y_input_predict, 1)[0])
+        confirmation_perc_NN_pred = 100*np.mean(np.argmax(NN['Y'], 1) == np.argmax(self.Y_input_predict, 1)[0])
+        confirmation_perc_NN_true_label = 100*np.mean(np.argmax(NN['Y'], 1) == np.argmax(self.Y_input, 1)[0])
 
         # init figure
         nr_of_rows = math.ceil(math.sqrt(nr_to_plot))
         fig, ax = plt.subplots(nr_of_rows, nr_of_rows, sharex='col', sharey='row', figsize=(16, 8))
-        fig.suptitle(f'Plot of nearest neighbors (NN) in layer {NN["layer name"]} with {confirmation_perc_NN}% of NN confirm with prediction')
+        fig.suptitle(f'Plot of nearest neighbors (NN) in layer {NN["layer name"]} with {round(confirmation_perc_NN_pred,2)}% and {round(confirmation_perc_NN_true_label,2)}% of NN confirm with prediction and true label, resp.')
 
         # plot input image and all nearest neighbors
         nr_NN_plotted = 0
