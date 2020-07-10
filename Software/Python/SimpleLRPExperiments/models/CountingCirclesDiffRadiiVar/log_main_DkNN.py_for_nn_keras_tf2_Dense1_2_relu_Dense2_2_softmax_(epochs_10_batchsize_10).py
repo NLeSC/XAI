@@ -30,7 +30,7 @@ np.random.seed(0)
 epochs = 10
 batch_size = 10
 retrain_existing_model = False
-k = 15  # number of nearest neighbors to consider per layer
+k = 10  # number of nearest neighbors to consider per layer
 
 # load data
 X, Y = tools.data_loader.load_data()
@@ -41,24 +41,17 @@ X, Y = tools.data_loader.load_data()
 model = Sequential()
 
 # Add an input layer
-model.add(Dense(units=80,
+model.add(Dense(units=2,
                 kernel_initializer=initializers.RandomNormal(stddev=settings.nrOfPixels**(-.5)),
                 input_shape=(settings.nrOfPixels,),
-                name='Dense1_80'))
+                name='Dense1_2'))
 
-model.add(Activation('relu', name='relu1'))  # for testing: can be replaced by adding activation in previous Dense
-
-# intermediate layer
-model.add(Dense(units=40,
-                kernel_initializer=initializers.RandomNormal(stddev=settings.nrOfPixels**(-.5)),
-                name='Dense2_40'))
-
-model.add(Activation('relu', name='relu2'))  # for testing: can be replaced by adding activation in previous Dense
+model.add(Activation('relu', name='relu'))  # for testing: can be replaced by adding activation in previous Dense
 
 # Add an output layer
 model.add(Dense(units=Y[settings.kinds[0]].shape[-1],
                 kernel_initializer=initializers.RandomNormal(stddev=settings.nrOfPixels**(-.5)),
-                name='Dense3_3'))
+                name='Dense2_2'))
 
 model.add(Activation('softmax', name='softmax'))
 
@@ -88,12 +81,9 @@ else:
     model.save(model_loc)
 
     # log main_DkNN.py that produced neural net
-    script_name = 'main_DkNN'
+    script_name = 'main_DkNN.py'
     nameLogScript = 'log_' + script_name + '_for_' + model_name + '.py'
-    try:
-        shutil.copyfile(script_name + '.py', settings.modelPath + nameLogScript)
-    except FileNotFoundError:
-        print('could not save the log, continue without saving.')
+    shutil.copyfile(script_name, settings.modelPath + nameLogScript)
 
 # evaluate model on test data
 YPred = model.predict(X['test'])
@@ -106,35 +96,20 @@ extractor = tensorflow.keras.Model(inputs=model.inputs,
                                    outputs=model.inputs + [l.output for l in model.layers])
 train_features = extractor(X['train'])
 
-# inspect correctly classified image
-image_idx = 0
+# inspect image
+image_idx = idxs_falsely_classified[2]
 x = X['test'][image_idx:image_idx + 1, :]
 y = Y['test'][image_idx:image_idx + 1, :]
 test_image_features = extractor(x)
 tools.data_analysis.plot_vector_as_image(x, f'label = {y}, output layer1 = {test_image_features[1].numpy()}, output layer3 = {test_image_features[2].numpy()}')
-deep_k_NN = DkNN(extractor, X, Y, k, x, y, model.predict(x))
+deep_k_NN = DkNN(extractor, X, Y, 15, x, y, model.predict(x))
+
 deep_k_NN.plot_NN_layer(1)
 deep_k_NN.plot_NN_layer(2)
 deep_k_NN.plot_NN_layer(3)
 deep_k_NN.plot_NN_layer(4)
-deep_k_NN.plot_NN_layer(5)
-deep_k_NN.plot_NN_layer(6)
 
-# inspect correctly classified image
-image_idx = idxs_falsely_classified[1]
-x = X['test'][image_idx:image_idx + 1, :]
-y = Y['test'][image_idx:image_idx + 1, :]
-test_image_features = extractor(x)
-tools.data_analysis.plot_vector_as_image(x, f'label = {y}, output layer1 = {test_image_features[1].numpy()}, output layer3 = {test_image_features[2].numpy()}')
-deep_k_NN = DkNN(extractor, X, Y, k, x, y, model.predict(x))
-deep_k_NN.plot_NN_layer(1)
-deep_k_NN.plot_NN_layer(2)
-deep_k_NN.plot_NN_layer(3)
-deep_k_NN.plot_NN_layer(4)
-deep_k_NN.plot_NN_layer(5)
-deep_k_NN.plot_NN_layer(6)
 
-tools.data_analysis.multipage('Results\Figures from Python script main_DkNN.pdf')
 
 
 

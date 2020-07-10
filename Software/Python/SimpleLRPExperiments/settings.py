@@ -13,25 +13,25 @@ from definitions import ROOT_DIR
 dataRootPath = ROOT_DIR + '/Data'
 
 
-# TrianglesAndSquares
-# ===================
-
-dataName = 'TrianglesAndSquares'
-imageDimensions = (32, 32)
-
-# path locations
-dataPath = dataRootPath + '/TrianglesAndSquaresRotation/Gray/'
-modelPath = 'models/' + dataName + '/'
-
-# data names
-kinds = ['train', 'test', 'valid']
-imagesNames = {'train': dataName + '_images_train_50k.mat',
-               'test': dataName + '_images_test_30k.mat',
-               'valid': dataName + '_images_valid_20k.mat'}
-labelsNames = {'train': dataName + '_labels_train_50k.mat',
-               'test': dataName + '_labels_test_30k.mat',
-               'valid': dataName + '_labels_valid_20k.mat'}
-bandsNameTest = dataName + '_bands_test_30k.mat'
+# # TrianglesAndSquares
+# # ===================
+#
+# dataName = 'TrianglesAndSquares'
+# imageDimensions = (32, 32)
+#
+# # path locations
+# dataPath = dataRootPath + '/TrianglesAndSquaresRotation/Gray/'
+# modelPath = 'models/' + dataName + '/'
+#
+# # data names
+# kinds = ['train', 'test', 'valid']
+# imagesNames = {'train': dataName + '_images_train_50k.mat',
+#                'test': dataName + '_images_test_30k.mat',
+#                'valid': dataName + '_images_valid_20k.mat'}
+# labelsNames = {'train': dataName + '_labels_train_50k.mat',
+#                'test': dataName + '_labels_test_30k.mat',
+#                'valid': dataName + '_labels_valid_20k.mat'}
+# bandsNameTest = dataName + '_bands_test_30k.mat'
 
 
 # # HorizontalVersusVertical
@@ -134,6 +134,20 @@ bandsNameTest = dataName + '_bands_test_30k.mat'
 #                'valid': 'C_distinct_actual_validate.mat'}
 
 
+# Counting circles with different radi and variability
+# ===================================================
+
+dataName = 'CountingCirclesDiffRadiiVar'
+imageDimensions = (64, 64)
+dataset_name = 'circles_diff_radii_var_100k.npz'
+
+# path locations
+dataPath = dataRootPath + '/' + dataName + '/'
+modelPath = 'models/' + dataName + '/'
+
+ # data names
+kinds = ['train', 'test', 'valid']
+imagesNames = labelsNames = None  # hack to ensure that .npz is loaded at once
 
 """Some common settings are being calculated below based on values above """
 import numpy as np
