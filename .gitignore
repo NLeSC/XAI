@@ -1,11 +1,7 @@
 Software/lrp_toolbox-1.2.0/caffe-master-lrp/examples/
 *.pyc
 *.asv
-/Data/MNIST/images
-/Data/MNIST/imageDatastores
-/Data/TrianglesAndSquaresRotation/Gray/
-/Data/TrianglesAndSquaresScaleRotation
-/Data/CountingCirclesDiffRadiiVar
+/Data/
 /Results/Experiments/TrianglesAndSquares/
 /Papers/
 /Software/.cache
