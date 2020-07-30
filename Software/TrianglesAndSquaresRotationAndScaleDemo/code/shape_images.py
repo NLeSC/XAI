@@ -25,14 +25,9 @@ VALID = 0.2
 #             i += 1
 #     return img
 
-# load and split to training, test and validaiton data
-def load_split_data(fname):
+# split to training, test and validaiton data
+def split_data(images, labels):
     
-    # load
-    data = np.load(fname)
-    images=data['images']
-    labels=data['labels']
-        
     # split      
     nim = len(labels)
     ntr = int(TRAIN*nim)
