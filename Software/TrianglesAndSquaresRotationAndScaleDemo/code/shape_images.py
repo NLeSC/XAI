@@ -73,3 +73,39 @@ def plot_12images(images, labels, figsize=None):
         plt.title('n=%d' %(label))
            
     plt.show()
+    
+# sort based on contrast
+def sort_contrast(images, bg_point=[1,1], fg_point=[32,32]):
+    # initializaitons
+    nim = np.shape(images)[0]
+    
+    output_images = np.zeros_like(images)
+    bg_values = np.zeros([1,nim])
+    fg_values = np.zeros([1,nim])
+
+    # indicies of a BG and FG points
+    fg_row = fg_point[0]
+    fg_col = fg_point[1]
+    bg_row = bg_point[0]
+    bg_col = bg_point[1]
+    
+    # collect row vectors of BG and FG values
+    for ind in range(nim):
+        bg_values[ind] = images[ind, bg_row, bg_col]
+        fg_values[ind] = images[ind, fg_row, fg_col]
+
+# clear shape_images
+
+# % create combined vector from the BG and FG values for sorting
+# combined_values = bg_values * 1000 + fg_values;
+
+# % sort
+# [~,sort_index] = sort(combined_values);
+
+# % construct output matrix by using sorted indicies
+# for ind =  1:num_images
+#     output_images(ind,:) = input_images(sort_index(ind),:);
+# end
+    
+    return output_images, bg_values, fg_values
+    
