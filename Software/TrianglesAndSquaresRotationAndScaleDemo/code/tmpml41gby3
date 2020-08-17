@@ -74,36 +74,14 @@ def plot_12images(images, labels, figsize=None):
            
     plt.show()
     
-    
-# plot 12 random shape images
-def plot_12seqimages(images, labels, start_ind=0, figsize=None):
-    j=0      
-    if figsize is None:
-        figsize = (8, 6)
-    plt.figure(figsize=figsize)
-    for i in range(12):
-        ind=start_ind + i
-        img=images[ind,:]
-        img=np.reshape(img,(64,64))
-        label=labels[ind]
-        j = j+1
-        plt.subplot(3, 4, j)
-        plt.imshow(img*255,cmap=cm.gray, vmin=0, vmax=255)
-        plt.xticks([])
-        plt.yticks([])
-        plt.title('n=%d' %(label))
-           
-    plt.show()
-        
 # sort based on contrast
-def sort_contrast(images, labels, bg_point=[1,1], fg_point=[32,32]):
+def sort_contrast(images, bg_point=[1,1], fg_point=[32,32]):
     # initializaitons
     nim = np.shape(images)[0]
     
     output_images = np.zeros_like(images)
-    output_labels = np.zeros_like(labels)
-    bg_values = np.zeros(nim)
-    fg_values = np.zeros(nim)
+    bg_values = np.zeros([1,nim])
+    fg_values = np.zeros([1,nim])
 
     # indicies of a BG and FG points
     fg_row = fg_point[0]
@@ -112,22 +90,22 @@ def sort_contrast(images, labels, bg_point=[1,1], fg_point=[32,32]):
     bg_col = bg_point[1]
     
     # collect row vectors of BG and FG values
-    for ind in range(nim):
-        bg_values[ind] = images[ind, bg_row, bg_col]
-        fg_values[ind] = images[ind, fg_row, fg_col]
+    # for ind in range(nim):
+    #     bg_values[ind] = images[ind, bg_row, bg_col]
+    #     fg_values[ind] = images[ind, fg_row, fg_col]
 
-    # create combined vector from the BG and FG values for sorting
-    combined_values = bg_values * 1000 + fg_values;
+# clear shape_images
 
-    # sort
-    sort_index = np.argsort(combined_values);
+# % create combined vector from the BG and FG values for sorting
+# combined_values = bg_values * 1000 + fg_values;
 
-    # construct output matrix by using sorted indicies
-    for ind in range(nim):
-        new_ind = sort_index[ind]
-        output_images[ind,:,:] = images[new_ind,:,:]
-        output_labels[ind] = labels[new_ind]
+# % sort
+# [~,sort_index] = sort(combined_values);
 
+# % construct output matrix by using sorted indicies
+# for ind =  1:num_images
+#     output_images(ind,:) = input_images(sort_index(ind),:);
+# end
     
-    return output_images, output_labels, sort_index
+    return output_images, bg_values, fg_values
     
