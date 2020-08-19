@@ -114,8 +114,8 @@ def sort_contrast(images, labels=None, bg_point=[1,1], fg_point=[32,32]):
     
     output_images = np.zeros_like(images)
     output_labels = np.zeros_like(labels)
-    bg_values = np.zeros(nim)
-    fg_values = np.zeros(nim)
+    bg_values = np.zeros(nim, dtype=int)
+    fg_values = np.zeros(nim, dtype=int)
 
     # indicies of a BG and FG points
     fg_row = fg_point[0]
@@ -125,23 +125,30 @@ def sort_contrast(images, labels=None, bg_point=[1,1], fg_point=[32,32]):
     
     # collect row vectors of BG and FG values
     for ind in range(nim):
-        bg_values[ind] = images[ind, bg_row, bg_col]
-        fg_values[ind] = images[ind, fg_row, fg_col]
-
+       bg_values[ind] = images[ind, bg_row, bg_col]*255
+       fg_values[ind] = images[ind, fg_row, fg_col]*255
+     
+    #print('bg_values: ', bg_values)
+    #print('fg_values: ', fg_values)
+    
     # create combined vector from the BG and FG values for sorting
     combined_values = bg_values * 1000 + fg_values;
+    #print('combined_values: ', combined_values)
 
     # sort
     sort_index = np.argsort(combined_values);
-
+    #print('sort_index: ',sort_index)
+    #print('sorted combined values: ', combined_values[sort_index])
+    
     # construct output matrix by using sorted indicies
-    for ind in range(nim):
-        new_ind = sort_index[ind]
-        output_images[ind,:,:] = images[new_ind,:,:]
-        if labels is None:
-            output_labels = None
-        else:
-            output_labels[ind] = labels[new_ind]
+    
+    if labels is None:
+        output_labels = None
+    else:
+        output_labels = labels[sort_index]
+
+            
+    output_images = images[sort_index]       
 
     
     return output_images, output_labels, sort_index
