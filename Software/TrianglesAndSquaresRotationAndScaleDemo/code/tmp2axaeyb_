@@ -57,29 +57,31 @@ def split_data(images, labels):
 def plot_12images(images, labels=None, figsize=None):
     j=0
     nim = np.shape(images)[0]
+    if labels is None:
+        labels = np.zeros((nim))        
         
+    print(np.shape(labels))    
     if figsize is None:
         figsize = (8, 6)
     plt.figure(figsize=figsize)
     for _ in range(12):
         ind=int(np.random.randint(1,nim-12))
+        print(int)
         img=images[ind,:]
         img=np.reshape(img,(64,64))
-        if labels is not None:
-            label=labels[ind]
+        label=labels[ind]
         j = j+1
         plt.subplot(3, 4, j)
         plt.imshow(img*255,cmap=cm.gray, vmin=0, vmax=255)
         plt.xticks([])
         plt.yticks([])
-        if labels is not None:
-            plt.title('n=%d' %(label))
+        plt.title('n=%d' %(label))
            
     plt.show()
     
     
 # plot 12 random shape images
-def plot_12seqimages(images, labels=None, start_ind=0, figsize=None):
+def plot_12seqimages(images, labels, start_ind=0, figsize=None):
     j=0      
     if figsize is None:
         figsize = (8, 6)
@@ -88,15 +90,13 @@ def plot_12seqimages(images, labels=None, start_ind=0, figsize=None):
         ind=start_ind + i
         img=images[ind,:]
         img=np.reshape(img,(64,64))
-        if labels is not None:
-            label=labels[ind]
+        label=labels[ind]
         j = j+1
         plt.subplot(3, 4, j)
         plt.imshow(img*255,cmap=cm.gray, vmin=0, vmax=255)
         plt.xticks([])
         plt.yticks([])
-        if labels is not None:
-            plt.title('n=%d' %(label))
+        plt.title('n=%d' %(label))
            
     plt.show()
  
@@ -108,7 +108,7 @@ def select_shape(images, labels, label):
     return selected_images    
         
 # sort based on contrast
-def sort_contrast(images, labels=None, bg_point=[1,1], fg_point=[32,32]):
+def sort_contrast(images, labels, bg_point=[1,1], fg_point=[32,32]):
     # initializaitons
     nim = np.shape(images)[0]
     
@@ -138,10 +138,7 @@ def sort_contrast(images, labels=None, bg_point=[1,1], fg_point=[32,32]):
     for ind in range(nim):
         new_ind = sort_index[ind]
         output_images[ind,:,:] = images[new_ind,:,:]
-        if labels is None:
-            output_labels = None
-        else:
-            output_labels[ind] = labels[new_ind]
+        output_labels[ind] = labels[new_ind]
 
     
     return output_images, output_labels, sort_index
