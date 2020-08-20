@@ -127,13 +127,14 @@ def sort_contrast(images, labels=None, bg_point=[1,1], fg_point=[32,32]):
     for ind in range(nim):
        bg_values[ind] = images[ind, bg_row, bg_col]*255
        fg_values[ind] = images[ind, fg_row, fg_col]*255
-     
+       
     
     # create combined vector from the BG and FG values for sorting
-    combined_values = bg_values * 1000 + fg_values;
-
+    contrast = np.abs(bg_values-fg_values)
+    combined_values = contrast * 1000 + bg_values;
     # sort
     sort_index = np.argsort(combined_values);
+  #  sort_index = np.argsort(contrast);
     
     # construct output matrix by using sorted indicies
     
