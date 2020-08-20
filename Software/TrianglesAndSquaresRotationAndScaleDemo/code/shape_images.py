@@ -100,7 +100,7 @@ def plot_12seqimages(images, labels=None, start_ind=0, figsize=None):
            
     plt.show()
  
-    # select images of a single shape
+# select images of a single shape
 def select_shape(images, labels, label):    
    
     selected_images = images[labels==label]  
@@ -128,17 +128,12 @@ def sort_contrast(images, labels=None, bg_point=[1,1], fg_point=[32,32]):
        bg_values[ind] = images[ind, bg_row, bg_col]*255
        fg_values[ind] = images[ind, fg_row, fg_col]*255
      
-    #print('bg_values: ', bg_values)
-    #print('fg_values: ', fg_values)
     
     # create combined vector from the BG and FG values for sorting
     combined_values = bg_values * 1000 + fg_values;
-    #print('combined_values: ', combined_values)
 
     # sort
     sort_index = np.argsort(combined_values);
-    #print('sort_index: ',sort_index)
-    #print('sorted combined values: ', combined_values[sort_index])
     
     # construct output matrix by using sorted indicies
     
@@ -153,3 +148,43 @@ def sort_contrast(images, labels=None, bg_point=[1,1], fg_point=[32,32]):
     
     return output_images, output_labels, sort_index
     
+
+# sort based on foreground object size
+def sort_size(images, labels=None, fg_point=[32,32]):
+    # initializaitons
+    nim = np.shape(images)[0]
+    
+    output_images = np.zeros_like(images)
+    output_labels = np.zeros_like(labels)
+    fg_count = np.zeros(nim, dtype=int)
+
+    # indicies of a BG and FG points
+    fg_row = fg_point[0]
+    fg_col = fg_point[1]
+    
+    # count the number of pixels belonging to the FG and BG 
+    for ind in range(nim):      
+       fg_value = int(images[ind, fg_row, fg_col]*255)
+      # print('fg_value: ', fg_value)
+       image = 255*images[ind]
+       image = image.astype(int)
+       fg_count[ind] = np.count_nonzero(image == fg_value)
+   # print('fg_count: ', fg_count)
+     
+
+    # sort
+    sort_index = np.argsort(fg_count);
+    #print('sort_index: ', sort_index)
+
+    
+    # construct output matrix by using sorted indicies
+    if labels is None:
+        output_labels = None
+    else:
+        output_labels = labels[sort_index]
+
+            
+    output_images = images[sort_index]       
+
+    
+    return output_images, output_labels, sort_index
