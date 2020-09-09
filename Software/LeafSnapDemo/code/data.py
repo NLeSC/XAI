@@ -2,8 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 
-TRAIN = 0.7
-VALID = 0.2
+TRAIN = 0.8
+VALID = 0.1
 
 
 # split to training, test and validaiton data
@@ -32,7 +32,7 @@ def split_data(images, labels):
     images_test = images[start_test_ind:]
     labels_test = labels[start_test_ind:]
     
-    return images_train, images_val, images_test, labels_train, labels_val, labels_test
+    return images_train, images_val, images_test, labels_train, labels_val, labels_test, end_train_ind, end_val_ind 
 
 # plot 12 random shape images
 def plot_12images(images, labels=None, sources = None, figsize=None):

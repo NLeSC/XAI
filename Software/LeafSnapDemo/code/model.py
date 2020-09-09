@@ -16,7 +16,7 @@ def generate_model(input_shape, num_classes):
                      name='conv2d_layer1'))
     model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2), name='maxpooling2d_layer1'))
     model.add(Conv2D(32, (5, 5), activation='relu', name='conv2d_layer2'))
-    model.add(MaxPooling2D(pool_size=(2, 2), name='maxpooling2d_layer1'))
+    model.add(MaxPooling2D(pool_size=(2, 2), name='maxpooling2d_layer2'))
     model.add(Dropout(0.5, name='dropout_layer1'))
     model.add(Flatten(name='flatten_layer1'))
     model.add(Dense(100, activation='relu', name='dense_layer1'))
@@ -26,16 +26,17 @@ def generate_model(input_shape, num_classes):
     return model
 
 # train the model
-def train_model(model, images_train, labels_train,images_val, labels_val, batch_size, epochs):
+def train_model(model, images_train, labels_train,images_val, labels_val, batch_size, epochs, best_model):
 
     model.compile(loss=keras.losses.categorical_crossentropy,
                   optimizer=keras.optimizers.Adadelta(),
                   metrics=['accuracy'])
     
-    model.fit(images_train, labels_train,
+    results = model.fit(images_train, labels_train,
               batch_size=batch_size,
               epochs=epochs,
               verbose=1,
-              validation_data=(images_val, labels_val))
+              validation_data=(images_val, labels_val),
+              callbacks=[best_model])
 
-    return model
+    return model, results
