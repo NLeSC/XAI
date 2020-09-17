@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 
-TRAIN = 0.8
+TRAIN = 0.7
 VALID = 0.1
 
 
