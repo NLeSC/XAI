@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 
 TRAIN = 0.7
-VALID = 0.1
+VALID = 0.2
 
 
 # split to training, test and validaiton data
