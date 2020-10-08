@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 
@@ -47,11 +48,15 @@ def plot_12images(images, labels=None, sources = None, figsize=None):
         img=images[ind,:]
         img=np.reshape(img,(64,64,3))
         if labels is not None:
-            label=labels[ind]
+            if isinstance(labels,(np.ndarray)):
+                label=labels[ind]
+            elif isinstance(labels, pd.core.series.Series):
+                label = labels.iloc[ind]
         else:
             label = ''
         if sources is not None:
-            source = ', ' + sources[ind]
+            if isinstance(sources, pd.core.series.Series):
+                source = ', ' + sources.iloc[ind]            
         else:
             source = ''
         j = j+1
