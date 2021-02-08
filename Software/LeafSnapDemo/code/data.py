@@ -35,8 +35,8 @@ def split_data(images, labels):
     
     return images_train, images_val, images_test, labels_train, labels_val, labels_test, end_train_ind, end_val_ind 
 
-# plot 12 random shape images
-def plot_12images(images, labels=None, sources = None, figsize=None):
+# plot 12 random leaf images
+def plot_12images(images, labels=None, predictions = None, sources = None, figsize=None):
     j=0
     nim = np.shape(images)[0]
         
@@ -54,6 +54,14 @@ def plot_12images(images, labels=None, sources = None, figsize=None):
                 label = labels.iloc[ind]
         else:
             label = ''
+        if predictions is not None:
+            if isinstance(predictions,(np.ndarray)):
+                prediction=predictions[ind]
+            elif isinstance(predictions, pd.core.series.Series):
+                prediction = predictions.iloc[ind]
+        else:
+            prediction = ''  
+          
         if sources is not None:
             if isinstance(sources, pd.core.series.Series):
                 source = ', ' + sources.iloc[ind]            
@@ -65,7 +73,9 @@ def plot_12images(images, labels=None, sources = None, figsize=None):
         plt.xticks([])
         plt.yticks([])
         text = label + source
-        plt.title('%s' %(text))
+        plt.title('label: %s' %(text))
+        if prediction:
+            plt.xlabel('prediction: %s' %(prediction))
            
     plt.show()
     
