@@ -57,11 +57,13 @@ def plot_12images(images, labels=None, predictions = None, sources = None, figsi
         if predictions is not None:
             if isinstance(predictions,(np.ndarray)):
                 prediction=predictions[ind]
+                #print("predictions is an array!") 
             elif isinstance(predictions, pd.core.series.Series):
+                #print("predictions is a series from a DataFrame!")   
                 prediction = predictions.iloc[ind]
         else:
             prediction = ''  
-          
+        #print("prediction: ", prediction)    
         if sources is not None:
             if isinstance(sources, pd.core.series.Series):
                 source = ', ' + sources.iloc[ind]            
