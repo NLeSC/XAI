@@ -81,3 +81,48 @@ def plot_12images(images, labels=None, predictions = None, sources = None, figsi
            
     plt.show()
     
+# plot 12 sequential leaf images
+def plot_12seqimages(images, labels=None, predictions = None, sources = None, start_ind = 0, figsize=None):
+    j=0
+        
+    if figsize is None:
+        figsize = (8, 6)
+    plt.figure(figsize=figsize)
+    for i in range(12):
+        ind=start_ind + i
+        img=images[ind,:]
+        img=np.reshape(img,(64,64,3))
+        if labels is not None:
+            if isinstance(labels,(np.ndarray)):
+                label=labels[ind]
+            elif isinstance(labels, pd.core.series.Series):
+                label = labels.iloc[ind]
+        else:
+            label = ''
+        if predictions is not None:
+            if isinstance(predictions,(np.ndarray)):
+                prediction=predictions[ind]
+                #print("predictions is an array!") 
+            elif isinstance(predictions, pd.core.series.Series):
+                #print("predictions is a series from a DataFrame!")   
+                prediction = predictions.iloc[ind]
+        else:
+            prediction = ''  
+        #print("prediction: ", prediction)    
+        if sources is not None:
+            if isinstance(sources, pd.core.series.Series):
+                source = ', ' + sources.iloc[ind]            
+        else:
+            source = ''
+        j = j+1
+        plt.subplot(3, 4, j)
+        plt.imshow(img) #,cmap=cm.gray, vmin=0, vmax=255)
+        plt.xticks([])
+        plt.yticks([])
+        text = label + source
+        plt.title('label: %s' %(text))
+        if prediction:
+            plt.xlabel('prediction: %s' %(prediction))
+           
+    plt.show()
+        
