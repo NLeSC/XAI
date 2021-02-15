@@ -36,7 +36,7 @@ def split_data(images, labels):
     return images_train, images_val, images_test, labels_train, labels_val, labels_test, end_train_ind, end_val_ind 
 
 # plot 12 random leaf images
-def plot_12images(images, labels=None, predictions = None, sources = None, figsize=None):
+def plot_12images(images, labels=None, predictions = None, sources = None, unique_species_names = None, figsize=None):
     j=0
     nim = np.shape(images)[0]
         
@@ -49,21 +49,23 @@ def plot_12images(images, labels=None, predictions = None, sources = None, figsi
         img=np.reshape(img,(64,64,3))
         if labels is not None:
             if isinstance(labels,(np.ndarray)):
-                label=labels[ind]
+                label_numeric = labels[ind]
+                label = unique_species_names[label_numeric]
             elif isinstance(labels, pd.core.series.Series):
-                label = labels.iloc[ind]
-        else:
-            label = ''
+                label_numeric = labels.iloc[ind]
+                label = unique_species_names.iloc[label_numeric]
+            else:
+                label = ''
         if predictions is not None:
             if isinstance(predictions,(np.ndarray)):
-                prediction=predictions[ind]
-                #print("predictions is an array!") 
-            elif isinstance(predictions, pd.core.series.Series):
-                #print("predictions is a series from a DataFrame!")   
-                prediction = predictions.iloc[ind]
+                prediction_numeric = predictions[ind]
+                prediction=unique_species_names[prediction_numeric]
+                
+            elif isinstance(predictions, pd.core.series.Series): 
+                prediction_numeric = predictions.iloc[ind]
+                prediction = unique_species_names.iloc[prediction_numeric]
         else:
-            prediction = ''  
-        #print("prediction: ", prediction)    
+            prediction = ''     
         if sources is not None:
             if isinstance(sources, pd.core.series.Series):
                 source = ', ' + sources.iloc[ind]            
@@ -74,15 +76,15 @@ def plot_12images(images, labels=None, predictions = None, sources = None, figsi
         plt.imshow(img) #,cmap=cm.gray, vmin=0, vmax=255)
         plt.xticks([])
         plt.yticks([])
-        text = label + source
-        plt.title('label: %s' %(text))
+        text = '%d, ' %(label_numeric) + label + source
+        plt.title(text)
         if prediction:
-            plt.xlabel('prediction: %s' %(prediction))
+            plt.xlabel('prediction: %d, %s' %(prediction_numeric, prediction))
            
     plt.show()
     
 # plot 12 sequential leaf images
-def plot_12seqimages(images, labels=None, predictions = None, sources = None, start_ind = 0, figsize=None):
+def plot_12seqimages(images, labels=None, predictions = None, sources = None, unique_species_names=None, start_ind = 0, figsize=None):
     j=0
         
     if figsize is None:
@@ -94,21 +96,23 @@ def plot_12seqimages(images, labels=None, predictions = None, sources = None, st
         img=np.reshape(img,(64,64,3))
         if labels is not None:
             if isinstance(labels,(np.ndarray)):
-                label=labels[ind]
+                label_numeric = labels[ind]
+                label = unique_species_names[label_numeric]
             elif isinstance(labels, pd.core.series.Series):
-                label = labels.iloc[ind]
+                label_numeric = labels.iloc[ind]
+                label = unique_species_names.iloc[label_numeric]
         else:
             label = ''
         if predictions is not None:
             if isinstance(predictions,(np.ndarray)):
-                prediction=predictions[ind]
-                #print("predictions is an array!") 
+                prediction_numeric = predictions[ind]
+                prediction=unique_species_names[prediction_numeric]
             elif isinstance(predictions, pd.core.series.Series):
-                #print("predictions is a series from a DataFrame!")   
-                prediction = predictions.iloc[ind]
+                prediction_numeric = predictions.iloc[ind]
+                prediction = unique_species_names.iloc[prediction_numeric]
         else:
-            prediction = ''  
-        #print("prediction: ", prediction)    
+            prediction = '' 
+              
         if sources is not None:
             if isinstance(sources, pd.core.series.Series):
                 source = ', ' + sources.iloc[ind]            
@@ -119,10 +123,10 @@ def plot_12seqimages(images, labels=None, predictions = None, sources = None, st
         plt.imshow(img) #,cmap=cm.gray, vmin=0, vmax=255)
         plt.xticks([])
         plt.yticks([])
-        text = label + source
-        plt.title('label: %s' %(text))
+        text = '%d, ' %(label_numeric) + label + source
+        plt.title(text)
         if prediction:
-            plt.xlabel('prediction: %s' %(prediction))
+            plt.xlabel('prediction: %d, %s' %(prediction_numeric, prediction))
            
     plt.show()
         
