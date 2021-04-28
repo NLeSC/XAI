@@ -7,8 +7,8 @@ Software/lrp_toolbox-1.2.0/caffe-master-lrp/examples/
 /Software/.cache
 /Software/ONNX
 /Software/pytorch/data
-Software/pytorch/.ipynb_checkpoints/
-Software/LeafSnapDemo/.ipynb_checkpoints/
+/Software/pytorch/.ipynb_checkpoints/
+/Software/LeafSnapDemo/.ipynb_checkpoints/
 /Results/Experiments/TrianglesAndSquares/Binary/*.mat
 /Results/Experiments/TrianglesAndSquares/Gray/*.mat
 *.mat
